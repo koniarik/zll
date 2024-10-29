@@ -87,9 +87,50 @@ constexpr void link_as_last( T& lh, T& rh ) noexcept( nothrow_access< Acc, T > )
         Acc::get( &rh ).prev = p;
 }
 
+template < typename Derived >
+struct ll_base
+{
+        Derived* next()
+        {
+                return hdr.next;
+        }
+        Derived const* next() const
+        {
+                return hdr.next;
+        }
+        Derived* prev()
+        {
+                return hdr.prev;
+        }
+        Derived const* prev() const
+        {
+                return hdr.prev;
+        }
+
+        Derived& derived()
+        {
+                return *static_cast< Derived* >( this );
+        }
+        Derived const& derived() const
+        {
+                return *static_cast< Derived const* >( this );
+        }
+
+private:
+        struct access
+        {
+                static auto& get( Derived* d ) noexcept
+                {
+                        return static_cast< ll_base* >( d )->hdr;
+                }
+        };
+
+        ll_header< Derived, access > hdr;
+};
+
 template < typename Acc, typename T >
-constexpr void
-for_each_node( T& n, auto&& f ) noexcept( nothrow_access< Acc, T >&& noexcept( f( n ) ) )
+constexpr void for_each_node( T& n, std::invocable< T& > auto&& f ) noexcept(
+    nothrow_access< Acc, T >&& noexcept( f( n ) ) )
 {
         for ( T* p = Acc::get( &n ).prev; p; p = Acc::get( p ).prev )
                 f( *p );
@@ -97,5 +138,27 @@ for_each_node( T& n, auto&& f ) noexcept( nothrow_access< Acc, T >&& noexcept( f
         for ( T* p = Acc::get( &n ).next; p; p = Acc::get( p ).next )
                 f( *p );
 }
+
+constexpr void for_each_node_base_impl( auto& n, auto&& f ) noexcept
+{
+        for ( auto* p = n.prev(); p; p = p->prev() )
+                f( *p );
+        f( n.derived() );
+        for ( auto* p = n.next(); p; p = p->next() )
+                f( *p );
+}
+
+template < typename D, std::invocable< D& > F >
+constexpr void for_each_node( ll_base< D >& n, F&& f ) noexcept
+{
+        for_each_node_base_impl( n, (F&&) f );
+}
+
+template < typename D, std::invocable< D const& > F >
+constexpr void for_each_node( ll_base< D > const& n, F&& f ) noexcept
+{
+        for_each_node_base_impl( n, (F&&) f );
+}
+
 
 }  // namespace zll
