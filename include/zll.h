@@ -214,7 +214,7 @@ struct ll_list
 
         constexpr void link_as_last( T& node ) noexcept( noexcept_access )
         {
-                link_as_last< T, Acc >( *this, node );
+                zll::link_as_last< T, Acc >( *this, node );
         }
 
         ~ll_list() noexcept( noexcept_access )
