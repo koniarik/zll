@@ -1,6 +1,8 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include <iostream>
+//
 #include "zll.h"
 
 #include <doctest/doctest.h>
@@ -9,7 +11,8 @@
 
 namespace zll
 {
-
+namespace
+{
 struct hdr_access
 {
         static auto& get( auto* item ) noexcept
@@ -57,7 +60,7 @@ struct der : public ll_base< der >
 
 void check_links( node_t& first )
 {
-        for ( ll_ptr< node_t, hdr_access > p = &first; *p.next(); p = *p.next() ) {
+        for ( _ll_ptr< node_t, hdr_access > p = &first; *p.next(); p = *p.next() ) {
                 CHECK( p.next()->prev() );
                 CHECK_EQ( p.ptr, p.next()->prev()->ptr );
         }
@@ -65,13 +68,13 @@ void check_links( node_t& first )
 
 void check_links( der& first )
 {
-        for ( ll_ptr< der, typename der::access > p = &first; *p.next(); p = *p.next() ) {
+        for ( _ll_ptr< der, typename der::access > p = &first; *p.next(); p = *p.next() ) {
                 CHECK( p.next()->prev() );
                 CHECK_EQ( p.ptr, p.next()->prev()->ptr );
         }
 }
 
-void check_for_each_node( node_t& n, std::set< node_t const* > expected )
+void check_for_each_node( node_t& n, std::set< node_t const* > const& expected )
 {
         std::set< node_t const* > s;
         for_each_node< hdr_access >( n, [&]( node_t& m ) {
@@ -86,7 +89,7 @@ void check_for_each_node( node_t& n, std::set< node_t const* > expected )
         CHECK_EQ( s2, expected );
 }
 
-void check_for_each_node( der& n, std::set< der const* > expected )
+void check_for_each_node( der& n, std::set< der const* > const& expected )
 {
         std::set< der const* > s;
         for_each_node( n, [&]( der& m ) {
@@ -101,8 +104,11 @@ void check_for_each_node( der& n, std::set< der const* > expected )
         CHECK_EQ( s2, expected );
 }
 
+}  // namespace
+
 TEST_CASE_TEMPLATE( "single", T, node_t, der )
 {
+        std::cout << "single test: " << typeid( T ).name() << std::endl;
         using access = typename T::access;
 
         T d1;
@@ -120,15 +126,15 @@ TEST_CASE_TEMPLATE( "single", T, node_t, der )
         check_for_each_node( d1, { &d1 } );
 }
 
-TEST_CASE( "dual" )
+TEST_CASE_TEMPLATE( "dual", T, node_t, der )
 {
-        node_t d1, d2;
-        link_as_last< node_t, hdr_access >( &d1, d2 );
+        T d1, d2;
+        link_as_last< T, typename T::access >( &d1, d2 );
         check_links( d1 );
         check_for_each_node( d1, { &d1, &d2 } );
 }
 
-TEST_CASE( "triple" )
+TEST_CASE_TEMPLATE( "triple", T, node_t, der )
 {
         node_t d1, d2, d3;
         SUBCASE( "link as last" )
@@ -149,10 +155,10 @@ TEST_CASE( "triple" )
         check_for_each_node( d1, { &d1, &d3 } );
 }
 
-TEST_CASE( "cpy" )
+TEST_CASE_TEMPLATE( "cpy", T, node_t, der )
 {
-        node_t d1;
-        node_t d2{ d1 };
+        T d1;
+        T d2{ d1 };
 
         SUBCASE( "two" )
         {
@@ -162,7 +168,7 @@ TEST_CASE( "cpy" )
 
         SUBCASE( "three" )
         {
-                node_t d3{ d2 };
+                T d3{ d2 };
 
                 check_links( d1 );
                 check_for_each_node( d1, { &d1, &d2, &d3 } );
@@ -170,7 +176,7 @@ TEST_CASE( "cpy" )
 
         SUBCASE( "three assign" )
         {
-                node_t d3;
+                T d3;
                 d3 = d2;
 
                 check_links( d1 );
@@ -179,31 +185,31 @@ TEST_CASE( "cpy" )
 
         SUBCASE( "move it" )
         {
-                node_t d3{ std::move( d2 ) };
+                T d3{ std::move( d2 ) };
                 check_links( d1 );
                 check_for_each_node( d1, { &d1, &d3 } );
         }
 
         SUBCASE( "move it assign" )
         {
-                node_t d3;
+                T d3;
                 d3 = std::move( d2 );
                 check_links( d1 );
                 check_for_each_node( d1, { &d1, &d3 } );
         }
 }
 
-TEST_CASE( "vector" )
+TEST_CASE_TEMPLATE( "vector", T, node_t, der )
 {
-        std::vector< node_t > d1;
+        std::vector< T > d1;
         for ( int i = 0; i < 42; i++ ) {
                 auto& last = d1.emplace_back();
                 if ( i > 0 )
-                        link_as_last< node_t, hdr_access >( &d1.front(), last );
+                        link_as_last< T, typename T::access >( &d1.front(), last );
                 check_links( d1.front() );
         }
-        std::set< node_t const* > s;
-        for ( node_t& d : d1 )
+        std::set< T const* > s;
+        for ( T& d : d1 )
                 s.insert( &d );
         check_for_each_node( d1.front(), s );
 }
