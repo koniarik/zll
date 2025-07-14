@@ -82,48 +82,11 @@ struct _ll_ptr
                 return ptr && is_node() ? reinterpret_cast< T* >( ptr ) : nullptr;
         }
 
-        constexpr ll_header< T, Acc >* hdr() noexcept( noexcept_access )
-        {
-                if ( auto* n = node() )
-                        return &Acc::get( n );
-                return nullptr;
-        }
-
         constexpr ll_list< T, Acc >* list() noexcept
         {
                 static_assert( alignof( T ) > 2 );
                 return ptr && !is_node() ? reinterpret_cast< ll_list< T, Acc >* >( ptr & ~mask ) :
                                            nullptr;
-        }
-
-        constexpr _ll_ptr* next() noexcept( noexcept_access )
-        {
-                if ( auto* n = hdr() )
-                        return &n->next;
-                if ( auto* l = list() )
-                        return &l->first;
-                return nullptr;
-        }
-
-        constexpr void front_try_set( _ll_ptr p ) noexcept( noexcept_access )
-        {
-                if ( auto* x = next() )
-                        *x = p;
-        }
-
-        constexpr _ll_ptr* prev() noexcept( noexcept_access )
-        {
-                if ( auto* n = hdr() )
-                        return &n->prev;
-                if ( auto* l = list() )
-                        return &l->last;
-                return nullptr;
-        }
-
-        constexpr void back_try_set( _ll_ptr p ) noexcept( noexcept_access )
-        {
-                if ( auto* x = prev() )
-                        *x = p;
         }
 
         friend constexpr auto
@@ -144,8 +107,15 @@ struct ll_header
 
         constexpr ~ll_header() noexcept( _nothrow_access< Acc, T > )
         {
-                next.back_try_set( prev );
-                prev.front_try_set( next );
+                if ( T* n = next.node() )
+                        Acc::get( n ).prev = prev;
+                else if ( auto* h = next.list() )
+                        h->last = next.node();
+
+                if ( T* p = prev.node() )
+                        Acc::get( p ).next = next;
+                else if ( auto* h = prev.list() )
+                        h->first = next.node();
         }
 };
 
@@ -154,8 +124,18 @@ constexpr void unlink( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& n_hdr = Acc::get( &node );
 
-        n_hdr.next.back_try_set( n_hdr.prev );
-        n_hdr.prev.front_try_set( n_hdr.next );
+        if ( auto* next = n_hdr.next.node() )
+                Acc::get( next ).prev = n_hdr.prev;
+        else if ( auto* h = n_hdr.next.list() )
+                h->last = n_hdr.prev.node();
+
+        if ( auto* prev = n_hdr.prev.node() )
+                Acc::get( prev ).next = n_hdr.next;
+        else if ( auto* h = n_hdr.prev.list() )
+                h->first = n_hdr.next.node();
+
+        n_hdr.next = nullptr;
+        n_hdr.prev = nullptr;
 }
 
 template < typename T, typename Acc >
@@ -167,8 +147,15 @@ constexpr void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T 
         to_hdr.next = from_hdr.next;
         to_hdr.prev = from_hdr.prev;
 
-        to_hdr.next.back_try_set( &to );
-        to_hdr.prev.front_try_set( &to );
+        if ( auto* n = to_hdr.next.node() )
+                Acc::get( n ).prev = &to;
+        else if ( auto* h = to_hdr.next.list() )
+                h->first = &to;
+
+        if ( auto* p = to_hdr.prev.node() )
+                Acc::get( p ).next = &to;
+        else if ( auto* h = to_hdr.prev.list() )
+                h->last = &to;
 
         from_hdr.next = nullptr;
         from_hdr.prev = nullptr;
@@ -181,20 +168,43 @@ constexpr void link_empty_as_next( T& n, T& empty ) noexcept( _nothrow_access< A
         auto& n_hdr = Acc::get( &n );
 
         e_hdr.next = n_hdr.next;
-        e_hdr.next.back_try_set( &empty );
+        if ( T* next = e_hdr.next.node() )
+                Acc::get( next ).prev = &empty;
+        else if ( auto* h = e_hdr.next.list() )
+                h->last = &empty;
 
         n_hdr.next = &empty;
         e_hdr.prev = &n;
 }
 
 template < typename T, typename Acc >
-constexpr void link_as_last( _ll_ptr< T, Acc > p, T& rh ) noexcept( _nothrow_access< Acc, T > )
+constexpr void link_empty_as_prev( T& n, T& empty ) noexcept( _nothrow_access< Acc, T > )
 {
-        while ( auto&& m = p.next()->node() )
-                p = m;
+        auto& e_hdr = Acc::get( &empty );
+        auto& n_hdr = Acc::get( &n );
 
-        *p.next()            = &rh;
-        Acc::get( &rh ).prev = p;
+        e_hdr.prev = n_hdr.prev;
+        if ( T* prev = e_hdr.prev.node() )
+                Acc::get( prev ).next = &empty;
+        else if ( auto* h = e_hdr.prev.list() )
+                h->first = &empty;
+
+        n_hdr.prev = &empty;
+        e_hdr.next = &n;
+}
+
+template < typename T, typename Acc >
+constexpr void link_empty_as_last( T& n, T& rh ) noexcept( _nothrow_access< Acc, T > )
+{
+        auto* p = &n;
+        while ( p ) {
+                auto* pp = Acc::get( p ).next.node();
+                if ( !pp )
+                        break;
+                p = pp;
+        }
+
+        link_empty_as_next< T, Acc >( *p, rh );
 }
 
 template < typename T, typename Acc >
@@ -202,27 +212,73 @@ struct ll_list
 {
         static constexpr bool noexcept_access = _nothrow_access< Acc, T >;
 
-        _ll_ptr< T, Acc > first = *this;
-        _ll_ptr< T, Acc > last  = *this;
+        T* first = nullptr;
+        T* last  = nullptr;
 
-        ll_list() = default;
+        constexpr ll_list() = default;
 
         ll_list( ll_list const& )                = delete;
         ll_list( ll_list&& ) noexcept            = delete;
         ll_list& operator=( ll_list const& )     = delete;
         ll_list& operator=( ll_list&& ) noexcept = delete;
 
-        constexpr void link_as_last( T& node ) noexcept( noexcept_access )
+        constexpr void link_front( T& node ) noexcept( noexcept_access )
         {
-                zll::link_as_last< T, Acc >( *this, node );
+                unlink( node );
+                link_empty_front( node );
         }
 
-        ~ll_list() noexcept( noexcept_access )
+        constexpr void link_empty_front( T& node ) noexcept( noexcept_access )
         {
                 if ( first )
-                        first.back_try_set( nullptr );
+                        return link_empty_as_prev< T, Acc >( *last, node );
+                link_first( node );
+        }
+
+        constexpr void unlink_front() noexcept( noexcept_access )
+        {
+                unlink( *last );
+        }
+
+        constexpr bool empty() const noexcept
+        {
+                return !first;
+        }
+
+        constexpr void link_back( T& node ) noexcept( noexcept_access )
+        {
+                unlink( node );
+                link_empty_back( node );
+        }
+
+        constexpr void link_empty_back( T& node ) noexcept( noexcept_access )
+        {
                 if ( last )
-                        last.front_try_set( nullptr );
+                        return link_empty_as_next< T, Acc >( *last, node );
+                link_first( node );
+        }
+
+        constexpr void unlink_back() noexcept( noexcept_access )
+        {
+                unlink( *last );
+        }
+
+        constexpr ~ll_list() noexcept( noexcept_access )
+        {
+                if ( first )
+                        Acc::get( first ).prev = nullptr;
+                if ( last )
+                        Acc::get( last ).next = nullptr;
+        }
+
+private:
+        void link_first( T& node ) noexcept( noexcept_access )
+        {
+                first = &node;
+                last  = &node;
+
+                Acc::get( &node ).next = *this;
+                Acc::get( &node ).prev = *this;
         }
 };
 
