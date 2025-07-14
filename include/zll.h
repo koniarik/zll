@@ -94,6 +94,24 @@ struct _ll_ptr
 };
 
 template < typename T, typename Acc >
+constexpr void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n )
+{
+        if ( T* x = p.node() )
+                Acc::get( x ).prev = n;
+        else if ( auto* h = p.list() )
+                h->last = n.node();
+}
+
+template < typename T, typename Acc >
+constexpr void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n )
+{
+        if ( T* x = p.node() )
+                Acc::get( x ).next = n;
+        else if ( auto* h = p.list() )
+                h->first = n.node();
+}
+
+template < typename T, typename Acc >
 struct ll_header
 {
         _ll_ptr< T, Acc > next = nullptr;
@@ -107,15 +125,8 @@ struct ll_header
 
         constexpr ~ll_header() noexcept( _nothrow_access< Acc, T > )
         {
-                if ( T* n = next.node() )
-                        Acc::get( n ).prev = prev;
-                else if ( auto* h = next.list() )
-                        h->last = next.node();
-
-                if ( T* p = prev.node() )
-                        Acc::get( p ).next = next;
-                else if ( auto* h = prev.list() )
-                        h->first = next.node();
+                _prev_or_last_set( next, prev );
+                _next_or_first_set( prev, next );
         }
 };
 
@@ -124,15 +135,8 @@ constexpr void unlink( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& n_hdr = Acc::get( &node );
 
-        if ( auto* next = n_hdr.next.node() )
-                Acc::get( next ).prev = n_hdr.prev;
-        else if ( auto* h = n_hdr.next.list() )
-                h->last = n_hdr.prev.node();
-
-        if ( auto* prev = n_hdr.prev.node() )
-                Acc::get( prev ).next = n_hdr.next;
-        else if ( auto* h = n_hdr.prev.list() )
-                h->first = n_hdr.next.node();
+        _prev_or_last_set( n_hdr.next, n_hdr.prev );
+        _next_or_first_set( n_hdr.prev, n_hdr.next );
 
         n_hdr.next = nullptr;
         n_hdr.prev = nullptr;
@@ -147,15 +151,8 @@ constexpr void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T 
         to_hdr.next = from_hdr.next;
         to_hdr.prev = from_hdr.prev;
 
-        if ( auto* n = to_hdr.next.node() )
-                Acc::get( n ).prev = &to;
-        else if ( auto* h = to_hdr.next.list() )
-                h->first = &to;
-
-        if ( auto* p = to_hdr.prev.node() )
-                Acc::get( p ).next = &to;
-        else if ( auto* h = to_hdr.prev.list() )
-                h->last = &to;
+        _prev_or_last_set< T, Acc >( to_hdr.next, &to );
+        _next_or_first_set< T, Acc >( to_hdr.prev, &to );
 
         from_hdr.next = nullptr;
         from_hdr.prev = nullptr;
@@ -168,10 +165,7 @@ constexpr void link_empty_as_next( T& n, T& empty ) noexcept( _nothrow_access< A
         auto& n_hdr = Acc::get( &n );
 
         e_hdr.next = n_hdr.next;
-        if ( T* next = e_hdr.next.node() )
-                Acc::get( next ).prev = &empty;
-        else if ( auto* h = e_hdr.next.list() )
-                h->last = &empty;
+        _prev_or_last_set< T, Acc >( e_hdr.next, &empty );
 
         n_hdr.next = &empty;
         e_hdr.prev = &n;
@@ -184,10 +178,7 @@ constexpr void link_empty_as_prev( T& n, T& empty ) noexcept( _nothrow_access< A
         auto& n_hdr = Acc::get( &n );
 
         e_hdr.prev = n_hdr.prev;
-        if ( T* prev = e_hdr.prev.node() )
-                Acc::get( prev ).next = &empty;
-        else if ( auto* h = e_hdr.prev.list() )
-                h->first = &empty;
+        _next_or_first_set< T, Acc >( e_hdr.prev, &empty );
 
         n_hdr.prev = &empty;
         e_hdr.next = &n;
@@ -224,7 +215,7 @@ struct ll_list
 
         constexpr void link_front( T& node ) noexcept( noexcept_access )
         {
-                unlink( node );
+                unlink< T, Acc >( node );
                 link_empty_front( node );
         }
 
@@ -237,7 +228,7 @@ struct ll_list
 
         constexpr void unlink_front() noexcept( noexcept_access )
         {
-                unlink( *last );
+                unlink< T, Acc >( *last );
         }
 
         constexpr bool empty() const noexcept
@@ -247,7 +238,7 @@ struct ll_list
 
         constexpr void link_back( T& node ) noexcept( noexcept_access )
         {
-                unlink( node );
+                unlink< T, Acc >( node );
                 link_empty_back( node );
         }
 
@@ -260,7 +251,7 @@ struct ll_list
 
         constexpr void unlink_back() noexcept( noexcept_access )
         {
-                unlink( *last );
+                unlink< T, Acc >( *last );
         }
 
         constexpr ~ll_list() noexcept( noexcept_access )
@@ -321,11 +312,6 @@ struct ll_base
                 unlink< Derived, access >( derived() );
                 link_empty_as_next< Derived, access >( o.derived(), derived() );
                 return *this;
-        }
-
-        constexpr void link_as_last( ll_base& node ) noexcept
-        {
-                link_as_last< Derived, access >( *this, node );
         }
 
         Derived* next()

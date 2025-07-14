@@ -140,10 +140,26 @@ TEST_CASE_TEMPLATE( "single", T, node_t, der )
 
 TEST_CASE_TEMPLATE( "dual", T, node_t, der )
 {
+        using access = typename T::access;
+
         T d1, d2;
-        link_empty_as_last< T, typename T::access >( d1, d2 );
+
+        SUBCASE( "link as last" )
+        {
+                link_empty_as_last< T, typename T::access >( d1, d2 );
+                check_for_each_node( d1, { &d1, &d2 } );
+        }
+        SUBCASE( "move" )
+        {
+                ll_list< T, access > l;
+                l.link_back( d1 );
+                l.link_back( d2 );
+                T d3{ std::move( d1 ) };
+                CHECK_EQ( l.first, &d3 );
+                CHECK_EQ( l.last, &d2 );
+                check_for_each_node( d2, { &d2, &d3 } );
+        }
         check_links( d1 );
-        check_for_each_node( d1, { &d1, &d2 } );
 }
 
 TEST_CASE_TEMPLATE( "triple", T, node_t, der )
