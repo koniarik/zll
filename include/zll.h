@@ -199,6 +199,20 @@ constexpr void link_empty_as_last( T& n, T& rh ) noexcept( _nothrow_access< Acc,
 }
 
 template < typename T, typename Acc >
+constexpr void link_empty_as_first( T& n, T& rh ) noexcept( _nothrow_access< Acc, T > )
+{
+        auto* p = &n;
+        while ( p ) {
+                auto* pp = Acc::get( p ).prev.node();
+                if ( !pp )
+                        break;
+                p = pp;
+        }
+
+        link_empty_as_prev< T, Acc >( *p, rh );
+}
+
+template < typename T, typename Acc = typename T::access >
 struct ll_list
 {
         static constexpr bool noexcept_access = _nothrow_access< Acc, T >;
@@ -216,14 +230,10 @@ struct ll_list
         constexpr void link_front( T& node ) noexcept( noexcept_access )
         {
                 unlink< T, Acc >( node );
-                link_empty_front( node );
-        }
-
-        constexpr void link_empty_front( T& node ) noexcept( noexcept_access )
-        {
                 if ( first )
-                        return link_empty_as_prev< T, Acc >( *last, node );
-                link_first( node );
+                        link_empty_as_prev< T, Acc >( *last, node );
+                else
+                        link_first( node );
         }
 
         constexpr void unlink_front() noexcept( noexcept_access )
@@ -239,14 +249,10 @@ struct ll_list
         constexpr void link_back( T& node ) noexcept( noexcept_access )
         {
                 unlink< T, Acc >( node );
-                link_empty_back( node );
-        }
-
-        constexpr void link_empty_back( T& node ) noexcept( noexcept_access )
-        {
                 if ( last )
-                        return link_empty_as_next< T, Acc >( *last, node );
-                link_first( node );
+                        link_empty_as_next< T, Acc >( *last, node );
+                else
+                        link_first( node );
         }
 
         constexpr void unlink_back() noexcept( noexcept_access )
@@ -263,7 +269,7 @@ struct ll_list
         }
 
 private:
-        void link_first( T& node ) noexcept( noexcept_access )
+        constexpr void link_first( T& node ) noexcept( noexcept_access )
         {
                 first = &node;
                 last  = &node;
@@ -278,25 +284,25 @@ struct ll_base
 {
         struct access
         {
-                static auto& get( Derived* d ) noexcept
+                constexpr static auto& get( Derived* d ) noexcept
                 {
                         return static_cast< ll_base* >( d )->hdr;
                 }
         };
 
-        ll_base() noexcept = default;
+        constexpr ll_base() noexcept = default;
 
-        ll_base( ll_base&& o ) noexcept
+        constexpr ll_base( ll_base&& o ) noexcept
         {
                 move_from_to< Derived, access >( o.derived(), derived() );
         }
 
-        ll_base( ll_base& o ) noexcept
+        constexpr ll_base( ll_base& o ) noexcept
         {
                 link_empty_as_next< Derived, access >( o.derived(), derived() );
         }
 
-        ll_base& operator=( ll_base&& o ) noexcept
+        constexpr ll_base& operator=( ll_base&& o ) noexcept
         {
                 if ( this == &o )
                         return *this;
@@ -305,7 +311,7 @@ struct ll_base
                 return *this;
         }
 
-        ll_base& operator=( ll_base& o ) noexcept
+        constexpr ll_base& operator=( ll_base& o ) noexcept
         {
                 if ( this == &o )
                         return *this;
@@ -314,33 +320,45 @@ struct ll_base
                 return *this;
         }
 
-        Derived* next()
+        constexpr void link_next( Derived& empty ) noexcept
+        {
+                unlink< Derived, access >( empty );
+                link_empty_as_next< Derived, access >( derived(), empty );
+        }
+
+        constexpr void link_prev( Derived& empty ) noexcept
+        {
+                unlink< Derived, access >( empty );
+                link_empty_as_prev< Derived, access >( derived(), empty );
+        }
+
+        constexpr Derived* next()
         {
                 return hdr.next.node();
         }
 
-        Derived const* next() const
+        constexpr Derived const* next() const
         {
                 return hdr.next.node();
         }
 
-        Derived* prev()
+        constexpr Derived* prev()
         {
                 return hdr.prev.node();
         }
 
-        Derived const* prev() const
+        constexpr Derived const* prev() const
         {
                 return hdr.prev.node();
         }
 
 protected:
-        Derived& derived()
+        constexpr Derived& derived()
         {
                 return *static_cast< Derived* >( this );
         }
 
-        Derived const& derived() const
+        constexpr Derived const& derived() const
         {
                 return *static_cast< Derived const* >( this );
         }

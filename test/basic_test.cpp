@@ -128,7 +128,7 @@ TEST_CASE_TEMPLATE( "single", T, node_t, der )
         SUBCASE( "list" )
         {
                 ll_list< T, access > l;
-                l.link_empty_back( d1 );
+                l.link_back( d1 );
 
                 CHECK_EQ( l.first, &d1 );
                 CHECK_EQ( l.last, &d1 );
@@ -240,6 +240,35 @@ TEST_CASE_TEMPLATE( "vector", T, node_t, der )
         for ( T& d : d1 )
                 s.insert( &d );
         check_for_each_node( d1.front(), s );
+}
+
+struct cont : public ll_base< cont >
+{
+        int i = 0;
+
+        cont( int v )
+          : i( v )
+        {
+        }
+};
+
+TEST_CASE( "cont" )
+{
+        cont c1{ 1 }, c2{ 2 }, c3{ 3 };
+
+        ll_list< cont > l;
+        l.link_back( c1 );
+        l.link_back( c2 );
+        l.link_back( c3 );
+
+        {
+                std::vector< int > x;
+                cont               c20{ c2 };
+                for_each_node( c1, [&]( cont& c ) {
+                        x.emplace_back( c.i );
+                } );
+                CHECK_EQ( x, std::vector< int >{ 1, 2, 2, 3 } );
+        }
 }
 
 }  // namespace zll
