@@ -51,7 +51,7 @@ struct ll_list;
 template < typename T, typename Acc = typename T::access >
 struct ll_header;
 
-// Variadic ptr wrapper pointer either to ll_list or node with ll_header.
+/// Variadic ptr wrapper pointer either to ll_list or node with ll_header.
 template < typename T, typename Acc = typename T::access >
 struct _ll_ptr
 {
@@ -125,11 +125,11 @@ void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n )
                 h->_first = n.node();
 }
 
-// Linked-list header containing pointers to the next and previous elements or the list itself.
-// Will detach itself from the linked list on destruction.
-//
-// Type `T` is the type of the node that contains this header.
-// Type `Acc` is the access type that provides access to the header of the node.
+/// Linked-list header containing pointers to the next and previous elements or the list itself.
+/// Will detach itself from the linked list on destruction.
+///
+/// Type `T` is the type of the node that contains this header.
+/// Type `Acc` is the access type that provides access to the header of the node.
 template < typename T, typename Acc >
 struct ll_header
 {
@@ -149,8 +149,8 @@ struct ll_header
         }
 };
 
-// Unlink a node from existing list. Previous or following node are linked together instead.
-// Node itself does not keep any connections.
+/// Unlink a node from existing list. Previous or following node are linked together instead.
+/// Node itself does not keep any connections.
 template < typename T, typename Acc = typename T::access >
 void detach( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -163,7 +163,7 @@ void detach( T& node ) noexcept( _nothrow_access< Acc, T > )
         n_hdr.prev = nullptr;
 }
 
-// Returns true if the node is detached from list.
+/// Returns true if the node is detached from list.
 template < typename T, typename Acc = typename T::access >
 bool detached( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -171,8 +171,8 @@ bool detached( T& node ) noexcept( _nothrow_access< Acc, T > )
         return !n_hdr.next && !n_hdr.prev;
 }
 
-// Detaches subrange [first, last] from the list. The range is not linked to any other node after
-// detachment. Successor of `last` and predecessor of `first` are linked together.
+/// Detaches subrange [first, last] from the list. The range is not linked to any other node after
+/// detachment. Successor of `last` and predecessor of `first` are linked together.
 template < typename T, typename Acc = typename T::access >
 void detach_range( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -183,16 +183,16 @@ void detach_range( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
         Acc::get( &last ).next  = nullptr;
 }
 
-// Returns true if the range is detached from list.
+/// Returns true if the range is detached from list.
 template < typename T, typename Acc = typename T::access >
 bool detached_range( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
         return !Acc::get( &first ).prev && !Acc::get( &last ).next;
 }
 
-// Links predecessor and successor of `from` node as predecessor and successor of `to` node.
-// Can be used to implement move semantics of custom nodes. Undefined behavior if `to` is not
-// detached.
+/// Links predecessor and successor of `from` node as predecessor and successor of `to` node.
+/// Can be used to implement move semantics of custom nodes. Undefined behavior if `to` is not
+/// detached.
 template < typename T, typename Acc = typename T::access >
 void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -210,8 +210,8 @@ void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
         from_hdr.prev = nullptr;
 }
 
-// Link detached node `d` after node `n`, any successor of `n` will be successor of `d`.
-// Undefined behavior if `d` is not detached.
+/// Link detached node `d` after node `n`, any successor of `n` will be successor of `d`.
+/// Undefined behavior if `d` is not detached.
 template < typename T, typename Acc = typename T::access >
 void link_detached_as_next( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -226,8 +226,8 @@ void link_detached_as_next( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
         e_hdr.prev = &n;
 }
 
-// Link detached node `d` before node `n`, any predecessor of `n` will be predecessor of `d`.
-// Undefined behavior if `d` is not detached.
+/// Link detached node `d` before node `n`, any predecessor of `n` will be predecessor of `d`.
+/// Undefined behavior if `d` is not detached.
 template < typename T, typename Acc = typename T::access >
 void link_detached_as_prev( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -242,7 +242,7 @@ void link_detached_as_prev( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
         e_hdr.next = &n;
 }
 
-// Iterate over predecessors of node `n` and return the first node in the list.
+/// Iterate over predecessors of node `n` and return the first node in the list.
 template < typename T, typename Acc = typename T::access >
 T& first_node_of( T& n ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -256,7 +256,7 @@ T& first_node_of( T& n ) noexcept( _nothrow_access< Acc, T > )
         return *p;
 }
 
-// Iterate over successors of node `n` and return the last node in the list.
+/// Iterate over successors of node `n` and return the last node in the list.
 template < typename T, typename Acc = typename T::access >
 T& last_node_of( T& n ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -270,8 +270,8 @@ T& last_node_of( T& n ) noexcept( _nothrow_access< Acc, T > )
         return *p;
 }
 
-// Link detached node `d` as last element of the list accessed by node `n`.
-// Undefined behavior if `d` is not detached.
+/// Link detached node `d` as last element of the list accessed by node `n`.
+/// Undefined behavior if `d` is not detached.
 template < typename T, typename Acc = typename T::access >
 void link_detached_as_last( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -280,8 +280,8 @@ void link_detached_as_last( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
         link_detached_as_next< T, Acc >( last, d );
 }
 
-// Link detached node `d` as first element of the list accessed by node `n`.
-// Undefined behavior if `d` is not detached.
+/// Link detached node `d` as first element of the list accessed by node `n`.
+/// Undefined behavior if `d` is not detached.
 template < typename T, typename Acc = typename T::access >
 void link_detached_as_first( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -290,10 +290,10 @@ void link_detached_as_first( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
         link_detached_as_prev< T, Acc >( first, d );
 }
 
-// Link detached range [first, last] as successor of node `n`.
-// Undefined behavior if sublist [first, last] is not detached.
-// The range is linked as successor of `n` and the last element of the range is linked as
-// predecessor of previous `n` successor.
+/// Link detached range [first, last] as successor of node `n`.
+/// Undefined behavior if sublist [first, last] is not detached.
+/// The range is linked as successor of `n` and the last element of the range is linked as
+/// predecessor of previous `n` successor.
 template < typename T, typename Acc = typename T::access >
 void link_range_as_next( T& n, T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -305,10 +305,10 @@ void link_range_as_next( T& n, T& first, T& last ) noexcept( _nothrow_access< Ac
         Acc::get( &n ).next     = &first;
 }
 
-// Link detached range [first, last] as predecessor of node `n`.
-// Undefined behavior if sublist [first, last] is not detached.
-// The range is linked as predecessor of `n` and the first element of the range is linked as
-// successor of previous `n` predecessor.
+/// Link detached range [first, last] as predecessor of node `n`.
+/// Undefined behavior if sublist [first, last] is not detached.
+/// The range is linked as predecessor of `n` and the first element of the range is linked as
+/// successor of previous `n` predecessor.
 template < typename T, typename Acc = typename T::access >
 void link_range_as_prev( T& n, T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -320,8 +320,8 @@ void link_range_as_prev( T& n, T& first, T& last ) noexcept( _nothrow_access< Ac
         Acc::get( &n ).prev    = &last;
 }
 
-// Link nodes in `nodes` in order as successors of each other.
-// Undefined behavior if any of the nodes is not detached.
+/// Link nodes in `nodes` in order as successors of each other.
+/// Undefined behavior if any of the nodes is not detached.
 template < typename T, typename Acc = typename T::access >
 void link_group( std::initializer_list< T* > nodes )
 {
@@ -336,9 +336,9 @@ void link_group( std::initializer_list< T* > nodes )
         }
 }
 
-// Merge two ranges [lhf, lhl] and [rhf, rhl] into one range. Uses `comp` to determine the order of
-// the elements in the resulting range. Pointers to the first and last elements of the
-// resulting range are returned.
+/// Merge two ranges [lhf, lhl] and [rhf, rhl] into one range. Uses `comp` to determine the order of
+/// the elements in the resulting range. Pointers to the first and last elements of the
+/// resulting range are returned.
 template < typename T, typename Acc, typename Compare = std::less<> >
 std::pair< T*, T* >
 merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) noexcept(
@@ -391,8 +391,8 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
         return { first, last };
 }
 
-// Remove all nodes in the range [first, last] for which `p` returns true. Returns the number of
-// removed nodes.
+/// Remove all nodes in the range [first, last] for which `p` returns true. Returns the number of
+/// removed nodes.
 template < typename T, typename Acc, typename Pred >
 std::size_t range_remove( T& first, T& last, Pred&& p ) noexcept(
     _nothrow_access< Acc, T > && noexcept( p( first ) ) )
@@ -414,8 +414,8 @@ std::size_t range_remove( T& first, T& last, Pred&& p ) noexcept(
         return count;
 }
 
-// Reverse order of nodes in the range [first, last]. The first node in the range will become the
-// last node and the last node will become the first node.
+/// Reverse order of nodes in the range [first, last]. The first node in the range will become the
+/// last node and the last node will become the first node.
 template < typename T, typename Acc = typename T::access >
 void range_reverse( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
@@ -428,8 +428,8 @@ void range_reverse( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
         }
 }
 
-// Removes all consecutive nodes in the range [first, last] for which `p` returns true. Only first
-// element in each group of equal elements is left.
+/// Removes all consecutive nodes in the range [first, last] for which `p` returns true. Only first
+/// element in each group of equal elements is left.
 template < typename T, typename Acc, typename BinPred = std::equal_to<> >
 std::size_t range_unique( T& first, T& last, BinPred&& p = std::equal_to<>{} ) noexcept(
     _nothrow_access< Acc, T > && noexcept( p( first, last ) ) )
@@ -450,7 +450,7 @@ std::size_t range_unique( T& first, T& last, BinPred&& p = std::equal_to<>{} ) n
         return count;
 }
 
-// Sort the range [first, last] using quicksort algorithm. The `cmp` is used to compare two nodes.
+/// Sort the range [first, last] using quicksort algorithm. The `cmp` is used to compare two nodes.
 template < typename T, typename Acc, typename Compare = std::less<> >
 void range_qsort( T& first, T& last, Compare&& cmp = std::less<>{} ) noexcept(
     _nothrow_access< Acc, T > && noexcept( cmp( first, last ) ) )
@@ -478,7 +478,7 @@ void range_qsort( T& first, T& last, Compare&& cmp = std::less<>{} ) noexcept(
                 range_qsort< T, Acc >( *new_first, *Acc::get( &pivot ).prev.node(), cmp );
 }
 
-// Standard linked list iterator, needs just pointer to node
+/// Standard linked list iterator, needs just pointer to node
 template < typename T, typename Acc = typename T::access >
 struct ll_iterator
 {
@@ -534,7 +534,7 @@ private:
         T* _n = nullptr;
 };
 
-// Standard linked list const-iterator, needs just pointer to node
+/// Standard linked list const-iterator, needs just pointer to node
 template < typename T, typename Acc = typename T::access >
 struct ll_const_iterator
 {
@@ -590,12 +590,12 @@ private:
         T const* _n = nullptr;
 };
 
-// Non-owning linked list container, expects nodes to contain ll_header as member.
-// The nodes are linked together in a doubly linked list, with the first and last nodes
-// accessible through the `front()` and `back()` methods.
-//
-// Type `T` is the type of the node that contains the header.
-// Type `Acc` specifies how to access the node's header.
+/// Non-owning linked list container, expects nodes to contain ll_header as member.
+/// The nodes are linked together in a doubly linked list, with the first and last nodes
+/// accessible through the `front()` and `back()` methods.
+///
+/// Type `T` is the type of the node that contains the header.
+/// Type `Acc` specifies how to access the node's header.
 template < typename T, typename Acc >
 struct ll_list
 {
@@ -777,8 +777,8 @@ struct ll_list
                 range_reverse< T, Acc >( *_first, *_last );
         }
 
-        /// Removes all consecutive nodes in the list for which `p` returns true. Only first element
-        /// in each group of equal elements is left. Returns the number of removed nodes.
+        /// Removes all consecutive nodes in the list for which `p` returns true. Only first
+        /// element / in each group of equal elements is left. Returns the number of removed nodes.
         template < typename BinPred >
         std::size_t
         unique( BinPred p ) noexcept( noexcept_access && noexcept( p( *_first, *_last ) ) )
@@ -849,8 +849,8 @@ struct ll_list
                         link_first( node );
         }
 
-        /// Detaches the last element of the list. The second last element becomes the last element.
-        /// Undefined behavior if the list is empty.
+        /// Detaches the last element of the list. The second last element becomes the last
+        /// element. Undefined behavior if the list is empty.
         void detach_back() noexcept( noexcept_access )
         {
                 detach< T, Acc >( *_last );
@@ -892,11 +892,12 @@ private:
         T* _last  = nullptr;
 };
 
-// CRTP base class for linked list nodes containing `ll_header`. Provides access type to the header
-// of the node and implements move and copy semantics for the node. Provides basic API for the node.
-//
-// Note that for copy construction to work it has to use non-const reference to the node. This is so
-// we can re-link the copied node into the list.
+/// CRTP base class for linked list nodes containing `ll_header`. Provides access type to the header
+/// of the node and implements move and copy semantics for the node. Provides basic API for the
+/// node.
+///
+/// Note that for copy construction to work it has to use non-const reference to the node. This is
+/// so we can re-link the copied node into the list.
 template < typename Derived >
 struct ll_base
 {
@@ -943,8 +944,8 @@ struct ll_base
                 return *this;
         }
 
-        /// Copy assignment operator, copied node is linked to the list of the copied node after it.
-        /// If the copied node is the same as the current node, nothing happens.
+        /// Copy assignment operator, copied node is linked to the list of the copied node after
+        /// it. If the copied node is the same as the current node, nothing happens.
         ll_base& operator=( ll_base& o ) noexcept
         {
                 if ( this == &o )
@@ -962,8 +963,8 @@ struct ll_base
                 link_detached_as_next< Derived, access >( derived(), n );
         }
 
-        /// Link node `n` as predecessor of the current node. Node `n` is detached if it was already
-        /// linked.
+        /// Link node `n` as predecessor of the current node. Node `n` is detached if it was
+        /// already linked.
         void link_prev( Derived& n ) noexcept
         {
                 detach< Derived, access >( n );
