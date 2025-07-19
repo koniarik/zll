@@ -652,387 +652,391 @@ $(document).ready(function(){initNavTree('zll_8h_source.html',''); initResizable
 <div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>                        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span> </div>
 <div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                detach_nodes();</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                _first = std::exchange( other._first, <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>                <span class="keywordflow">if</span> ( _first )</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>                        Acc::get( _first ).prev = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                _last = std::exchange( other._last, <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                <span class="keywordflow">if</span> ( _last )</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                        Acc::get( _last ).next = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span> </div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        }</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span> </div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        T&amp; front() noexcept</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>        {</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>                <span class="keywordflow">return</span> *_first;</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        }</div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span> </div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        T&amp; back() noexcept</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        {</div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>                <span class="keywordflow">return</span> *_last;</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>        }</div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>        T <span class="keyword">const</span>&amp; front() const noexcept</div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        {</div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                <span class="keywordflow">return</span> *_first;</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        }</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span> </div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>        T <span class="keyword">const</span>&amp; back() const noexcept</div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>        {</div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>                <span class="keywordflow">return</span> *_last;</div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>        }</div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        iterator begin() noexcept</div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>        {</div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>                <span class="keywordflow">return</span> iterator{ _first };</div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>        }</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span> </div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>        const_iterator begin() const noexcept</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        {</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>                <span class="keywordflow">return</span> const_iterator{ _first };</div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>        }</div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span> </div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>        const_iterator cbegin() const noexcept</div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>        {</div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>                <span class="keywordflow">return</span> const_iterator{ _first };</div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>        }</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span> </div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>        iterator end() noexcept</div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>        {</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>                <span class="keywordflow">return</span> iterator{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>        }</div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span> </div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>        const_iterator end() const noexcept</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>        {</div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>                <span class="keywordflow">return</span> const_iterator{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>        }</div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span> </div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>        const_iterator cend() const noexcept</div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>        {</div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                <span class="keywordflow">return</span> const_iterator{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        }</div>
-<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span> </div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">  701</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">merge</a>( <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other ) <span class="keyword">noexcept</span>( noexcept_access )</div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>        {</div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>                <a class="code hl_function" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">merge</a>( std::move( other ), std::less&lt;&gt;{} );</div>
-<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>        }</div>
-<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span> </div>
-<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Compare &gt;</div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">  708</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">merge</a>( <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other, Compare comp ) <span class="keyword">noexcept</span>(</div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>            noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( comp( *_first, *_last ) ) )</div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>        {</div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;other || other.empty() )</div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() ) {</div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>                        *<span class="keyword">this</span> = std::move( other );</div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>                }</div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span> </div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                std::tie( _first, _last ) =</div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                    merge_ranges&lt; T, Acc &gt;( *_first, *_last, *other._first, *other._last, comp );</div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span> </div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>                Acc::get( _first ).prev = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                Acc::get( _last ).next  = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>                other._first            = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>                other._last             = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>        }</div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span> </div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>        std::size_t</div>
-<div class="line"><a id="l00730" name="l00730"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">  730</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">remove</a>( T <span class="keyword">const</span>&amp; value ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( *_first == *_last ) )</div>
-<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>        {</div>
-<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
-<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>                        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>                <span class="keywordflow">return</span> range_remove&lt; T, Acc &gt;( *_first, *_last, [&amp;value]( T&amp; n ) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>                        <span class="keywordflow">return</span> n == value;</div>
-<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>                } );</div>
-<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>        }</div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span> </div>
-<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Pred &gt;</div>
-<div class="line"><a id="l00742" name="l00742"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">  742</a></span>        std::size_t <a class="code hl_function" href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">remove_if</a>( Pred&amp;&amp; p ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( p( *_first ) ) )</div>
-<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>        {</div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>                        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>                <span class="keywordflow">return</span> range_remove&lt; T, Acc &gt;( *_first, *_last, std::forward&lt; Pred &gt;( p ) );</div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>        }</div>
-<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span> </div>
-<div class="line"><a id="l00751" name="l00751"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">  751</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">splice</a>( <a class="code hl_struct" href="structzll_1_1ll__iterator.html">iterator</a> pos, <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other ) <span class="keyword">noexcept</span>( noexcept_access )</div>
-<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>        {</div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;other || other.empty() )</div>
-<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span> </div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() ) {</div>
-<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>                        *<span class="keyword">this</span> = std::move( other );</div>
-<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( pos == end() ) {</div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>                        <span class="keyword">auto</span>* f = other._first;</div>
-<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>                        <span class="keyword">auto</span>* l = other._last;</div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>                        other.detach_nodes();</div>
-<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>                        link_range_as_next( *_last, *f, *l );</div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>                        <span class="keyword">auto</span>* f = other._first;</div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>                        <span class="keyword">auto</span>* l = other._last;</div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                        other.detach_nodes();</div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>                        link_range_as_prev( *pos, *f, *l );</div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>                }</div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>        }</div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span> </div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">  773</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">reverse</a>() noexcept( noexcept_access )</div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>        {</div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>                range_reverse&lt; T, Acc &gt;( *_first, *_last );</div>
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>        }</div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span> </div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> BinPred &gt;</div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>        std::size_t</div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">  784</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">unique</a>( BinPred p ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( p( *_first, *_last ) ) )</div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>        {</div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>                <span class="keywordflow">return</span> range_unique&lt; T, Acc &gt;( *_first, *_last, std::move( p ) );</div>
-<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>        }</div>
-<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span> </div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span>        std::size_t</div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">  795</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">unique</a>() noexcept( noexcept_access &amp;&amp; noexcept( std::equal_to&lt;&gt;{}( *_first, *_last ) ) )</div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>        {</div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">unique</a>( std::equal_to&lt;&gt;{} );</div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>        }</div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span> </div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Compare &gt;</div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">  802</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">sort</a>( Compare&amp;&amp; cmp ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( cmp( *_first, *_last ) ) )</div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>        {</div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                range_qsort&lt; T, Acc &gt;( *_first, *_last, std::forward&lt; Compare &gt;( cmp ) );</div>
-<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>        }</div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span> </div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">  810</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">sort</a>() noexcept( noexcept_access &amp;&amp; noexcept( std::less&lt;&gt;{}( *_first, *_last ) ) )</div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>        {</div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>                <a class="code hl_function" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">sort</a>( std::less&lt;&gt;{} );</div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>        }</div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span> </div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">  818</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">link_front</a>( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>        {</div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>                detach&lt; T, Acc &gt;( node );</div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>                <span class="keywordflow">if</span> ( _first )</div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                        link_detached_as_prev&lt; T, Acc &gt;( *_first, node );</div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                        link_first( node );</div>
-<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>        }</div>
-<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span> </div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">  829</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">detach_front</a>() noexcept( noexcept_access )</div>
-<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span>        {</div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>                detach&lt; T, Acc &gt;( *_first );</div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>        }</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span> </div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">  835</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() const noexcept</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>        {</div>
-<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>                <span class="keywordflow">return</span> !_first;</div>
-<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>        }</div>
-<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span> </div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">  843</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">link_back</a>( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>        {</div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>                detach&lt; T, Acc &gt;( node );</div>
-<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>                <span class="keywordflow">if</span> ( _last )</div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>                        link_detached_as_next&lt; T, Acc &gt;( *_last, node );</div>
-<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>                <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>                        link_first( node );</div>
-<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>        }</div>
-<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span> </div>
-<div class="line"><a id="l00854" name="l00854"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">  854</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">detach_back</a>() noexcept( noexcept_access )</div>
-<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>        {</div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>                detach&lt; T, Acc &gt;( *_last );</div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>        }</div>
-<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span> </div>
-<div class="line"><a id="l00861" name="l00861"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">  861</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">~ll_list</a>() noexcept( noexcept_access )</div>
-<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>        {</div>
-<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>                detach_nodes();</div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>        }</div>
-<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span> </div>
-<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U, <span class="keyword">typename</span> Bcc &gt;</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>        <span class="keyword">friend</span> <span class="keywordtype">void</span> _prev_or_last_set( <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> p, <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> n );</div>
-<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U, <span class="keyword">typename</span> Bcc &gt;</div>
-<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>        <span class="keyword">friend</span> <span class="keywordtype">void</span> _next_or_first_set( <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> p, <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> n );</div>
-<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span> </div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>        <span class="keywordtype">void</span> detach_nodes() noexcept( noexcept_access )</div>
-<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>        {</div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>                <span class="keywordflow">if</span> ( _first )</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>                        Acc::get( _first ).prev = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>                <span class="keywordflow">if</span> ( _last )</div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                        Acc::get( _last ).next = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>                _first = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>                _last  = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>        }</div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span> </div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>        <span class="keywordtype">void</span> link_first( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>        {</div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>                _first = &amp;node;</div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>                _last  = &amp;node;</div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span> </div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>                Acc::get( &amp;node ).next = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>                Acc::get( &amp;node ).prev = *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>        }</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                _first = other._first;</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>                <span class="keywordflow">if</span> ( _first ) {</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>                        other._first            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                        Acc::get( _first ).prev = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                }</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                _last = other._last;</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                <span class="keywordflow">if</span> ( _last ) {</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>                        other._last            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>                        Acc::get( _last ).next = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>                }</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span> </div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>        }</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span> </div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>        T&amp; front() noexcept</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        {</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>                <span class="keywordflow">return</span> *_first;</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>        }</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span> </div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>        T&amp; back() noexcept</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>        {</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                <span class="keywordflow">return</span> *_last;</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>        }</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span> </div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>        T <span class="keyword">const</span>&amp; front() const noexcept</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>        {</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                <span class="keywordflow">return</span> *_first;</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        }</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span> </div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>        T <span class="keyword">const</span>&amp; back() const noexcept</div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        {</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>                <span class="keywordflow">return</span> *_last;</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        }</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span> </div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>        iterator begin() noexcept</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>        {</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>                <span class="keywordflow">return</span> iterator{ _first };</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        }</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span> </div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>        const_iterator begin() const noexcept</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>        {</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>                <span class="keywordflow">return</span> const_iterator{ _first };</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>        }</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span> </div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>        const_iterator cbegin() const noexcept</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>        {</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                <span class="keywordflow">return</span> const_iterator{ _first };</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>        }</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span> </div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>        iterator end() noexcept</div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>        {</div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>                <span class="keywordflow">return</span> iterator{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>        }</div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span> </div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>        const_iterator end() const noexcept</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>        {</div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>                <span class="keywordflow">return</span> const_iterator{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>        }</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span> </div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>        const_iterator cend() const noexcept</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>        {</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>                <span class="keywordflow">return</span> const_iterator{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>        }</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span> </div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">  705</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">merge</a>( <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other ) <span class="keyword">noexcept</span>( noexcept_access )</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>        {</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>                <a class="code hl_function" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">merge</a>( std::move( other ), std::less&lt;&gt;{} );</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>        }</div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span> </div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Compare &gt;</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">  712</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">merge</a>( <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other, Compare comp ) <span class="keyword">noexcept</span>(</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>            noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( comp( *_first, *_last ) ) )</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>        {</div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;other || other.empty() )</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() ) {</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                        *<span class="keyword">this</span> = std::move( other );</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>                }</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span> </div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                std::tie( _first, _last ) =</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>                    merge_ranges&lt; T, Acc &gt;( *_first, *_last, *other._first, *other._last, comp );</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span> </div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>                Acc::get( _first ).prev = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>                Acc::get( _last ).next  = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>                other._first            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>                other._last             = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>        }</div>
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span> </div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>        std::size_t</div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">  734</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">remove</a>( T <span class="keyword">const</span>&amp; value ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( *_first == *_last ) )</div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>        {</div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>                        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>                <span class="keywordflow">return</span> range_remove&lt; T, Acc &gt;( *_first, *_last, [&amp;value]( T&amp; n ) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>                        <span class="keywordflow">return</span> n == value;</div>
+<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>                } );</div>
+<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>        }</div>
+<div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span> </div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Pred &gt;</div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">  746</a></span>        std::size_t <a class="code hl_function" href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">remove_if</a>( Pred&amp;&amp; p ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( p( *_first ) ) )</div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>        {</div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>                        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>                <span class="keywordflow">return</span> range_remove&lt; T, Acc &gt;( *_first, *_last, std::forward&lt; Pred &gt;( p ) );</div>
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>        }</div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span> </div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">  755</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">splice</a>( <a class="code hl_struct" href="structzll_1_1ll__iterator.html">iterator</a> pos, <a class="code hl_struct" href="structzll_1_1ll__list.html">ll_list</a>&amp;&amp; other ) <span class="keyword">noexcept</span>( noexcept_access )</div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>        {</div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;other || other.empty() )</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span> </div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() ) {</div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>                        *<span class="keyword">this</span> = std::move( other );</div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( pos == end() ) {</div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>                        <span class="keyword">auto</span>* f = other._first;</div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>                        <span class="keyword">auto</span>* l = other._last;</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>                        other.detach_nodes();</div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                        link_range_as_next( *_last, *f, *l );</div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>                        <span class="keyword">auto</span>* f = other._first;</div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>                        <span class="keyword">auto</span>* l = other._last;</div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>                        other.detach_nodes();</div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>                        link_range_as_prev( *pos, *f, *l );</div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>                }</div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>        }</div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span> </div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">  777</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">reverse</a>() noexcept( noexcept_access )</div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>        {</div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>                range_reverse&lt; T, Acc &gt;( *_first, *_last );</div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>        }</div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span> </div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> BinPred &gt;</div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>        std::size_t</div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">  788</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">unique</a>( BinPred p ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( p( *_first, *_last ) ) )</div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>        {</div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>                        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>                <span class="keywordflow">return</span> range_unique&lt; T, Acc &gt;( *_first, *_last, std::move( p ) );</div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>        }</div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span> </div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>        std::size_t</div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">  799</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">unique</a>() noexcept( noexcept_access &amp;&amp; noexcept( std::equal_to&lt;&gt;{}( *_first, *_last ) ) )</div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>        {</div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">unique</a>( std::equal_to&lt;&gt;{} );</div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>        }</div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span> </div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Compare &gt;</div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">  806</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">sort</a>( Compare&amp;&amp; cmp ) <span class="keyword">noexcept</span>( noexcept_access &amp;&amp; <span class="keyword">noexcept</span>( cmp( *_first, *_last ) ) )</div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>        {</div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>                <span class="keywordflow">if</span> ( <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() )</div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>                range_qsort&lt; T, Acc &gt;( *_first, *_last, std::forward&lt; Compare &gt;( cmp ) );</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>        }</div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span> </div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">  814</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">sort</a>() noexcept( noexcept_access &amp;&amp; noexcept( std::less&lt;&gt;{}( *_first, *_last ) ) )</div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>        {</div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>                <a class="code hl_function" href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">sort</a>( std::less&lt;&gt;{} );</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>        }</div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span> </div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">  822</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">link_front</a>( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>        {</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                detach&lt; T, Acc &gt;( node );</div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                <span class="keywordflow">if</span> ( _first )</div>
+<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>                        link_detached_as_prev&lt; T, Acc &gt;( *_first, node );</div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>                        link_first( node );</div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>        }</div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span> </div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">  833</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">detach_front</a>() noexcept( noexcept_access )</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>        {</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>                detach&lt; T, Acc &gt;( *_first );</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>        }</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span> </div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">  839</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a>() const noexcept</div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>        {</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                <span class="keywordflow">return</span> !_first;</div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>        }</div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span> </div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">  847</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">link_back</a>( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>        {</div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>                detach&lt; T, Acc &gt;( node );</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>                <span class="keywordflow">if</span> ( _last )</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>                        link_detached_as_next&lt; T, Acc &gt;( *_last, node );</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>                        link_first( node );</div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>        }</div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span> </div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">  858</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">detach_back</a>() noexcept( noexcept_access )</div>
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>        {</div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>                detach&lt; T, Acc &gt;( *_last );</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>        }</div>
+<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span> </div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno"><a class="line" href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">  865</a></span>        <a class="code hl_function" href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">~ll_list</a>() noexcept( noexcept_access )</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>        {</div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>                detach_nodes();</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>        }</div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span> </div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U, <span class="keyword">typename</span> Bcc &gt;</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>        <span class="keyword">friend</span> <span class="keywordtype">void</span> _prev_or_last_set( <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> p, <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> n );</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U, <span class="keyword">typename</span> Bcc &gt;</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>        <span class="keyword">friend</span> <span class="keywordtype">void</span> _next_or_first_set( <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> p, <a class="code hl_struct" href="structzll_1_1__ll__ptr.html">_ll_ptr&lt; U, Bcc &gt;</a> n );</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span> </div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>        <span class="keywordtype">void</span> detach_nodes() noexcept( noexcept_access )</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>        {</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>                <span class="keywordflow">if</span> ( _first )</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>                        Acc::get( _first ).prev = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>                <span class="keywordflow">if</span> ( _last )</div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>                        Acc::get( _last ).next = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>                _first = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>                _last  = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>        }</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span> </div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>        <span class="keywordtype">void</span> link_first( T&amp; node ) <span class="keyword">noexcept</span>( noexcept_access )</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>        {</div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>                _first = &amp;node;</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>                _last  = &amp;node;</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span> </div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>        T* _first = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>        T* _last  = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>};</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>                Acc::get( &amp;node ).next = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>                Acc::get( &amp;node ).prev = *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>        }</div>
 <div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span> </div>
-<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> Derived &gt;</div>
-<div class="line"><a id="l00902" name="l00902"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html">  902</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a></div>
-<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>{</div>
-<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span> </div>
-<div class="line"><a id="l00906" name="l00906"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base_1_1access.html">  906</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="structzll_1_1ll__base_1_1access.html">access</a></div>
-<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>        {</div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>                <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get( Derived* d ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>                {</div>
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>* <span class="keyword">&gt;</span>( d )-&gt;_hdr;</div>
-<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>                }</div>
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span> </div>
-<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>                <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get( Derived <span class="keyword">const</span>* d ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>                {</div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a> const* <span class="keyword">&gt;</span>( d )-&gt;_hdr;</div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>                }</div>
-<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>        };</div>
-<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span> </div>
-<div class="line"><a id="l00920" name="l00920"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447">  920</a></span>        <a class="code hl_function" href="structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447">ll_base</a>() noexcept = default;</div>
-<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span> </div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a5d0617c994a8c22248fd7eb0dc067215">  924</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp;&amp; o ) noexcept</div>
-<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>        {</div>
-<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>                move_from_to&lt; Derived, access &gt;( o.derived(), derived() );</div>
-<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>        }</div>
-<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span> </div>
-<div class="line"><a id="l00930" name="l00930"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">  930</a></span>        <a class="code hl_function" href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">ll_base</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; o ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>        {</div>
-<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>                link_detached_as_next&lt; Derived, access &gt;( o.derived(), derived() );</div>
-<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>        }</div>
-<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span> </div>
-<div class="line"><a id="l00938" name="l00938"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">  938</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; <a class="code hl_function" href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">operator=</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp;&amp; o ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>        {</div>
-<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;o )</div>
-<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>                        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>                detach&lt; Derived, access &gt;( derived() );</div>
-<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>                move_from_to&lt; Derived, access &gt;( o.derived(), derived() );</div>
-<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>        }</div>
-<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span> </div>
-<div class="line"><a id="l00949" name="l00949"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">  949</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; <a class="code hl_function" href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">operator=</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; o ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>        {</div>
-<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;o )</div>
-<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>                        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>                detach&lt; Derived, access &gt;( derived() );</div>
-<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>                link_detached_as_next&lt; Derived, access &gt;( o.derived(), derived() );</div>
-<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>        }</div>
-<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span> </div>
-<div class="line"><a id="l00960" name="l00960"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">  960</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">link_next</a>( Derived&amp; n ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span>        {</div>
-<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>                detach&lt; Derived, access &gt;( n );</div>
-<div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span>                link_detached_as_next&lt; Derived, access &gt;( derived(), n );</div>
-<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span>        }</div>
-<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span> </div>
-<div class="line"><a id="l00968" name="l00968"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">  968</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">link_prev</a>( Derived&amp; n ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>        {</div>
-<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>                detach&lt; Derived, access &gt;( n );</div>
-<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>                link_detached_as_prev&lt; Derived, access &gt;( derived(), n );</div>
-<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>        }</div>
-<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span> </div>
-<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>        Derived* next()</div>
-<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>        {</div>
-<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>                <span class="keywordflow">return</span> _hdr.next.node();</div>
-<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>        }</div>
-<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span> </div>
-<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>        Derived <span class="keyword">const</span>* next()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>                <span class="keywordflow">return</span> _hdr.next.node();</div>
-<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>        }</div>
-<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span> </div>
-<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span>        Derived* prev()</div>
-<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>        {</div>
-<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>                <span class="keywordflow">return</span> _hdr.prev.node();</div>
-<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>        }</div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span> </div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>        Derived <span class="keyword">const</span>* prev()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>                <span class="keywordflow">return</span> _hdr.prev.node();</div>
-<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>        }</div>
-<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span> </div>
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>        Derived&amp; derived()</div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>        {</div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>                <span class="keywordflow">return</span> *<span class="keyword">static_cast&lt;</span> Derived* <span class="keyword">&gt;</span>( this );</div>
-<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>        }</div>
-<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span> </div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>        Derived <span class="keyword">const</span>&amp; derived()<span class="keyword"> const</span></div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>                <span class="keywordflow">return</span> *<span class="keyword">static_cast&lt;</span> Derived const* <span class="keyword">&gt;</span>( this );</div>
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>        }</div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span> </div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>        ll_header&lt; Derived, access &gt; _hdr;</div>
-<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>};</div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>        T* _first = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span>        T* _last  = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span>};</div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span> </div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> Derived &gt;</div>
+<div class="line"><a id="l00906" name="l00906"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html">  906</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a></div>
+<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>{</div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span> </div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base_1_1access.html">  910</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="structzll_1_1ll__base_1_1access.html">access</a></div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>        {</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>                <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get( Derived* d ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>                {</div>
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>* <span class="keyword">&gt;</span>( d )-&gt;_hdr;</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>                }</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span> </div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>                <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get( Derived <span class="keyword">const</span>* d ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>                {</div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a> const* <span class="keyword">&gt;</span>( d )-&gt;_hdr;</div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>                }</div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>        };</div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span> </div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447">  924</a></span>        <a class="code hl_function" href="structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447">ll_base</a>() noexcept = default;</div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span> </div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a5d0617c994a8c22248fd7eb0dc067215">  928</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp;&amp; o ) noexcept</div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>        {</div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>                move_from_to&lt; Derived, access &gt;( o.derived(), derived() );</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>        }</div>
+<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span> </div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">  934</a></span>        <a class="code hl_function" href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">ll_base</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; o ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>        {</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>                link_detached_as_next&lt; Derived, access &gt;( o.derived(), derived() );</div>
+<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>        }</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span> </div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">  942</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; <a class="code hl_function" href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">operator=</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp;&amp; o ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>        {</div>
+<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;o )</div>
+<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>                        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>                detach&lt; Derived, access &gt;( derived() );</div>
+<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>                move_from_to&lt; Derived, access &gt;( o.derived(), derived() );</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>        }</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span> </div>
+<div class="line"><a id="l00953" name="l00953"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">  953</a></span>        <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; <a class="code hl_function" href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">operator=</a>( <a class="code hl_struct" href="structzll_1_1ll__base.html">ll_base</a>&amp; o ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>        {</div>
+<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>                <span class="keywordflow">if</span> ( <span class="keyword">this</span> == &amp;o )</div>
+<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>                        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>                detach&lt; Derived, access &gt;( derived() );</div>
+<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>                link_detached_as_next&lt; Derived, access &gt;( o.derived(), derived() );</div>
+<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>        }</div>
+<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span> </div>
+<div class="line"><a id="l00964" name="l00964"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">  964</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">link_next</a>( Derived&amp; n ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>        {</div>
+<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>                detach&lt; Derived, access &gt;( n );</div>
+<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span>                link_detached_as_next&lt; Derived, access &gt;( derived(), n );</div>
+<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>        }</div>
+<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span> </div>
+<div class="line"><a id="l00972" name="l00972"></a><span class="lineno"><a class="line" href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">  972</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">link_prev</a>( Derived&amp; n ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>        {</div>
+<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>                detach&lt; Derived, access &gt;( n );</div>
+<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>                link_detached_as_prev&lt; Derived, access &gt;( derived(), n );</div>
+<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>        }</div>
+<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span> </div>
+<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>        Derived* next()</div>
+<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>        {</div>
+<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>                <span class="keywordflow">return</span> _hdr.next.node();</div>
+<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>        }</div>
+<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span> </div>
+<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span>        Derived <span class="keyword">const</span>* next()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>                <span class="keywordflow">return</span> _hdr.next.node();</div>
+<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>        }</div>
+<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span> </div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>        Derived* prev()</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>        {</div>
+<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>                <span class="keywordflow">return</span> _hdr.prev.node();</div>
+<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>        }</div>
+<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span> </div>
+<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>        Derived <span class="keyword">const</span>* prev()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>                <span class="keywordflow">return</span> _hdr.prev.node();</div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>        }</div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span> </div>
+<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>        Derived&amp; derived()</div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>        {</div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>                <span class="keywordflow">return</span> *<span class="keyword">static_cast&lt;</span> Derived* <span class="keyword">&gt;</span>( this );</div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>        }</div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span> </div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>        Derived <span class="keyword">const</span>&amp; derived()<span class="keyword"> const</span></div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>                <span class="keywordflow">return</span> *<span class="keyword">static_cast&lt;</span> Derived const* <span class="keyword">&gt;</span>( this );</div>
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>        }</div>
 <div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span> </div>
-<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc = <span class="keyword">typename</span> T::access &gt;</div>
-<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span><span class="keywordtype">void</span> for_each_node( T&amp; n, std::invocable&lt; T&amp; &gt; <span class="keyword">auto</span>&amp;&amp; f ) <span class="keyword">noexcept</span>(</div>
-<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>    _nothrow_access&lt; Acc, T &gt; &amp;&amp; <span class="keyword">noexcept</span>( f( n ) ) )</div>
-<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>{</div>
-<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>        <span class="keyword">auto</span>&amp; h = Acc::get( &amp;n );</div>
-<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>        <span class="keywordflow">for</span> ( T* m = h.prev.node(); m; m = Acc::get( m ).prev.node() )</div>
-<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>                f( *m );</div>
-<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span>        f( n );</div>
-<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>        <span class="keywordflow">for</span> ( T* m = h.next.node(); m; m = Acc::get( m ).next.node() )</div>
-<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>                f( *m );</div>
-<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span>}</div>
-<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span> </div>
-<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc = <span class="keyword">typename</span> T::access &gt;</div>
-<div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>T* find_if_node( T&amp; n, std::invocable&lt; T&amp; &gt; <span class="keyword">auto</span>&amp;&amp; f ) <span class="keyword">noexcept</span>(</div>
-<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>    _nothrow_access&lt; Acc, T &gt; &amp;&amp; <span class="keyword">noexcept</span>( f( n ) ) )</div>
-<div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>{</div>
-<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>        <span class="keyword">auto</span>&amp; h = Acc::get( &amp;n );</div>
-<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>        <span class="keywordflow">for</span> ( T* m = h.prev.node(); m; m = Acc::get( m ).prev.node() )</div>
-<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>                <span class="keywordflow">if</span> ( f( *m ) )</div>
-<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>                        <span class="keywordflow">return</span> m;</div>
-<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>        <span class="keywordflow">if</span> ( f( n ) )</div>
-<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>                <span class="keywordflow">return</span> &amp;n;</div>
-<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>        <span class="keywordflow">for</span> ( T* m = h.next.node(); m; m = Acc::get( m ).next.node() )</div>
-<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>                <span class="keywordflow">if</span> ( f( *m ) )</div>
-<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>                        <span class="keywordflow">return</span> m;</div>
-<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>}</div>
-<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span> </div>
-<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>}  <span class="comment">// namespace zll</span></div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>        ll_header&lt; Derived, access &gt; _hdr;</div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>};</div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span> </div>
+<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc = <span class="keyword">typename</span> T::access &gt;</div>
+<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span><span class="keywordtype">void</span> for_each_node( T&amp; n, std::invocable&lt; T&amp; &gt; <span class="keyword">auto</span>&amp;&amp; f ) <span class="keyword">noexcept</span>(</div>
+<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>    _nothrow_access&lt; Acc, T &gt; &amp;&amp; <span class="keyword">noexcept</span>( f( n ) ) )</div>
+<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span>{</div>
+<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>        <span class="keyword">auto</span>&amp; h = Acc::get( &amp;n );</div>
+<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>        <span class="keywordflow">for</span> ( T* m = h.prev.node(); m; m = Acc::get( m ).prev.node() )</div>
+<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span>                f( *m );</div>
+<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span>        f( n );</div>
+<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>        <span class="keywordflow">for</span> ( T* m = h.next.node(); m; m = Acc::get( m ).next.node() )</div>
+<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>                f( *m );</div>
+<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span>}</div>
+<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span> </div>
+<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc = <span class="keyword">typename</span> T::access &gt;</div>
+<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>T* find_if_node( T&amp; n, std::invocable&lt; T&amp; &gt; <span class="keyword">auto</span>&amp;&amp; f ) <span class="keyword">noexcept</span>(</div>
+<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>    _nothrow_access&lt; Acc, T &gt; &amp;&amp; <span class="keyword">noexcept</span>( f( n ) ) )</div>
+<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>{</div>
+<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>        <span class="keyword">auto</span>&amp; h = Acc::get( &amp;n );</div>
+<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>        <span class="keywordflow">for</span> ( T* m = h.prev.node(); m; m = Acc::get( m ).prev.node() )</div>
+<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>                <span class="keywordflow">if</span> ( f( *m ) )</div>
+<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>                        <span class="keywordflow">return</span> m;</div>
+<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>        <span class="keywordflow">if</span> ( f( n ) )</div>
+<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>                <span class="keywordflow">return</span> &amp;n;</div>
+<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>        <span class="keywordflow">for</span> ( T* m = h.next.node(); m; m = Acc::get( m ).next.node() )</div>
+<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>                <span class="keywordflow">if</span> ( f( *m ) )</div>
+<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>                        <span class="keywordflow">return</span> m;</div>
+<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>}</div>
+<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span> </div>
+<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>}  <span class="comment">// namespace zll</span></div>
 <div class="ttc" id="astructzll_1_1__ll__ptr_html"><div class="ttname"><a href="structzll_1_1__ll__ptr.html">zll::_ll_ptr</a></div><div class="ttdoc">Variadic ptr wrapper pointer either to ll_list or node with ll_header.</div><div class="ttdef"><b>Definition:</b> zll.h:57</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_1_1access_html"><div class="ttname"><a href="structzll_1_1ll__base_1_1access.html">zll::ll_base::access</a></div><div class="ttdoc">Access type to the header of ll_base.</div><div class="ttdef"><b>Definition:</b> zll.h:907</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.h:903</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html_a17ddce6a1756808b10b9c235bf5c4478"><div class="ttname"><a href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">zll::ll_base::link_next</a></div><div class="ttdeci">void link_next(Derived &amp;n) noexcept</div><div class="ttdoc">Link node n as successor of the current node.</div><div class="ttdef"><b>Definition:</b> zll.h:960</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html_a247e72c69fb32a446998c35f56cfab65"><div class="ttname"><a href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">zll::ll_base::operator=</a></div><div class="ttdeci">ll_base &amp; operator=(ll_base &amp;&amp;o) noexcept</div><div class="ttdoc">Move assignment operator, moved-from node is detached.</div><div class="ttdef"><b>Definition:</b> zll.h:938</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html_a3ddcafc2edc7665684237be0d07d5a88"><div class="ttname"><a href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">zll::ll_base::ll_base</a></div><div class="ttdeci">ll_base(ll_base &amp;o) noexcept</div><div class="ttdoc">Copy constructor, copied node is linked to the list of the copied node after it.</div><div class="ttdef"><b>Definition:</b> zll.h:930</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html_a451dc5c0dc677bbd8ee7b8db9247ed39"><div class="ttname"><a href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">zll::ll_base::operator=</a></div><div class="ttdeci">ll_base &amp; operator=(ll_base &amp;o) noexcept</div><div class="ttdoc">Copy assignment operator, copied node is linked to the list of the copied node after it.</div><div class="ttdef"><b>Definition:</b> zll.h:949</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_1_1access_html"><div class="ttname"><a href="structzll_1_1ll__base_1_1access.html">zll::ll_base::access</a></div><div class="ttdoc">Access type to the header of ll_base.</div><div class="ttdef"><b>Definition:</b> zll.h:911</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.h:907</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html_a17ddce6a1756808b10b9c235bf5c4478"><div class="ttname"><a href="structzll_1_1ll__base.html#a17ddce6a1756808b10b9c235bf5c4478">zll::ll_base::link_next</a></div><div class="ttdeci">void link_next(Derived &amp;n) noexcept</div><div class="ttdoc">Link node n as successor of the current node.</div><div class="ttdef"><b>Definition:</b> zll.h:964</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html_a247e72c69fb32a446998c35f56cfab65"><div class="ttname"><a href="structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65">zll::ll_base::operator=</a></div><div class="ttdeci">ll_base &amp; operator=(ll_base &amp;&amp;o) noexcept</div><div class="ttdoc">Move assignment operator, moved-from node is detached.</div><div class="ttdef"><b>Definition:</b> zll.h:942</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html_a3ddcafc2edc7665684237be0d07d5a88"><div class="ttname"><a href="structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88">zll::ll_base::ll_base</a></div><div class="ttdeci">ll_base(ll_base &amp;o) noexcept</div><div class="ttdoc">Copy constructor, copied node is linked to the list of the copied node after it.</div><div class="ttdef"><b>Definition:</b> zll.h:934</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html_a451dc5c0dc677bbd8ee7b8db9247ed39"><div class="ttname"><a href="structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39">zll::ll_base::operator=</a></div><div class="ttdeci">ll_base &amp; operator=(ll_base &amp;o) noexcept</div><div class="ttdoc">Copy assignment operator, copied node is linked to the list of the copied node after it.</div><div class="ttdef"><b>Definition:</b> zll.h:953</div></div>
 <div class="ttc" id="astructzll_1_1ll__base_html_a6d1c0948048a7f9b0f4c6afc4562c447"><div class="ttname"><a href="structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447">zll::ll_base::ll_base</a></div><div class="ttdeci">ll_base() noexcept=default</div><div class="ttdoc">Default constructor node is detached.</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html_a6f8b49e52677b118778720d1f17d6fb5"><div class="ttname"><a href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">zll::ll_base::link_prev</a></div><div class="ttdeci">void link_prev(Derived &amp;n) noexcept</div><div class="ttdoc">Link node n as predecessor of the current node.</div><div class="ttdef"><b>Definition:</b> zll.h:968</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html_a6f8b49e52677b118778720d1f17d6fb5"><div class="ttname"><a href="structzll_1_1ll__base.html#a6f8b49e52677b118778720d1f17d6fb5">zll::ll_base::link_prev</a></div><div class="ttdeci">void link_prev(Derived &amp;n) noexcept</div><div class="ttdoc">Link node n as predecessor of the current node.</div><div class="ttdef"><b>Definition:</b> zll.h:972</div></div>
 <div class="ttc" id="astructzll_1_1ll__const__iterator_html"><div class="ttname"><a href="structzll_1_1ll__const__iterator.html">zll::ll_const_iterator</a></div><div class="ttdoc">Standard linked list const-iterator, needs just pointer to node.</div><div class="ttdef"><b>Definition:</b> zll.h:540</div></div>
 <div class="ttc" id="astructzll_1_1ll__header_html"><div class="ttname"><a href="structzll_1_1ll__header.html">zll::ll_header</a></div><div class="ttdoc">Linked-list header containing pointers to the next and previous elements or the list itself.</div><div class="ttdef"><b>Definition:</b> zll.h:135</div></div>
 <div class="ttc" id="astructzll_1_1ll__iterator_html"><div class="ttname"><a href="structzll_1_1ll__iterator.html">zll::ll_iterator</a></div><div class="ttdoc">Standard linked list iterator, needs just pointer to node.</div><div class="ttdef"><b>Definition:</b> zll.h:484</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.h:601</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a0a044839e4fb589f4efe7f80559d0fb8"><div class="ttname"><a href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">zll::ll_list::detach_front</a></div><div class="ttdeci">void detach_front() noexcept(noexcept_access)</div><div class="ttdoc">Detaches the first element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:829</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a0e36512220b610e64bf88980b75e2316"><div class="ttname"><a href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">zll::ll_list::merge</a></div><div class="ttdeci">void merge(ll_list &amp;&amp;other, Compare comp) noexcept(noexcept_access &amp;&amp;noexcept(comp(*_first, *_last)))</div><div class="ttdoc">Merge two lists together, see merge_ranges for details.</div><div class="ttdef"><b>Definition:</b> zll.h:708</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a0f5fbc8c0b897d6c0a31e7006203fcd9"><div class="ttname"><a href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">zll::ll_list::link_back</a></div><div class="ttdeci">void link_back(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node as the last element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:843</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a0f65edbf200d33be29439b31ee648f1f"><div class="ttname"><a href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">zll::ll_list::splice</a></div><div class="ttdeci">void splice(iterator pos, ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Inserts the nodes from other into this list before position pos.</div><div class="ttdef"><b>Definition:</b> zll.h:751</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a15757285ed6d05b0532ee33776cf2dc6"><div class="ttname"><a href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">zll::ll_list::detach_back</a></div><div class="ttdeci">void detach_back() noexcept(noexcept_access)</div><div class="ttdoc">Detaches the last element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:854</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a21dac906db82c68563d8d17e9790c9ca"><div class="ttname"><a href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">zll::ll_list::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Returns true if the list is empty, i.e. contains no elements.</div><div class="ttdef"><b>Definition:</b> zll.h:835</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a2de96f2d534a8b4524be7554ae75118a"><div class="ttname"><a href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">zll::ll_list::reverse</a></div><div class="ttdeci">void reverse() noexcept(noexcept_access)</div><div class="ttdoc">Reverses the order of nodes in the list.</div><div class="ttdef"><b>Definition:</b> zll.h:773</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a0a044839e4fb589f4efe7f80559d0fb8"><div class="ttname"><a href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">zll::ll_list::detach_front</a></div><div class="ttdeci">void detach_front() noexcept(noexcept_access)</div><div class="ttdoc">Detaches the first element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:833</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a0e36512220b610e64bf88980b75e2316"><div class="ttname"><a href="structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316">zll::ll_list::merge</a></div><div class="ttdeci">void merge(ll_list &amp;&amp;other, Compare comp) noexcept(noexcept_access &amp;&amp;noexcept(comp(*_first, *_last)))</div><div class="ttdoc">Merge two lists together, see merge_ranges for details.</div><div class="ttdef"><b>Definition:</b> zll.h:712</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a0f5fbc8c0b897d6c0a31e7006203fcd9"><div class="ttname"><a href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">zll::ll_list::link_back</a></div><div class="ttdeci">void link_back(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node as the last element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:847</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a0f65edbf200d33be29439b31ee648f1f"><div class="ttname"><a href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">zll::ll_list::splice</a></div><div class="ttdeci">void splice(iterator pos, ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Inserts the nodes from other into this list before position pos.</div><div class="ttdef"><b>Definition:</b> zll.h:755</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a15757285ed6d05b0532ee33776cf2dc6"><div class="ttname"><a href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">zll::ll_list::detach_back</a></div><div class="ttdeci">void detach_back() noexcept(noexcept_access)</div><div class="ttdoc">Detaches the last element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:858</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a21dac906db82c68563d8d17e9790c9ca"><div class="ttname"><a href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">zll::ll_list::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Returns true if the list is empty, i.e. contains no elements.</div><div class="ttdef"><b>Definition:</b> zll.h:839</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a2de96f2d534a8b4524be7554ae75118a"><div class="ttname"><a href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">zll::ll_list::reverse</a></div><div class="ttdeci">void reverse() noexcept(noexcept_access)</div><div class="ttdoc">Reverses the order of nodes in the list.</div><div class="ttdef"><b>Definition:</b> zll.h:777</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html_a37b3980fe542f31123c1f9cc27ad1b0f"><div class="ttname"><a href="structzll_1_1ll__list.html#a37b3980fe542f31123c1f9cc27ad1b0f">zll::ll_list::ll_list</a></div><div class="ttdeci">ll_list(std::initializer_list&lt; T * &gt; il) noexcept(noexcept_access)</div><div class="ttdoc">Constructs a list with nodes provided in the initializer list.</div><div class="ttdef"><b>Definition:</b> zll.h:613</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a496669464ff05be0d363d3e85a83448a"><div class="ttname"><a href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">zll::ll_list::~ll_list</a></div><div class="ttdeci">~ll_list() noexcept(noexcept_access)</div><div class="ttdoc">Detaches all nodes in the list.</div><div class="ttdef"><b>Definition:</b> zll.h:861</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a496669464ff05be0d363d3e85a83448a"><div class="ttname"><a href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">zll::ll_list::~ll_list</a></div><div class="ttdeci">~ll_list() noexcept(noexcept_access)</div><div class="ttdoc">Detaches all nodes in the list.</div><div class="ttdef"><b>Definition:</b> zll.h:865</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html_a6a916ca1505f421671a0ffb18dfb2089"><div class="ttname"><a href="structzll_1_1ll__list.html#a6a916ca1505f421671a0ffb18dfb2089">zll::ll_list::ll_list</a></div><div class="ttdeci">ll_list()=default</div><div class="ttdoc">Default constructor creates an empty list.</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a6cea35427711bccfb28a172f2ca62264"><div class="ttname"><a href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">zll::ll_list::unique</a></div><div class="ttdeci">std::size_t unique(BinPred p) noexcept(noexcept_access &amp;&amp;noexcept(p(*_first, *_last)))</div><div class="ttdoc">Removes all consecutive nodes in the list for which p returns true.</div><div class="ttdef"><b>Definition:</b> zll.h:784</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a6d48f2c34a4e1be735ecb2aa0bc484cb"><div class="ttname"><a href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">zll::ll_list::sort</a></div><div class="ttdeci">void sort() noexcept(noexcept_access &amp;&amp;noexcept(std::less&lt;&gt;{}(*_first, *_last)))</div><div class="ttdoc">Sorts the nodes in the list. Uses std::less&lt;&gt; for comparison.</div><div class="ttdef"><b>Definition:</b> zll.h:810</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a6ef9849488ca8f4dc5e51332999edd0b"><div class="ttname"><a href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">zll::ll_list::merge</a></div><div class="ttdeci">void merge(ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Merge two lists together, seeh merge_ranges for details.</div><div class="ttdef"><b>Definition:</b> zll.h:701</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a7657512b4c1881f4e30e36e303799513"><div class="ttname"><a href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">zll::ll_list::link_front</a></div><div class="ttdeci">void link_front(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node as the first element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:818</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a6cea35427711bccfb28a172f2ca62264"><div class="ttname"><a href="structzll_1_1ll__list.html#a6cea35427711bccfb28a172f2ca62264">zll::ll_list::unique</a></div><div class="ttdeci">std::size_t unique(BinPred p) noexcept(noexcept_access &amp;&amp;noexcept(p(*_first, *_last)))</div><div class="ttdoc">Removes all consecutive nodes in the list for which p returns true.</div><div class="ttdef"><b>Definition:</b> zll.h:788</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a6d48f2c34a4e1be735ecb2aa0bc484cb"><div class="ttname"><a href="structzll_1_1ll__list.html#a6d48f2c34a4e1be735ecb2aa0bc484cb">zll::ll_list::sort</a></div><div class="ttdeci">void sort() noexcept(noexcept_access &amp;&amp;noexcept(std::less&lt;&gt;{}(*_first, *_last)))</div><div class="ttdoc">Sorts the nodes in the list. Uses std::less&lt;&gt; for comparison.</div><div class="ttdef"><b>Definition:</b> zll.h:814</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a6ef9849488ca8f4dc5e51332999edd0b"><div class="ttname"><a href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">zll::ll_list::merge</a></div><div class="ttdeci">void merge(ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Merge two lists together, seeh merge_ranges for details.</div><div class="ttdef"><b>Definition:</b> zll.h:705</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a7657512b4c1881f4e30e36e303799513"><div class="ttname"><a href="structzll_1_1ll__list.html#a7657512b4c1881f4e30e36e303799513">zll::ll_list::link_front</a></div><div class="ttdeci">void link_front(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node as the first element of the list.</div><div class="ttdef"><b>Definition:</b> zll.h:822</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html_a797c87daaa74aeee4360c3109738038a"><div class="ttname"><a href="structzll_1_1ll__list.html#a797c87daaa74aeee4360c3109738038a">zll::ll_list::ll_list</a></div><div class="ttdeci">ll_list(ll_list const &amp;)=delete</div><div class="ttdoc">Copy is not allowed.</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_a8d7ec94377f447903f08346123eff2f3"><div class="ttname"><a href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">zll::ll_list::remove</a></div><div class="ttdeci">std::size_t remove(T const &amp;value) noexcept(noexcept_access &amp;&amp;noexcept(*_first== *_last))</div><div class="ttdoc">Removes all nodes compared equal to value value from the list.</div><div class="ttdef"><b>Definition:</b> zll.h:730</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_ac8d79b7b8617f710ec2d711aa8025fbd"><div class="ttname"><a href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">zll::ll_list::unique</a></div><div class="ttdeci">std::size_t unique() noexcept(noexcept_access &amp;&amp;noexcept(std::equal_to&lt;&gt;{}(*_first, *_last)))</div><div class="ttdoc">Removes all consecutive nodes in the list for which std::equal_to&lt;&gt; returns true.</div><div class="ttdef"><b>Definition:</b> zll.h:795</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a8d7ec94377f447903f08346123eff2f3"><div class="ttname"><a href="structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3">zll::ll_list::remove</a></div><div class="ttdeci">std::size_t remove(T const &amp;value) noexcept(noexcept_access &amp;&amp;noexcept(*_first== *_last))</div><div class="ttdoc">Removes all nodes compared equal to value value from the list.</div><div class="ttdef"><b>Definition:</b> zll.h:734</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_ac8d79b7b8617f710ec2d711aa8025fbd"><div class="ttname"><a href="structzll_1_1ll__list.html#ac8d79b7b8617f710ec2d711aa8025fbd">zll::ll_list::unique</a></div><div class="ttdeci">std::size_t unique() noexcept(noexcept_access &amp;&amp;noexcept(std::equal_to&lt;&gt;{}(*_first, *_last)))</div><div class="ttdoc">Removes all consecutive nodes in the list for which std::equal_to&lt;&gt; returns true.</div><div class="ttdef"><b>Definition:</b> zll.h:799</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html_ac95a983fa5b5598201fd7fd72bf8c73c"><div class="ttname"><a href="structzll_1_1ll__list.html#ac95a983fa5b5598201fd7fd72bf8c73c">zll::ll_list::ll_list</a></div><div class="ttdeci">ll_list(ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Move constructor. Moved-from list is empty after move.</div><div class="ttdef"><b>Definition:</b> zll.h:627</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_ad231f1cf14feeca3fac7c1cfe09cd420"><div class="ttname"><a href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">zll::ll_list::sort</a></div><div class="ttdeci">void sort(Compare &amp;&amp;cmp) noexcept(noexcept_access &amp;&amp;noexcept(cmp(*_first, *_last)))</div><div class="ttdoc">Sorts the nodes in the list. The cmp is used to compare two nodes.</div><div class="ttdef"><b>Definition:</b> zll.h:802</div></div>
-<div class="ttc" id="astructzll_1_1ll__list_html_ae393bfe8f151baf370bbacaa4491ff32"><div class="ttname"><a href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">zll::ll_list::remove_if</a></div><div class="ttdeci">std::size_t remove_if(Pred &amp;&amp;p) noexcept(noexcept_access &amp;&amp;noexcept(p(*_first)))</div><div class="ttdoc">Removes all nodes for which p returns true from the list.</div><div class="ttdef"><b>Definition:</b> zll.h:742</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_ad231f1cf14feeca3fac7c1cfe09cd420"><div class="ttname"><a href="structzll_1_1ll__list.html#ad231f1cf14feeca3fac7c1cfe09cd420">zll::ll_list::sort</a></div><div class="ttdeci">void sort(Compare &amp;&amp;cmp) noexcept(noexcept_access &amp;&amp;noexcept(cmp(*_first, *_last)))</div><div class="ttdoc">Sorts the nodes in the list. The cmp is used to compare two nodes.</div><div class="ttdef"><b>Definition:</b> zll.h:806</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_ae393bfe8f151baf370bbacaa4491ff32"><div class="ttname"><a href="structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32">zll::ll_list::remove_if</a></div><div class="ttdeci">std::size_t remove_if(Pred &amp;&amp;p) noexcept(noexcept_access &amp;&amp;noexcept(p(*_first)))</div><div class="ttdoc">Removes all nodes for which p returns true from the list.</div><div class="ttdef"><b>Definition:</b> zll.h:746</div></div>
 <div class="ttc" id="astructzll_1_1ll__list_html_afe6a7806993527b9b9622d37b63373e0"><div class="ttname"><a href="structzll_1_1ll__list.html#afe6a7806993527b9b9622d37b63373e0">zll::ll_list::operator=</a></div><div class="ttdeci">ll_list &amp; operator=(ll_list &amp;&amp;other) noexcept(noexcept_access)</div><div class="ttdoc">Move assignment operator. Moved-from list is empty after move.</div><div class="ttdef"><b>Definition:</b> zll.h:633</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
