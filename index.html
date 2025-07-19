@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -102,7 +103,7 @@ Basic Usage with CRTP &lt;tt&gt;ll_base&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;zll.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>MyNode : <span class="keyword">public</span> zll::ll_base&lt;MyNode&gt; {</div>
+<div class="line"><span class="keyword">struct </span>MyNode : <span class="keyword">public</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt;MyNode&gt; {</div>
 <div class="line">    <span class="keywordtype">int</span> value;</div>
 <div class="line">    MyNode(<span class="keywordtype">int</span> v) : value(v) {}</div>
 <div class="line">};</div>
@@ -127,6 +128,7 @@ Basic Usage with CRTP &lt;tt&gt;ll_base&lt;/tt&gt;</h3>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.h:903</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
 Advanced Usage with Custom Accessors</h3>
 <p >For more control over where the list header is stored:</p>
@@ -140,7 +142,7 @@ Advanced Usage with Custom Accessors</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>MyData {</div>
 <div class="line">    <span class="keywordtype">int</span> value;</div>
-<div class="line">    zll::ll_header&lt;MyData, MyAccessor&gt; list_header;</div>
+<div class="line">    <a class="code hl_struct" href="structzll_1_1ll__header.html">zll::ll_header&lt;MyData, MyAccessor&gt;</a> list_header;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
@@ -157,19 +159,20 @@ Advanced Usage with Custom Accessors</h3>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructzll_1_1ll__header_html"><div class="ttname"><a href="structzll_1_1ll__header.html">zll::ll_header</a></div><div class="ttdoc">Linked-list header containing pointers to the next and previous elements or the list itself.</div><div class="ttdef"><b>Definition:</b> zll.h:135</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
 Using with &lt;tt&gt;ll_list&lt;/tt&gt;</h3>
 <p >For managing lists with explicit list objects:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;zll.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>Node : <span class="keyword">public</span> zll::ll_base&lt;Node&gt; {</div>
+<div class="line"><span class="keyword">struct </span>Node : <span class="keyword">public</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt;Node&gt; {</div>
 <div class="line">    std::string name;</div>
 <div class="line">    Node(std::string n) : name(std::move(n)) {}</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    zll::ll_list&lt;Node, Node::access&gt; my_list;</div>
+<div class="line">    <a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt;Node, Node::access&gt;</a> my_list;</div>
 <div class="line">    </div>
 <div class="line">    Node node1(<span class="stringliteral">&quot;first&quot;</span>);</div>
 <div class="line">    Node node2(<span class="stringliteral">&quot;second&quot;</span>);</div>
@@ -180,6 +183,7 @@ Using with &lt;tt&gt;ll_list&lt;/tt&gt;</h3>
 <div class="line">    <span class="comment">// List automatically manages node relationships</span></div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.h:601</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 Building and Testing</h2>
 <div class="fragment"><div class="line"># Configure with tests enabled</div>

@@ -34,8 +34,12 @@ var NAVTREE =
       [ "Building and Testing", "index.html#autotoc_md5", null ],
       [ "Project Status", "index.html#autotoc_md6", null ],
       [ "License", "index.html#autotoc_md7", null ],
-      [ "Class List", "annotated.html", null ],
-      [ "Class Index", "classes.html", null ]
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ]
+      ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ]
