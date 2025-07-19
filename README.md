@@ -1,13 +1,16 @@
-# ZLL - Z Linked List
+<div align="center">
+ZLL - Z Linked List
 
-A C++20 single-file header-only library providing an intrusive doubly-linked list implementation.
+---
 
-## Features
+[Documentation](https://koniarik.github.io/zll/)
 
-- **Zero Dependencies**: Requires only C++20, no external libraries needed
-- **Header-Only**: Simply include `zll.h` and start using
-- **Memory Efficient**: Uses pointer tagging to distinguish between nodes and list headers
-- **Flexible**: Supports custom accessor patterns for advanced use cases
+</div>
+
+
+A C++20 single-file header-only library providing an non-owning intrusive doubly-linked list implementation.
+The nodes of the list are movable, copyable, while still keeping presence in the list. The nodes can be just linked together without root list structure.
+Any node of the list can also automatically unlink itself on destruction.
 
 ## Quick Start
 
