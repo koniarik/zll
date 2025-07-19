@@ -636,12 +636,16 @@ struct ll_list
                         return *this;
 
                 detach_nodes();
-                _first = std::exchange( other._first, nullptr );
-                if ( _first )
+                _first = other._first;
+                if ( _first ) {
+                        other._first            = nullptr;
                         Acc::get( _first ).prev = *this;
-                _last = std::exchange( other._last, nullptr );
-                if ( _last )
+                }
+                _last = other._last;
+                if ( _last ) {
+                        other._last            = nullptr;
                         Acc::get( _last ).next = *this;
+                }
 
                 return *this;
         }
