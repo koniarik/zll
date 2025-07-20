@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['remove_0',['remove',['../structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3',1,'zll::ll_list']]],
-  ['remove_5fif_1',['remove_if',['../structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32',1,'zll::ll_list']]],
-  ['reverse_2',['reverse',['../structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a',1,'zll::ll_list']]]
+  ['get_0',['get',['../structzll_1_1ll__iterator.html#aef8bc1a977b388ef069fb6d534a59fb7',1,'zll::ll_iterator::get()'],['../structzll_1_1ll__base_1_1access.html#a8dd6d8a9085f23af2e19c6eea769e036',1,'zll::ll_base::access::get(Derived *d) noexcept'],['../structzll_1_1ll__base_1_1access.html#a5ddffd64ecd1405aea73eefb9f708992',1,'zll::ll_base::access::get(Derived const *d) noexcept']]]
 ];

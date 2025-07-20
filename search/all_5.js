@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['merge_0',['merge',['../structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b',1,'zll::ll_list::merge(ll_list &amp;&amp;other) noexcept(noexcept_access)'],['../structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316',1,'zll::ll_list::merge(ll_list &amp;&amp;other, Compare comp) noexcept(noexcept_access &amp;&amp;noexcept(comp(*_first, *_last)))']]]
+  ['empty_0',['empty',['../structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca',1,'zll::ll_list']]],
+  ['end_1',['end',['../structzll_1_1ll__list.html#a1b82a94331b62555ae82bfa06c7648ed',1,'zll::ll_list::end() noexcept'],['../structzll_1_1ll__list.html#a0e0a1ed602706749c2fdf5de9b40cb51',1,'zll::ll_list::end() const noexcept']]]
 ];

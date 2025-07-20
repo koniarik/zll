@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../structzll_1_1ll__list.html#afe6a7806993527b9b9622d37b63373e0',1,'zll::ll_list::operator=()'],['../structzll_1_1ll__base.html#a247e72c69fb32a446998c35f56cfab65',1,'zll::ll_base::operator=(ll_base &amp;&amp;o) noexcept'],['../structzll_1_1ll__base.html#a451dc5c0dc677bbd8ee7b8db9247ed39',1,'zll::ll_base::operator=(ll_base &amp;o) noexcept']]]
+  ['empty_0',['empty',['../structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca',1,'zll::ll_list']]],
+  ['end_1',['end',['../structzll_1_1ll__list.html#a1b82a94331b62555ae82bfa06c7648ed',1,'zll::ll_list::end() noexcept'],['../structzll_1_1ll__list.html#a0e0a1ed602706749c2fdf5de9b40cb51',1,'zll::ll_list::end() const noexcept']]]
 ];

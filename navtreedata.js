@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "zll", "index.html", [
-    [ "Classes", "annotated.html", [
+    [ "Namespaces", "namespaces.html", [
       [ "Quick Start", "index.html#autotoc_md1", [
         [ "Basic Usage with CRTP <tt>ll_base</tt>", "index.html#autotoc_md2", null ],
         [ "Advanced Usage with Custom Accessors", "index.html#autotoc_md3", null ],
@@ -34,22 +34,38 @@ var NAVTREE =
       [ "Building and Testing", "index.html#autotoc_md5", null ],
       [ "Project Status", "index.html#autotoc_md6", null ],
       [ "License", "index.html#autotoc_md7", null ],
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ]
+      ] ]
+    ] ],
+    [ "Concepts", "concepts.html", "concepts" ],
+    [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"structzll_1_1ll__list.html#afe6a7806993527b9b9622d37b63373e0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
