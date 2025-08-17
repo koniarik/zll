@@ -4,7 +4,7 @@ option(ZLL_TESTS_ENABLED "Enable tests" OFF)
 
 project(zll)
 
-add_library(zll INTERFACE include/zll.h)
+add_library(zll INTERFACE include/zll.hpp)
 target_include_directories(zll INTERFACE include)
 target_compile_features(zll INTERFACE cxx_std_20)
 
