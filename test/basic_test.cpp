@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "zll.h"
+#include "zll.hpp"
 
 #include <doctest/doctest.h>
 #include <list>
@@ -13,9 +13,9 @@ namespace
 {
 struct hdr_access
 {
-        static auto& get( auto* item ) noexcept
+        static auto& get( auto& item ) noexcept
         {
-                return item->hdr;
+                return item.hdr;
         }
 };
 
@@ -68,9 +68,9 @@ struct der : public ll_base< der >
 template < typename T, typename Acc = typename T::access >
 void check_links( T& first )
 {
-        for ( T* p = Acc::get( &first ).next.node(); p; p = Acc::get( p ).next.node() ) {
-                CHECK( Acc::get( p ).prev.node() );
-                CHECK_EQ( p, Acc::get( Acc::get( p ).prev.node() ).next.node() );
+        for ( T* p = Acc::get( first ).next.node(); p; p = Acc::get( *p ).next.node() ) {
+                CHECK( Acc::get( *p ).prev.node() );
+                CHECK_EQ( p, Acc::get( *Acc::get( *p ).prev.node() ).next.node() );
         }
 }
 
@@ -305,7 +305,7 @@ void check_nodes_ptr( T const& l, std::vector< T const* > const& expected )
 {
         check_links( l );
         std::vector< T const* > result;
-        for ( auto* n = &l; n; n = Acc::get( n ).next.node() )
+        for ( auto* n = &l; n; n = Acc::get( *n ).next.node() )
                 result.push_back( n );
         CHECK_EQ( result, expected );
 };
