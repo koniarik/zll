@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['next_0',['next',['../structzll_1_1ll__base.html#a342051fe6b5f4984add24430c93aa264',1,'zll::ll_base::next()'],['../structzll_1_1ll__base.html#a97f989474f72ded90e533e3e0636270c',1,'zll::ll_base::next() const']]],
-  ['node_1',['node',['../structzll_1_1__ll__ptr.html#a8a3d8d5aa5f6488e8089a3503f938fe5',1,'zll::_ll_ptr::node() const noexcept'],['../structzll_1_1__ll__ptr.html#a32cf474c1b497bf33930f572c2e42f27',1,'zll::_ll_ptr::node() noexcept']]]
+  ['merge_0',['merge',['../structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b',1,'zll::ll_list::merge(ll_list &amp;&amp;other) noexcept(noexcept_access)'],['../structzll_1_1ll__list.html#a0e36512220b610e64bf88980b75e2316',1,'zll::ll_list::merge(ll_list &amp;&amp;other, Compare comp) noexcept(noexcept_access &amp;&amp;noexcept(comp(*_first, *_last)))']]],
+  ['merge_5franges_1',['merge_ranges',['../namespacezll.html#a42243d44581d8f0ee1e9c18d4acf2184',1,'zll']]],
+  ['move_5ffrom_5fto_2',['move_from_to',['../namespacezll.html#a144697c395d7e039e0aca2a585fbe792',1,'zll::move_from_to(T &amp;from, T &amp;to) noexcept(_nothrow_access&lt; Acc, T &gt;)'],['../namespacezll.html#a56726fdd989df6be96c6e591aa5de655',1,'zll::move_from_to(T &amp;from, T &amp;to) noexcept']]]
 ];

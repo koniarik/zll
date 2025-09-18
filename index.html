@@ -122,14 +122,14 @@ Basic Usage with CRTP &lt;tt&gt;ll_base&lt;/tt&gt;</h3>
 <div class="line">    MyNode moved_from_node2(std::move(node2));  <span class="comment">// Takes node2&#39;s position</span></div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Traverse the list, prints: 1, 1, 2, 3</span></div>
-<div class="line">    <a class="code hl_function" href="namespacezll.html#a6613e379d2956adc2bdb9cd36e9c7d66">zll::for_each_node</a>(node1, [](<span class="keyword">const</span> MyNode&amp; node) {</div>
+<div class="line">    <a class="code hl_function" href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">zll::for_each_node</a>(node1, [](<span class="keyword">const</span> MyNode&amp; node) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Value: &quot;</span> &lt;&lt; node.value &lt;&lt; std::endl;</div>
 <div class="line">    });</div>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacezll_html_a6613e379d2956adc2bdb9cd36e9c7d66"><div class="ttname"><a href="namespacezll.html#a6613e379d2956adc2bdb9cd36e9c7d66">zll::for_each_node</a></div><div class="ttdeci">void for_each_node(T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(f(n)))</div><div class="ttdoc">Iterate over all nodes in the list starting from n and call f for each node.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1016</div></div>
-<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:907</div></div>
+<div class="ttc" id="anamespacezll_html_ab55da35af7a7e04b1898f7562f8274b7"><div class="ttname"><a href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">zll::for_each_node</a></div><div class="ttdeci">void for_each_node(T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(f(n)))</div><div class="ttdoc">Iterate over all nodes in the list starting from n and call f for each node.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1052</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:942</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
 Advanced Usage with Custom Accessors</h3>
 <p >For more control over where the list header is stored:</p>
@@ -160,7 +160,7 @@ Advanced Usage with Custom Accessors</h3>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructzll_1_1ll__header_html"><div class="ttname"><a href="structzll_1_1ll__header.html">zll::ll_header</a></div><div class="ttdoc">Linked-list header containing pointers to the next and previous elements or the list itself.</div><div class="ttdef"><b>Definition:</b> zll.hpp:135</div></div>
+<div class="ttc" id="astructzll_1_1ll__header_html"><div class="ttname"><a href="structzll_1_1ll__header.html">zll::ll_header</a></div><div class="ttdoc">Linked-list header containing pointers to the next and previous elements or the list itself.</div><div class="ttdef"><b>Definition:</b> zll.hpp:149</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
 Using with &lt;tt&gt;ll_list&lt;/tt&gt;</h3>
 <p >For managing lists with explicit list objects:</p>
@@ -184,7 +184,7 @@ Using with &lt;tt&gt;ll_list&lt;/tt&gt;</h3>
 <div class="line">    <span class="comment">// List automatically manages node relationships</span></div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:601</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:636</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 Building and Testing</h2>
 <div class="fragment"><div class="line"># Configure with tests enabled</div>

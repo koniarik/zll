@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pointer_0',['pointer',['../structzll_1_1ll__iterator.html#adaf9f5d4ea29392f35d23b779fb7b499',1,'zll::ll_iterator::pointer()'],['../structzll_1_1ll__const__iterator.html#a4c23e8346977e7cbe8de14befcc4c753',1,'zll::ll_const_iterator::pointer()']]]
+  ['iterator_0',['iterator',['../structzll_1_1ll__list.html#a67cee329308019f60f1006e7e7a3db32',1,'zll::ll_list']]],
+  ['iterator_5fcategory_1',['iterator_category',['../structzll_1_1ll__iterator.html#a99f9433053424322581b363ee122d611',1,'zll::ll_iterator::iterator_category()'],['../structzll_1_1ll__const__iterator.html#a53cc8d146be73f87d1377c4f0219073e',1,'zll::ll_const_iterator::iterator_category()']]]
 ];
