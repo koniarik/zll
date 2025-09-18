@@ -68,9 +68,9 @@ struct der : public ll_base< der >
 template < typename T, typename Acc = typename T::access >
 void check_links( T& first )
 {
-        for ( T* p = Acc::get( first ).next.node(); p; p = Acc::get( *p ).next.node() ) {
-                CHECK( Acc::get( *p ).prev.node() );
-                CHECK_EQ( p, Acc::get( *Acc::get( *p ).prev.node() ).next.node() );
+        for ( T* p = _node( Acc::get( first ).next ); p; p = _node( Acc::get( *p ).next ) ) {
+                CHECK( _node( Acc::get( *p ).prev ) );
+                CHECK_EQ( p, _node( Acc::get( *_node( Acc::get( *p ).prev ) ).next ) );
         }
 }
 
@@ -305,7 +305,7 @@ void check_nodes_ptr( T const& l, std::vector< T const* > const& expected )
 {
         check_links( l );
         std::vector< T const* > result;
-        for ( auto* n = &l; n; n = Acc::get( *n ).next.node() )
+        for ( auto* n = &l; n; n = _node( Acc::get( *n ).next ) )
                 result.push_back( n );
         CHECK_EQ( result, expected );
 };
