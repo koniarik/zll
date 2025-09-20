@@ -1307,6 +1307,8 @@ void detach( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T
         }
         if ( n )
                 _replace_in_parent( node, *n );
+        else if ( Acc::get( node ).parent )
+                _detach_parent( node );
 }
 
 template < typename T, typename Acc = typename T::access >

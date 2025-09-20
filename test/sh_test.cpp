@@ -100,9 +100,11 @@ void check_links( T& node )
 std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& value )
 {
         os << "{ ";
-        for ( auto* v : value )
-                os << (void const*) v << "(" << (void const*) v->hdr.left << ", "
-                   << (void const*) v->hdr.right << ") ";
+        for ( auto* v : value ) {
+                auto& hdr = node_t::access::get( *v );
+                os << (void const*) v << "(" << (void const*) hdr.left << ", "
+                   << (void const*) hdr.right << ") ";
+        }
         os << "}";
         return os;
 }
