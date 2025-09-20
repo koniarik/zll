@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['next_0',['next',['../structzll_1_1ll__header.html#a16404babb800b5c366ea0c8c155c7e82',1,'zll::ll_header']]],
-  ['noexcept_5faccess_1',['noexcept_access',['../structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97',1,'zll::ll_list::noexcept_access()'],['../structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717',1,'zll::sh_heap::noexcept_access()']]]
+  ['parent_0',['parent',['../structzll_1_1sh__header.html#a445d3f7f384b4a6c51ffdd84adce02ad',1,'zll::sh_header']]],
+  ['prev_1',['prev',['../structzll_1_1ll__header.html#a47fe347eb009eda3af9c9518097cb6b2',1,'zll::ll_header']]],
+  ['ptr_2',['ptr',['../structzll_1_1__vptr.html#adcc09c1686c3cdc163f0be89d9b9ad2b',1,'zll::_vptr']]]
 ];

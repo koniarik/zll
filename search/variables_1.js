@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['left_0',['left',['../structzll_1_1sh__header.html#a5698edf6d37c6d5ec5e2cd47bf480c0e',1,'zll::sh_header']]]
+  ['mask_0',['mask',['../structzll_1_1__vptr.html#a405a8888790bded6b0d5969c417a006b',1,'zll::_vptr']]]
 ];

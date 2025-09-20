@@ -140,39 +140,39 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a1d61dbaf61de26105350353407fec4dc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a> = <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1ll__list.html">ll_list</a>&lt; T, Acc &gt; &gt;</td></tr>
 <tr class="memdesc:a1d61dbaf61de26105350353407fec4dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variadic ptr wrapper pointer either to <a class="el" href="structzll_1_1ll__list.html" title="Non-owning linked list container, expects nodes to contain ll_header as member.">ll_list</a> or node with <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a>.  <a href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">More...</a><br /></td></tr>
 <tr class="separator:a1d61dbaf61de26105350353407fec4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6404192352095925dec9d82ad1574378"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:a6404192352095925dec9d82ad1574378"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a> = <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &gt;</td></tr>
-<tr class="separator:a6404192352095925dec9d82ad1574378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4103d2220bdc7be9c33845fca16a88"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </td></tr>
+<tr class="memitem:a9a4103d2220bdc7be9c33845fca16a88"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a> = <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td></tr>
+<tr class="separator:a9a4103d2220bdc7be9c33845fca16a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af957553a3f9c001fee625ccbd9dc1fb8"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:af957553a3f9c001fee625ccbd9dc1fb8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#af957553a3f9c001fee625ccbd9dc1fb8">_attach_first</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &amp;parent, T &amp;node) noexcept</td></tr>
-<tr class="separator:af957553a3f9c001fee625ccbd9dc1fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a645affc70674ba3de696565bdfbbab74"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:a645affc70674ba3de696565bdfbbab74"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a645affc70674ba3de696565bdfbbab74">_attach_left</a> (T &amp;parent, T &amp;node) noexcept</td></tr>
 <tr class="separator:a645affc70674ba3de696565bdfbbab74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44b9de7ee244e260b58b2484ad5d6e6b"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:a44b9de7ee244e260b58b2484ad5d6e6b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a44b9de7ee244e260b58b2484ad5d6e6b">_attach_parent</a> (T &amp;node, <a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt; p) noexcept</td></tr>
-<tr class="separator:a44b9de7ee244e260b58b2484ad5d6e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5412e918bbe6c334d5bf89e53fccb38e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </td></tr>
+<tr class="memitem:a5412e918bbe6c334d5bf89e53fccb38e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a5412e918bbe6c334d5bf89e53fccb38e">_attach_parent</a> (T &amp;node, <a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt; p) noexcept</td></tr>
+<tr class="separator:a5412e918bbe6c334d5bf89e53fccb38e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cc056e3c715e65923bcd0590d10d450"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:a9cc056e3c715e65923bcd0590d10d450"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a9cc056e3c715e65923bcd0590d10d450">_attach_right</a> (T &amp;parent, T &amp;node) noexcept</td></tr>
 <tr class="separator:a9cc056e3c715e65923bcd0590d10d450"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a325c9cacad0cdd2ff2b3bcc649470521"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:a325c9cacad0cdd2ff2b3bcc649470521"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a325c9cacad0cdd2ff2b3bcc649470521">_detach_first</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T &gt; &amp;parent) noexcept</td></tr>
-<tr class="separator:a325c9cacad0cdd2ff2b3bcc649470521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5dff3b7bdb508e7fb31bd87195cea93"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </td></tr>
+<tr class="memitem:ad5dff3b7bdb508e7fb31bd87195cea93"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#ad5dff3b7bdb508e7fb31bd87195cea93">_attach_top</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;parent, T &amp;node) noexcept</td></tr>
+<tr class="separator:ad5dff3b7bdb508e7fb31bd87195cea93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1145a2385eedb0eec234aa927b8d3717"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:a1145a2385eedb0eec234aa927b8d3717"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1145a2385eedb0eec234aa927b8d3717">_detach_left</a> (T &amp;node) noexcept</td></tr>
 <tr class="separator:a1145a2385eedb0eec234aa927b8d3717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d2cb4e3891528c34134d19e3f0a9cb"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:a44d2cb4e3891528c34134d19e3f0a9cb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a44d2cb4e3891528c34134d19e3f0a9cb">_detach_parent</a> (T &amp;node) noexcept</td></tr>
-<tr class="separator:a44d2cb4e3891528c34134d19e3f0a9cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4fa0956cd9f74af2007bfc81808058b"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
+<tr class="memitem:ad4fa0956cd9f74af2007bfc81808058b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#ad4fa0956cd9f74af2007bfc81808058b">_detach_parent</a> (T &amp;node) noexcept</td></tr>
+<tr class="separator:ad4fa0956cd9f74af2007bfc81808058b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe2b32276c27b748e4bc0b4d6c8e64ff"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:abe2b32276c27b748e4bc0b4d6c8e64ff"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#abe2b32276c27b748e4bc0b4d6c8e64ff">_detach_right</a> (T &amp;node) noexcept</td></tr>
 <tr class="separator:abe2b32276c27b748e4bc0b4d6c8e64ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa358d53b80cc6e0fb2c592e5ff9fd131"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:aa358d53b80cc6e0fb2c592e5ff9fd131"><td class="memTemplItemLeft" align="right" valign="top">auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#aa358d53b80cc6e0fb2c592e5ff9fd131">_heap</a> (<a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt; p)</td></tr>
-<tr class="separator:aa358d53b80cc6e0fb2c592e5ff9fd131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2b6eb35bd9e2e20634db0ac8050d14"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </td></tr>
+<tr class="memitem:a3b2b6eb35bd9e2e20634db0ac8050d14"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a3b2b6eb35bd9e2e20634db0ac8050d14">_detach_top</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;parent) noexcept</td></tr>
+<tr class="separator:a3b2b6eb35bd9e2e20634db0ac8050d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c4c45a8023e924511da9cde8e77d1e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </td></tr>
+<tr class="memitem:a43c4c45a8023e924511da9cde8e77d1e"><td class="memTemplItemLeft" align="right" valign="top">auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a43c4c45a8023e924511da9cde8e77d1e">_heap</a> (<a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt; p)</td></tr>
+<tr class="separator:a43c4c45a8023e924511da9cde8e77d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64ee2786d9ecf29fa220db757b470f46"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:a64ee2786d9ecf29fa220db757b470f46"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a64ee2786d9ecf29fa220db757b470f46">_list</a> (<a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a>&lt; T, Acc &gt; p) noexcept</td></tr>
 <tr class="separator:a64ee2786d9ecf29fa220db757b470f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,9 +182,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab8f3d9775a158c210e833a1b0cd11527"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:ab8f3d9775a158c210e833a1b0cd11527"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#ab8f3d9775a158c210e833a1b0cd11527">_node</a> (<a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a>&lt; T, Acc &gt; p) noexcept</td></tr>
 <tr class="separator:ab8f3d9775a158c210e833a1b0cd11527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af68ba1538371089918caa81a5c880976"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:af68ba1538371089918caa81a5c880976"><td class="memTemplItemLeft" align="right" valign="top">auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#af68ba1538371089918caa81a5c880976">_node</a> (<a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt; p)</td></tr>
-<tr class="separator:af68ba1538371089918caa81a5c880976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee6fbb18e3ea789c484bc69425fc666"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </td></tr>
+<tr class="memitem:adee6fbb18e3ea789c484bc69425fc666"><td class="memTemplItemLeft" align="right" valign="top">auto *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#adee6fbb18e3ea789c484bc69425fc666">_node</a> (<a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt; p)</td></tr>
+<tr class="separator:adee6fbb18e3ea789c484bc69425fc666"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2681e264ccf581ce0999c457afdf1ec3"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
 <tr class="memitem:a2681e264ccf581ce0999c457afdf1ec3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a2681e264ccf581ce0999c457afdf1ec3">_prev_or_last_set</a> (<a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a>&lt; T, Acc &gt; p, <a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a>&lt; T, Acc &gt; n)</td></tr>
 <tr class="separator:a2681e264ccf581ce0999c457afdf1ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,15 +197,19 @@ Functions</h2></td></tr>
 <tr class="memitem:a738a4b1707b2655cf49ea855198961f0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc , typename Compare &gt; </td></tr>
 <tr class="memitem:a738a4b1707b2655cf49ea855198961f0"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a738a4b1707b2655cf49ea855198961f0">_sh_merge_impl</a> (T &amp;left, T &amp;right, Compare &amp;&amp;comp) noexcept</td></tr>
 <tr class="separator:a738a4b1707b2655cf49ea855198961f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e2784e7208aa4e0e6503dd98d9975ce"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</td></tr>
+<tr class="memitem:a3e2784e7208aa4e0e6503dd98d9975ce"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a3e2784e7208aa4e0e6503dd98d9975ce">_sh_pop</a> (T &amp;node, Compare &amp;&amp;comp) noexcept</td></tr>
+<tr class="separator:a3e2784e7208aa4e0e6503dd98d9975ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d418476eff4046b39fc5d0335ff6693"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a6d418476eff4046b39fc5d0335ff6693"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">detach</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
 <tr class="memdesc:a6d418476eff4046b39fc5d0335ff6693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink a node from existing list.  <a href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">More...</a><br /></td></tr>
 <tr class="separator:a6d418476eff4046b39fc5d0335ff6693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e8096a99b25673872b052ec5122aef7"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
-<tr class="memitem:a4e8096a99b25673872b052ec5122aef7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a4e8096a99b25673872b052ec5122aef7">detach</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
-<tr class="separator:a4e8096a99b25673872b052ec5122aef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc097d2827b79daac9a7a645b96cfbaf"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</td></tr>
+<tr class="memitem:adc097d2827b79daac9a7a645b96cfbaf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#adc097d2827b79daac9a7a645b96cfbaf">detach</a> (T &amp;node, Compare &amp;&amp;comp) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="separator:adc097d2827b79daac9a7a645b96cfbaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aee72801f82d0cebea0f695436f422f"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a5aee72801f82d0cebea0f695436f422f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a5aee72801f82d0cebea0f695436f422f">detach_range</a> (T &amp;first, T &amp;last) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
@@ -216,11 +220,11 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a4686b548a6c2812e4ee2e6f9ab3ab8fa"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a4686b548a6c2812e4ee2e6f9ab3ab8fa">detached</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
 <tr class="memdesc:a4686b548a6c2812e4ee2e6f9ab3ab8fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the node is detached from list.  <a href="namespacezll.html#a4686b548a6c2812e4ee2e6f9ab3ab8fa">More...</a><br /></td></tr>
 <tr class="separator:a4686b548a6c2812e4ee2e6f9ab3ab8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69569a4f4ec867fb6037511875f4512"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
-<tr class="memitem:ab69569a4f4ec867fb6037511875f4512"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#ab69569a4f4ec867fb6037511875f4512">detached</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
-<tr class="memdesc:ab69569a4f4ec867fb6037511875f4512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the node is detached from heap.  <a href="namespacezll.html#ab69569a4f4ec867fb6037511875f4512">More...</a><br /></td></tr>
-<tr class="separator:ab69569a4f4ec867fb6037511875f4512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e5f7f94bac5fc728b19ee708f3fc2ff"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</td></tr>
+<tr class="memitem:a1e5f7f94bac5fc728b19ee708f3fc2ff"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1e5f7f94bac5fc728b19ee708f3fc2ff">detached</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a1e5f7f94bac5fc728b19ee708f3fc2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the node is detached from heap.  <a href="namespacezll.html#a1e5f7f94bac5fc728b19ee708f3fc2ff">More...</a><br /></td></tr>
+<tr class="separator:a1e5f7f94bac5fc728b19ee708f3fc2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee0b9647befb868890b60caf39f3d293"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:aee0b9647befb868890b60caf39f3d293"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#aee0b9647befb868890b60caf39f3d293">detached_range</a> (T &amp;first, T &amp;last) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
@@ -236,15 +240,15 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a5b8723bf61a7e944036fb5dfce168d70"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a5b8723bf61a7e944036fb5dfce168d70">first_node_of</a> (T &amp;n) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
 <tr class="memdesc:a5b8723bf61a7e944036fb5dfce168d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over predecessors of node <code>n</code> and return the first node in the list.  <a href="namespacezll.html#a5b8723bf61a7e944036fb5dfce168d70">More...</a><br /></td></tr>
 <tr class="separator:a5b8723bf61a7e944036fb5dfce168d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7780783a1e5df8e17411943b86484ea3"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
-<tr class="memitem:a7780783a1e5df8e17411943b86484ea3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a7780783a1e5df8e17411943b86484ea3">for_each_node</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f)</td></tr>
-<tr class="separator:a7780783a1e5df8e17411943b86484ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab55da35af7a7e04b1898f7562f8274b7"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:ab55da35af7a7e04b1898f7562f8274b7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">for_each_node</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(f(n)))</td></tr>
 <tr class="memdesc:ab55da35af7a7e04b1898f7562f8274b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over all nodes in the list starting from <code>n</code> and call <code>f</code> for each node.  <a href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">More...</a><br /></td></tr>
 <tr class="separator:ab55da35af7a7e04b1898f7562f8274b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f566cd1dda5e21f8afd339aabe22103"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
+<tr class="memitem:a1f566cd1dda5e21f8afd339aabe22103"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1f566cd1dda5e21f8afd339aabe22103">inorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f)</td></tr>
+<tr class="separator:a1f566cd1dda5e21f8afd339aabe22103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71541bac40e1e9feef56f551b0bbe9ce"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a71541bac40e1e9feef56f551b0bbe9ce"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a71541bac40e1e9feef56f551b0bbe9ce">last_node_of</a> (T &amp;n) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
@@ -307,6 +311,14 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a144697c395d7e039e0aca2a585fbe792"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a144697c395d7e039e0aca2a585fbe792">move_from_to</a> (T &amp;from, T &amp;to) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
 <tr class="memdesc:a144697c395d7e039e0aca2a585fbe792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links predecessor and successor of <code>from</code> node as predecessor and successor of <code>to</code> node.  <a href="namespacezll.html#a144697c395d7e039e0aca2a585fbe792">More...</a><br /></td></tr>
 <tr class="separator:a144697c395d7e039e0aca2a585fbe792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a400b7b04fe500d9310f661ff92238a91"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
+<tr class="memitem:a400b7b04fe500d9310f661ff92238a91"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a400b7b04fe500d9310f661ff92238a91">postorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f)</td></tr>
+<tr class="separator:a400b7b04fe500d9310f661ff92238a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23d7cc5a40478769455189e3297b925d"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
+<tr class="memitem:a23d7cc5a40478769455189e3297b925d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a23d7cc5a40478769455189e3297b925d">preorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f)</td></tr>
+<tr class="separator:a23d7cc5a40478769455189e3297b925d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ccc5e1d745179f3326f0ff913454176"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc , typename Compare  = std::less&lt;&gt;&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a1ccc5e1d745179f3326f0ff913454176"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1ccc5e1d745179f3326f0ff913454176">range_qsort</a> (T &amp;first, T &amp;last, Compare &amp;&amp;cmp=std::less&lt;&gt;{}) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(cmp(first, last)))</td></tr>
@@ -327,6 +339,10 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a0f5d6a98fc40a5b09ff7b6db2f55dff5"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a0f5d6a98fc40a5b09ff7b6db2f55dff5">range_unique</a> (T &amp;first, T &amp;last, BinPred &amp;&amp;p=std::equal_to&lt;&gt;{}) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(p(first, last)))</td></tr>
 <tr class="memdesc:a0f5d6a98fc40a5b09ff7b6db2f55dff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the range [first, last] for which <code>p</code> returns true.  <a href="namespacezll.html#a0f5d6a98fc40a5b09ff7b6db2f55dff5">More...</a><br /></td></tr>
 <tr class="separator:a0f5d6a98fc40a5b09ff7b6db2f55dff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a143f4bb33cae47f8d7ffd5c593c7b1"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
+<tr class="memitem:a7a143f4bb33cae47f8d7ffd5c593c7b1"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a7a143f4bb33cae47f8d7ffd5c593c7b1">top_node_of</a> (T &amp;node) noexcept</td></tr>
+<tr class="separator:a7a143f4bb33cae47f8d7ffd5c593c7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a1d61dbaf61de26105350353407fec4dc" name="a1d61dbaf61de26105350353407fec4dc"></a>
@@ -347,16 +363,16 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="a6404192352095925dec9d82ad1574378" name="a6404192352095925dec9d82ad1574378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6404192352095925dec9d82ad1574378">&#9670;&#160;</a></span>_sh_ptr</h2>
+<a id="a9a4103d2220bdc7be9c33845fca16a88" name="a9a4103d2220bdc7be9c33845fca16a88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4103d2220bdc7be9c33845fca16a88">&#9670;&#160;</a></span>_sh_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">zll::_sh_ptr</a> = typedef <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">zll::_sh_ptr</a> = typedef <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -364,44 +380,6 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="af957553a3f9c001fee625ccbd9dc1fb8" name="af957553a3f9c001fee625ccbd9dc1fb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af957553a3f9c001fee625ccbd9dc1fb8">&#9670;&#160;</a></span>_attach_first()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void zll::_attach_first </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &amp;&#160;</td>
-          <td class="paramname"><em>parent</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>node</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a645affc70674ba3de696565bdfbbab74" name="a645affc70674ba3de696565bdfbbab74"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a645affc70674ba3de696565bdfbbab74">&#9670;&#160;</a></span>_attach_left()</h2>
 
@@ -440,13 +418,13 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="a44b9de7ee244e260b58b2484ad5d6e6b" name="a44b9de7ee244e260b58b2484ad5d6e6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44b9de7ee244e260b58b2484ad5d6e6b">&#9670;&#160;</a></span>_attach_parent()</h2>
+<a id="a5412e918bbe6c334d5bf89e53fccb38e" name="a5412e918bbe6c334d5bf89e53fccb38e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5412e918bbe6c334d5bf89e53fccb38e">&#9670;&#160;</a></span>_attach_parent()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -460,7 +438,7 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt;&#160;</td>
           <td class="paramname"><em>p</em>&#160;</td>
         </tr>
         <tr>
@@ -516,23 +494,33 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="a325c9cacad0cdd2ff2b3bcc649470521" name="a325c9cacad0cdd2ff2b3bcc649470521"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a325c9cacad0cdd2ff2b3bcc649470521">&#9670;&#160;</a></span>_detach_first()</h2>
+<a id="ad5dff3b7bdb508e7fb31bd87195cea93" name="ad5dff3b7bdb508e7fb31bd87195cea93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5dff3b7bdb508e7fb31bd87195cea93">&#9670;&#160;</a></span>_attach_top()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T &amp; zll::_detach_first </td>
+          <td class="memname">void zll::_attach_top </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>parent</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -572,8 +560,8 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="a44d2cb4e3891528c34134d19e3f0a9cb" name="a44d2cb4e3891528c34134d19e3f0a9cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44d2cb4e3891528c34134d19e3f0a9cb">&#9670;&#160;</a></span>_detach_parent()</h2>
+<a id="ad4fa0956cd9f74af2007bfc81808058b" name="ad4fa0956cd9f74af2007bfc81808058b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4fa0956cd9f74af2007bfc81808058b">&#9670;&#160;</a></span>_detach_parent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -584,7 +572,7 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt; zll::_detach_parent </td>
+          <td class="memname">auto zll::_detach_parent </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>node</em></td><td>)</td>
@@ -628,18 +616,46 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="aa358d53b80cc6e0fb2c592e5ff9fd131" name="aa358d53b80cc6e0fb2c592e5ff9fd131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa358d53b80cc6e0fb2c592e5ff9fd131">&#9670;&#160;</a></span>_heap()</h2>
+<a id="a3b2b6eb35bd9e2e20634db0ac8050d14" name="a3b2b6eb35bd9e2e20634db0ac8050d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b2b6eb35bd9e2e20634db0ac8050d14">&#9670;&#160;</a></span>_detach_top()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; zll::_detach_top </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;&#160;</td>
+          <td class="paramname"><em>parent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43c4c45a8023e924511da9cde8e77d1e" name="a43c4c45a8023e924511da9cde8e77d1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c4c45a8023e924511da9cde8e77d1e">&#9670;&#160;</a></span>_heap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto * zll::_heap </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
@@ -734,18 +750,18 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 
 </div>
 </div>
-<a id="af68ba1538371089918caa81a5c880976" name="af68ba1538371089918caa81a5c880976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af68ba1538371089918caa81a5c880976">&#9670;&#160;</a></span>_node() <span class="overload">[2/2]</span></h2>
+<a id="adee6fbb18e3ea789c484bc69425fc666" name="adee6fbb18e3ea789c484bc69425fc666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adee6fbb18e3ea789c484bc69425fc666">&#9670;&#160;</a></span>_node() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; </div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto * zll::_node </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacezll.html#a6404192352095925dec9d82ad1574378">_sh_ptr</a>&lt; T, Acc &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a>&lt; T, Acc, Compare &gt;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
@@ -910,6 +926,45 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 
 </div>
 </div>
+<a id="a3e2784e7208aa4e0e6503dd98d9975ce" name="a3e2784e7208aa4e0e6503dd98d9975ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e2784e7208aa4e0e6503dd98d9975ce">&#9670;&#160;</a></span>_sh_pop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * zll::_sh_pop </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Compare &amp;&amp;&#160;</td>
+          <td class="paramname"><em>comp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6d418476eff4046b39fc5d0335ff6693" name="a6d418476eff4046b39fc5d0335ff6693"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6d418476eff4046b39fc5d0335ff6693">&#9670;&#160;</a></span>detach() <span class="overload">[1/2]</span></h2>
 
@@ -942,14 +997,14 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 </div>
 </div>
-<a id="a4e8096a99b25673872b052ec5122aef7" name="a4e8096a99b25673872b052ec5122aef7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e8096a99b25673872b052ec5122aef7">&#9670;&#160;</a></span>detach() <span class="overload">[2/2]</span></h2>
+<a id="adc097d2827b79daac9a7a645b96cfbaf" name="adc097d2827b79daac9a7a645b96cfbaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc097d2827b79daac9a7a645b96cfbaf">&#9670;&#160;</a></span>detach() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -958,8 +1013,18 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
           <td class="memname">void zll::detach </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>node</em></td><td>)</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Compare &amp;&amp;&#160;</td>
+          <td class="paramname"><em>comp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1044,14 +1109,14 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 </div>
 </div>
-<a id="ab69569a4f4ec867fb6037511875f4512" name="ab69569a4f4ec867fb6037511875f4512"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab69569a4f4ec867fb6037511875f4512">&#9670;&#160;</a></span>detached() <span class="overload">[2/2]</span></h2>
+<a id="a1e5f7f94bac5fc728b19ee708f3fc2ff" name="a1e5f7f94bac5fc728b19ee708f3fc2ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e5f7f94bac5fc728b19ee708f3fc2ff">&#9670;&#160;</a></span>detached() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1190,39 +1255,8 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 </div>
 </div>
-<a id="a7780783a1e5df8e17411943b86484ea3" name="a7780783a1e5df8e17411943b86484ea3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7780783a1e5df8e17411943b86484ea3">&#9670;&#160;</a></span>for_each_node() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc  = typename T::access&gt; <br />
-requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void zll::for_each_node </td>
-          <td>(</td>
-          <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::invocable&lt; T &amp; &gt; auto &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ab55da35af7a7e04b1898f7562f8274b7" name="ab55da35af7a7e04b1898f7562f8274b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab55da35af7a7e04b1898f7562f8274b7">&#9670;&#160;</a></span>for_each_node() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab55da35af7a7e04b1898f7562f8274b7">&#9670;&#160;</a></span>for_each_node()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1260,6 +1294,37 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 <p>Iterate over all nodes in the list starting from <code>n</code> and call <code>f</code> for each node. </p>
 <p >The order of the nodes is: predecessors, <code>n</code>, successors. </p>
+
+</div>
+</div>
+<a id="a1f566cd1dda5e21f8afd339aabe22103" name="a1f566cd1dda5e21f8afd339aabe22103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f566cd1dda5e21f8afd339aabe22103">&#9670;&#160;</a></span>inorder_traverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void zll::inorder_traverse </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::invocable&lt; T &amp; &gt; auto &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1801,6 +1866,68 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 </div>
 </div>
+<a id="a400b7b04fe500d9310f661ff92238a91" name="a400b7b04fe500d9310f661ff92238a91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a400b7b04fe500d9310f661ff92238a91">&#9670;&#160;</a></span>postorder_traverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void zll::postorder_traverse </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::invocable&lt; T &amp; &gt; auto &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a23d7cc5a40478769455189e3297b925d" name="a23d7cc5a40478769455189e3297b925d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23d7cc5a40478769455189e3297b925d">&#9670;&#160;</a></span>preorder_traverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void zll::preorder_traverse </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::invocable&lt; T &amp; &gt; auto &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1ccc5e1d745179f3326f0ff913454176" name="a1ccc5e1d745179f3326f0ff913454176"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ccc5e1d745179f3326f0ff913454176">&#9670;&#160;</a></span>range_qsort()</h2>
 
@@ -1983,6 +2110,35 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 <p>Removes all consecutive nodes in the range [first, last] for which <code>p</code> returns true. </p>
 <p >Only first element in each group of equal elements is left. </p>
+
+</div>
+</div>
+<a id="a7a143f4bb33cae47f8d7ffd5c593c7b1" name="a7a143f4bb33cae47f8d7ffd5c593c7b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a143f4bb33cae47f8d7ffd5c593c7b1">&#9670;&#160;</a></span>top_node_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc  = typename T::access&gt; <br />
+requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; zll::top_node_of </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

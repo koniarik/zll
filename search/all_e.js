@@ -9,5 +9,5 @@ var searchData=
   ['remove_6',['remove',['../structzll_1_1ll__list.html#a8d7ec94377f447903f08346123eff2f3',1,'zll::ll_list']]],
   ['remove_5fif_7',['remove_if',['../structzll_1_1ll__list.html#ae393bfe8f151baf370bbacaa4491ff32',1,'zll::ll_list']]],
   ['reverse_8',['reverse',['../structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a',1,'zll::ll_list']]],
-  ['right_9',['right',['../structzll_1_1sh__header.html#aaa06d2e0630ff8fb90f5d569d41db81a',1,'zll::sh_header']]]
+  ['right_9',['right',['../structzll_1_1sh__header.html#a7af8f1e24bb59deda4f21cb77d44182b',1,'zll::sh_header']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>zll: zll::sh_heap&lt; T, Acc &gt; Struct Template Reference</title>
+<title>zll: zll::sh_heap&lt; T, Acc, Compare &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('structzll_1_1sh__heap.html',''); initR
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structzll_1_1sh__heap-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">zll::sh_heap&lt; T, Acc &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">zll::sh_heap&lt; T, Acc, Compare &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -103,53 +103,57 @@ $(document).ready(function(){initNavTree('structzll_1_1sh__heap.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adce50674df13854645c942538da690b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#adce50674df13854645c942538da690b5">empty</a> () const noexcept</td></tr>
-<tr class="separator:adce50674df13854645c942538da690b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d29c908163f53aa581a83849370bc45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a4d29c908163f53aa581a83849370bc45">link</a> (T &amp;node) noexcept(<a class="el" href="structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717">noexcept_access</a>)</td></tr>
-<tr class="separator:a4d29c908163f53aa581a83849370bc45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1b1d390cc587c9949dfd1c76cbf41af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#ab1b1d390cc587c9949dfd1c76cbf41af">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;) noexcept=delete</td></tr>
-<tr class="separator:ab1b1d390cc587c9949dfd1c76cbf41af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79d2ce9df42f33b581cefd71fbfff482"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a79d2ce9df42f33b581cefd71fbfff482">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
-<tr class="separator:a79d2ce9df42f33b581cefd71fbfff482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa60f2ec739325062562fb23f5faa598a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#aa60f2ec739325062562fb23f5faa598a">pop</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717">noexcept_access</a>)</td></tr>
-<tr class="separator:aa60f2ec739325062562fb23f5faa598a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfc02719bb6f79d048e4c7e5000356b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#abfc02719bb6f79d048e4c7e5000356b2">sh_heap</a> () noexcept=default</td></tr>
-<tr class="separator:abfc02719bb6f79d048e4c7e5000356b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bfe9ef8955546a9c342c2d821e47975"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a6bfe9ef8955546a9c342c2d821e47975">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;) noexcept=delete</td></tr>
-<tr class="separator:a6bfe9ef8955546a9c342c2d821e47975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2b34fe942b1b41a2ad261db000629cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#aa2b34fe942b1b41a2ad261db000629cf">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
-<tr class="separator:aa2b34fe942b1b41a2ad261db000629cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b3da36f75e52392e5424d6832c3a804"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a5b3da36f75e52392e5424d6832c3a804">take</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717">noexcept_access</a>)</td></tr>
-<tr class="separator:a5b3da36f75e52392e5424d6832c3a804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfb0e6692709b6d51380f414d2c2a68d"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#abfb0e6692709b6d51380f414d2c2a68d">top</a> () noexcept</td></tr>
-<tr class="separator:abfb0e6692709b6d51380f414d2c2a68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06188ccc1af3061eeef5f3e9fe9ae539"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a06188ccc1af3061eeef5f3e9fe9ae539">~sh_heap</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717">noexcept_access</a>)</td></tr>
-<tr class="separator:a06188ccc1af3061eeef5f3e9fe9ae539"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a> () const noexcept</td></tr>
+<tr class="separator:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98e961c5fb278fd3ab7f9b6099df46af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a> (T &amp;node) noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="separator:a98e961c5fb278fd3ab7f9b6099df46af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6bf715751fc5c3f7aa5868d039c7026"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#aa6bf715751fc5c3f7aa5868d039c7026">merge</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:aa6bf715751fc5c3f7aa5868d039c7026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e6c3dd72675ba198da938fe0c4848a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a0e6c3dd72675ba198da938fe0c4848a1">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:a0e6c3dd72675ba198da938fe0c4848a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5276451b49a75e429fe0aaf9baaa8465"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a5276451b49a75e429fe0aaf9baaa8465">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
+<tr class="separator:a5276451b49a75e429fe0aaf9baaa8465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af687a550d64320a23db144905e51edf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#af687a550d64320a23db144905e51edf2">pop</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="separator:af687a550d64320a23db144905e51edf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a480877817290a799c27f8bd7bd34f824"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a480877817290a799c27f8bd7bd34f824">sh_heap</a> () noexcept=default</td></tr>
+<tr class="separator:a480877817290a799c27f8bd7bd34f824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8">sh_heap</a> (Compare comp)</td></tr>
+<tr class="separator:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63e7ad9869aaff7f5a1c025c29dbf81f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a63e7ad9869aaff7f5a1c025c29dbf81f">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
+<tr class="separator:a63e7ad9869aaff7f5a1c025c29dbf81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e7233e03981176e23ee6a9b8101220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a75e7233e03981176e23ee6a9b8101220">sh_heap</a> (std::initializer_list&lt; T * &gt; il) noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="separator:a75e7233e03981176e23ee6a9b8101220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad21dc27a8ed200cb10035c1dabc73213"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213">take</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="separator:ad21dc27a8ed200cb10035c1dabc73213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a3c5f1a302f04b0ca7605883e4dc83d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a6a3c5f1a302f04b0ca7605883e4dc83d">~sh_heap</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="separator:a6a3c5f1a302f04b0ca7605883e4dc83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a9af309b275ebabbc9e921025d3490869"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a9af309b275ebabbc9e921025d3490869">first</a> = nullptr</td></tr>
-<tr class="separator:a9af309b275ebabbc9e921025d3490869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa77a00b10a34e2749b17faad0587164"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164">top</a> = nullptr</td></tr>
+<tr class="separator:afa77a00b10a34e2749b17faad0587164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:adaf97760aa5f2915d98f385ab4179717"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#adaf97760aa5f2915d98f385ab4179717">noexcept_access</a> = _nothrow_access&lt; Acc, T &gt;</td></tr>
-<tr class="separator:adaf97760aa5f2915d98f385ab4179717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a761590954a055db058fb09d7c7837f1d"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a> = _nothrow_access&lt; Acc, T &gt;</td></tr>
+<tr class="separator:a761590954a055db058fb09d7c7837f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abfc02719bb6f79d048e4c7e5000356b2" name="abfc02719bb6f79d048e4c7e5000356b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfc02719bb6f79d048e4c7e5000356b2">&#9670;&#160;</a></span>sh_heap() <span class="overload">[1/3]</span></h2>
+<a id="a480877817290a799c27f8bd7bd34f824" name="a480877817290a799c27f8bd7bd34f824"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a480877817290a799c27f8bd7bd34f824">&#9670;&#160;</a></span>sh_heap() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::sh_heap </td>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -164,21 +168,21 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="aa2b34fe942b1b41a2ad261db000629cf" name="aa2b34fe942b1b41a2ad261db000629cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2b34fe942b1b41a2ad261db000629cf">&#9670;&#160;</a></span>sh_heap() <span class="overload">[2/3]</span></h2>
+<a id="a63e7ad9869aaff7f5a1c025c29dbf81f" name="a63e7ad9869aaff7f5a1c025c29dbf81f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63e7ad9869aaff7f5a1c025c29dbf81f">&#9670;&#160;</a></span>sh_heap() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::sh_heap </td>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; const &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -192,47 +196,103 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a6bfe9ef8955546a9c342c2d821e47975" name="a6bfe9ef8955546a9c342c2d821e47975"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bfe9ef8955546a9c342c2d821e47975">&#9670;&#160;</a></span>sh_heap() <span class="overload">[3/3]</span></h2>
+<a id="a80f50ef05b133d1c4c97ae270e165cd8" name="a80f50ef05b133d1c4c97ae270e165cd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80f50ef05b133d1c4c97ae270e165cd8">&#9670;&#160;</a></span>sh_heap() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::sh_heap </td>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">Compare&#160;</td>
+          <td class="paramname"><em>comp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a06188ccc1af3061eeef5f3e9fe9ae539" name="a06188ccc1af3061eeef5f3e9fe9ae539"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06188ccc1af3061eeef5f3e9fe9ae539">&#9670;&#160;</a></span>~sh_heap()</h2>
+<a id="a53ec2c6a9bbd14d86725820f7dd890a5" name="a53ec2c6a9bbd14d86725820f7dd890a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ec2c6a9bbd14d86725820f7dd890a5">&#9670;&#160;</a></span>sh_heap() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::~<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> </td>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a75e7233e03981176e23ee6a9b8101220" name="a75e7233e03981176e23ee6a9b8101220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75e7233e03981176e23ee6a9b8101220">&#9670;&#160;</a></span>sh_heap() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; T * &gt;&#160;</td>
+          <td class="paramname"><em>il</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6a3c5f1a302f04b0ca7605883e4dc83d" name="a6a3c5f1a302f04b0ca7605883e4dc83d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a3c5f1a302f04b0ca7605883e4dc83d">&#9670;&#160;</a></span>~sh_heap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::~<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -248,19 +308,19 @@ template&lt;typename T , typename Acc &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="adce50674df13854645c942538da690b5" name="adce50674df13854645c942538da690b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adce50674df13854645c942538da690b5">&#9670;&#160;</a></span>empty()</h2>
+<a id="adfcc52f4d05a15e7c95870cf28da6ecb" name="adfcc52f4d05a15e7c95870cf28da6ecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfcc52f4d05a15e7c95870cf28da6ecb">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::empty </td>
+          <td class="memname">bool <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::empty </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -275,19 +335,19 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a4d29c908163f53aa581a83849370bc45" name="a4d29c908163f53aa581a83849370bc45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d29c908163f53aa581a83849370bc45">&#9670;&#160;</a></span>link()</h2>
+<a id="a98e961c5fb278fd3ab7f9b6099df46af" name="a98e961c5fb278fd3ab7f9b6099df46af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98e961c5fb278fd3ab7f9b6099df46af">&#9670;&#160;</a></span>link()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::link </td>
+          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::link </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>node</em></td><td>)</td>
@@ -303,49 +363,77 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="ab1b1d390cc587c9949dfd1c76cbf41af" name="ab1b1d390cc587c9949dfd1c76cbf41af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1b1d390cc587c9949dfd1c76cbf41af">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="aa6bf715751fc5c3f7aa5868d039c7026" name="aa6bf715751fc5c3f7aa5868d039c7026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6bf715751fc5c3f7aa5868d039c7026">&#9670;&#160;</a></span>merge()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::operator= </td>
+          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::merge </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a79d2ce9df42f33b581cefd71fbfff482" name="a79d2ce9df42f33b581cefd71fbfff482"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79d2ce9df42f33b581cefd71fbfff482">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="a0e6c3dd72675ba198da938fe0c4848a1" name="a0e6c3dd72675ba198da938fe0c4848a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e6c3dd72675ba198da938fe0c4848a1">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::operator= </td>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5276451b49a75e429fe0aaf9baaa8465" name="a5276451b49a75e429fe0aaf9baaa8465"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5276451b49a75e429fe0aaf9baaa8465">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; const &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -359,19 +447,19 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="aa60f2ec739325062562fb23f5faa598a" name="aa60f2ec739325062562fb23f5faa598a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa60f2ec739325062562fb23f5faa598a">&#9670;&#160;</a></span>pop()</h2>
+<a id="af687a550d64320a23db144905e51edf2" name="af687a550d64320a23db144905e51edf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af687a550d64320a23db144905e51edf2">&#9670;&#160;</a></span>pop()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::pop </td>
+          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::pop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -386,46 +474,19 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a5b3da36f75e52392e5424d6832c3a804" name="a5b3da36f75e52392e5424d6832c3a804"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b3da36f75e52392e5424d6832c3a804">&#9670;&#160;</a></span>take()</h2>
+<a id="ad21dc27a8ed200cb10035c1dabc73213" name="ad21dc27a8ed200cb10035c1dabc73213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad21dc27a8ed200cb10035c1dabc73213">&#9670;&#160;</a></span>take()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::take </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abfb0e6692709b6d51380f414d2c2a68d" name="abfb0e6692709b6d51380f414d2c2a68d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfb0e6692709b6d51380f414d2c2a68d">&#9670;&#160;</a></span>top()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::top </td>
+          <td class="memname">T &amp; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::take </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -441,35 +502,19 @@ template&lt;typename T , typename Acc &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9af309b275ebabbc9e921025d3490869" name="a9af309b275ebabbc9e921025d3490869"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9af309b275ebabbc9e921025d3490869">&#9670;&#160;</a></span>first</h2>
+<a id="a761590954a055db058fb09d7c7837f1d" name="a761590954a055db058fb09d7c7837f1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761590954a055db058fb09d7c7837f1d">&#9670;&#160;</a></span>noexcept_access</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::first = nullptr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adaf97760aa5f2915d98f385ab4179717" name="adaf97760aa5f2915d98f385ab4179717"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adaf97760aa5f2915d98f385ab4179717">&#9670;&#160;</a></span>noexcept_access</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc &gt;::noexcept_access = _nothrow_access&lt; Acc, T &gt;</td>
+          <td class="memname">constexpr bool <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::noexcept_access = _nothrow_access&lt; Acc, T &gt;</td>
         </tr>
       </table>
   </td>
@@ -477,6 +522,22 @@ template&lt;typename T , typename Acc &gt; </div>
 <span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afa77a00b10a34e2749b17faad0587164" name="afa77a00b10a34e2749b17faad0587164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa77a00b10a34e2749b17faad0587164">&#9670;&#160;</a></span>top</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T* <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::top = nullptr</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>

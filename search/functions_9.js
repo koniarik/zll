@@ -1,7 +1,7 @@
 var searchData=
 [
   ['last_5fnode_5fof_0',['last_node_of',['../namespacezll.html#a71541bac40e1e9feef56f551b0bbe9ce',1,'zll']]],
-  ['link_1',['link',['../structzll_1_1sh__heap.html#a4d29c908163f53aa581a83849370bc45',1,'zll::sh_heap']]],
+  ['link_1',['link',['../structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af',1,'zll::sh_heap']]],
   ['link_5fback_2',['link_back',['../structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9',1,'zll::ll_list']]],
   ['link_5fdetached_3',['link_detached',['../namespacezll.html#a352f8d84175d43054a97d423da25a5ce',1,'zll']]],
   ['link_5fdetached_5fas_5ffirst_4',['link_detached_as_first',['../namespacezll.html#ad06c452ca25356a01e4ac1a88d341add',1,'zll']]],
