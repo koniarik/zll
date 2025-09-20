@@ -1,6 +1,7 @@
 #include "zll.hpp"
 
 #include <doctest/doctest.h>
+#include <iostream>
 #include <list>
 #include <set>
 #include <vector>
@@ -100,8 +101,8 @@ std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& val
 {
         os << "{ ";
         for ( auto* v : value )
-                os << (void*) v << "(" << (void*) v->hdr.left << ", " << (void*) v->hdr.right
-                   << ") ";
+                os << (void const*) v << "(" << (void const*) v->hdr.left << ", "
+                   << (void const*) v->hdr.right << ") ";
         os << "}";
         return os;
 }
@@ -110,8 +111,8 @@ std::ostream& operator<<( std::ostream& os, std::set< der const* > const& value 
 {
         os << "{ ";
         for ( auto* v : value )
-                os << (void*) v << "(" << (void*) der::access::get( *v ).left << ", "
-                   << (void*) der::access::get( *v ).right << ") ";
+                os << (void const*) v << "(" << (void const*) der::access::get( *v ).left << ", "
+                   << (void const*) der::access::get( *v ).right << ") ";
         os << "}";
         return os;
 }
