@@ -51,6 +51,10 @@ struct ll_header;
 template < typename Acc, typename T >
 concept _nothrow_access = noexcept( Acc::get( (T*) nullptr ) );
 
+template < typename Acc, typename T, typename Compare >
+concept _nothrow_access_compare =
+    _nothrow_access< Acc, T > && requires( T& a, T& b, Compare comp ) { noexcept( comp( a, b ) ); };
+
 template < typename T, typename Acc = typename T::access >
 concept _provides_ll_header = requires( T& t ) {
         {
@@ -122,21 +126,23 @@ constexpr auto* _list( _ll_ptr< T, Acc > p ) noexcept
 }
 
 template < typename T, typename Acc = typename T::access >
-void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n )
+void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
+    _nothrow_access< Acc, T > )
 {
         if ( T* x = _node( p ) )
                 Acc::get( *x ).prev = n;
         else if ( auto* h = _list( p ) )
-                h->_last = _node( n );
+                h->last = _node( n );
 }
 
 template < typename T, typename Acc = typename T::access >
-void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n )
+void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
+    _nothrow_access< Acc, T > )
 {
         if ( T* x = _node( p ) )
                 Acc::get( *x ).next = n;
         else if ( auto* h = _list( p ) )
-                h->_first = _node( n );
+                h->first = _node( n );
 }
 
 /// Linked-list header containing pointers to the next and previous elements or the list itself.
@@ -671,15 +677,15 @@ struct ll_list
                         return *this;
 
                 detach_nodes();
-                _first = other._first;
-                if ( _first ) {
-                        other._first             = nullptr;
-                        Acc::get( *_first ).prev = *this;
+                first = other.first;
+                if ( first ) {
+                        other.first             = nullptr;
+                        Acc::get( *first ).prev = *this;
                 }
-                _last = other._last;
-                if ( _last ) {
-                        other._last             = nullptr;
-                        Acc::get( *_last ).next = *this;
+                last = other.last;
+                if ( last ) {
+                        other.last             = nullptr;
+                        Acc::get( *last ).next = *this;
                 }
 
                 return *this;
@@ -687,37 +693,37 @@ struct ll_list
 
         T& front() noexcept
         {
-                return *_first;
+                return *first;
         }
 
         T& back() noexcept
         {
-                return *_last;
+                return *last;
         }
 
         T const& front() const noexcept
         {
-                return *_first;
+                return *first;
         }
 
         T const& back() const noexcept
         {
-                return *_last;
+                return *last;
         }
 
         iterator begin() noexcept
         {
-                return iterator{ _first };
+                return iterator{ first };
         }
 
         const_iterator begin() const noexcept
         {
-                return const_iterator{ _first };
+                return const_iterator{ first };
         }
 
         const_iterator cbegin() const noexcept
         {
-                return const_iterator{ _first };
+                return const_iterator{ first };
         }
 
         iterator end() noexcept
@@ -745,7 +751,7 @@ struct ll_list
         /// Merge two lists together, see `merge_ranges` for details.
         template < typename Compare >
         void merge( ll_list&& other, Compare comp ) noexcept(
-            noexcept_access && noexcept( comp( *_first, *_last ) ) )
+            noexcept_access && noexcept( comp( *first, *last ) ) )
         {
                 if ( this == &other || other.empty() )
                         return;
@@ -754,23 +760,23 @@ struct ll_list
                         return;
                 }
 
-                std::tie( _first, _last ) =
-                    merge_ranges< T, Acc >( *_first, *_last, *other._first, *other._last, comp );
+                std::tie( first, last ) =
+                    merge_ranges< T, Acc >( *first, *last, *other.first, *other.last, comp );
 
-                Acc::get( *_first ).prev = *this;
-                Acc::get( *_last ).next  = *this;
-                other._first             = nullptr;
-                other._last              = nullptr;
+                Acc::get( *first ).prev = *this;
+                Acc::get( *last ).next  = *this;
+                other.first             = nullptr;
+                other.last              = nullptr;
         }
 
         /// Removes all nodes compared equal to value `value` from the list. Returns the number of
         /// removed nodes.
         std::size_t
-        remove( T const& value ) noexcept( noexcept_access && noexcept( *_first == *_last ) )
+        remove( T const& value ) noexcept( noexcept_access && noexcept( *first == *last ) )
         {
                 if ( empty() )
                         return 0;
-                return range_remove< T, Acc >( *_first, *_last, [&value]( T& n ) noexcept {
+                return range_remove< T, Acc >( *first, *last, [&value]( T& n ) noexcept {
                         return n == value;
                 } );
         }
@@ -778,11 +784,11 @@ struct ll_list
         /// Removes all nodes for which `p` returns true from the list. Returns the number of
         /// removed nodes.
         template < typename Pred >
-        std::size_t remove_if( Pred&& p ) noexcept( noexcept_access && noexcept( p( *_first ) ) )
+        std::size_t remove_if( Pred&& p ) noexcept( noexcept_access && noexcept( p( *first ) ) )
         {
                 if ( empty() )
                         return 0;
-                return range_remove< T, Acc >( *_first, *_last, std::forward< Pred >( p ) );
+                return range_remove< T, Acc >( *first, *last, std::forward< Pred >( p ) );
         }
 
         /// Inserts the nodes from `other` into this list before position `pos`. If `pos` is equal
@@ -795,13 +801,13 @@ struct ll_list
                 if ( empty() ) {
                         *this = std::move( other );
                 } else if ( pos == end() ) {
-                        auto* f = other._first;
-                        auto* l = other._last;
+                        auto* f = other.first;
+                        auto* l = other.last;
                         other.detach_nodes();
-                        link_range_as_next( *_last, *f, *l );
+                        link_range_as_next( *last, *f, *l );
                 } else {
-                        auto* f = other._first;
-                        auto* l = other._last;
+                        auto* f = other.first;
+                        auto* l = other.last;
                         other.detach_nodes();
                         link_range_as_prev( *pos, *f, *l );
                 }
@@ -813,40 +819,40 @@ struct ll_list
         {
                 if ( empty() )
                         return;
-                range_reverse< T, Acc >( *_first, *_last );
+                range_reverse< T, Acc >( *first, *last );
         }
 
         /// Removes all consecutive nodes in the list for which `p` returns true. Only first
         /// element / in each group of equal elements is left. Returns the number of removed nodes.
         template < typename BinPred >
         std::size_t
-        unique( BinPred p ) noexcept( noexcept_access && noexcept( p( *_first, *_last ) ) )
+        unique( BinPred p ) noexcept( noexcept_access && noexcept( p( *first, *last ) ) )
         {
                 if ( empty() )
                         return 0;
-                return range_unique< T, Acc >( *_first, *_last, std::move( p ) );
+                return range_unique< T, Acc >( *first, *last, std::move( p ) );
         }
 
         /// Removes all consecutive nodes in the list for which `std::equal_to<>` returns true.
         /// Only first element in each group of equal elements is left. Returns the number of
         /// removed nodes.
         std::size_t
-        unique() noexcept( noexcept_access && noexcept( std::equal_to<>{}( *_first, *_last ) ) )
+        unique() noexcept( noexcept_access && noexcept( std::equal_to<>{}( *first, *last ) ) )
         {
                 return unique( std::equal_to<>{} );
         }
 
         /// Sorts the nodes in the list. The `cmp` is used to compare two nodes.
         template < typename Compare >
-        void sort( Compare&& cmp ) noexcept( noexcept_access && noexcept( cmp( *_first, *_last ) ) )
+        void sort( Compare&& cmp ) noexcept( noexcept_access && noexcept( cmp( *first, *last ) ) )
         {
                 if ( empty() )
                         return;
-                range_qsort< T, Acc >( *_first, *_last, std::forward< Compare >( cmp ) );
+                range_qsort< T, Acc >( *first, *last, std::forward< Compare >( cmp ) );
         }
 
         /// Sorts the nodes in the list. Uses `std::less<>` for comparison.
-        void sort() noexcept( noexcept_access && noexcept( std::less<>{}( *_first, *_last ) ) )
+        void sort() noexcept( noexcept_access && noexcept( std::less<>{}( *first, *last ) ) )
         {
                 sort( std::less<>{} );
         }
@@ -857,8 +863,8 @@ struct ll_list
         void link_front( T& node ) noexcept( noexcept_access )
         {
                 detach< T, Acc >( node );
-                if ( _first )
-                        link_detached_as_prev< T, Acc >( *_first, node );
+                if ( first )
+                        link_detached_as_prev< T, Acc >( *first, node );
                 else
                         link_first( node );
         }
@@ -867,13 +873,13 @@ struct ll_list
         /// Undefined behavior if the list is empty.
         void detach_front() noexcept( noexcept_access )
         {
-                detach< T, Acc >( *_first );
+                detach< T, Acc >( *first );
         }
 
         /// Returns true if the list is empty, i.e. contains no elements.
         bool empty() const noexcept
         {
-                return !_first;
+                return !first;
         }
 
         /// Links the node `node` as the last element of the list. The previous last element
@@ -882,8 +888,8 @@ struct ll_list
         void link_back( T& node ) noexcept( noexcept_access )
         {
                 detach< T, Acc >( node );
-                if ( _last )
-                        link_detached_as_next< T, Acc >( *_last, node );
+                if ( last )
+                        link_detached_as_next< T, Acc >( *last, node );
                 else
                         link_first( node );
         }
@@ -892,7 +898,7 @@ struct ll_list
         /// element. Undefined behavior if the list is empty.
         void detach_back() noexcept( noexcept_access )
         {
-                detach< T, Acc >( *_last );
+                detach< T, Acc >( *last );
         }
 
         /// Detaches all nodes in the list. The list becomes empty after this operation.
@@ -902,33 +908,28 @@ struct ll_list
                 detach_nodes();
         }
 
-private:
-        template < typename U, typename Bcc >
-        friend void _prev_or_last_set( _ll_ptr< U, Bcc > p, _ll_ptr< U, Bcc > n );
-        template < typename U, typename Bcc >
-        friend void _next_or_first_set( _ll_ptr< U, Bcc > p, _ll_ptr< U, Bcc > n );
+        T* first = nullptr;
+        T* last  = nullptr;
 
+private:
         void detach_nodes() noexcept( noexcept_access )
         {
-                if ( _first )
-                        Acc::get( *_first ).prev = nullptr;
-                if ( _last )
-                        Acc::get( *_last ).next = nullptr;
-                _first = nullptr;
-                _last  = nullptr;
+                if ( first )
+                        Acc::get( *first ).prev = nullptr;
+                if ( last )
+                        Acc::get( *last ).next = nullptr;
+                first = nullptr;
+                last  = nullptr;
         }
 
         void link_first( T& node ) noexcept( noexcept_access )
         {
-                _first = &node;
-                _last  = &node;
+                first = &node;
+                last  = &node;
 
                 Acc::get( node ).next = *this;
                 Acc::get( node ).prev = *this;
         }
-
-        T* _first = nullptr;
-        T* _last  = nullptr;
 };
 
 /// CRTP base class for linked list nodes containing `ll_header`. Provides access type to the header
@@ -1099,19 +1100,19 @@ template < typename T, typename Acc = typename T::access, typename Compare = std
 using _sh_ptr = _vptr< T, sh_heap< T, Acc, Compare > >;
 
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
-auto* _node( _sh_ptr< T, Acc, Compare > p )
+auto* _node( _sh_ptr< T, Acc, Compare > p ) noexcept
 {
         return p.a();
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
-auto* _heap( _sh_ptr< T, Acc, Compare > p )
+auto* _heap( _sh_ptr< T, Acc, Compare > p ) noexcept
 {
         return p.b();
 }
 
 template < typename T, typename Acc = typename T::access >
-T& _detach_right( T& node ) noexcept
+T& _detach_right( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *Acc::get( node ).right;
         Acc::get( tmp ).parent = nullptr;
@@ -1120,7 +1121,7 @@ T& _detach_right( T& node ) noexcept
 }
 
 template < typename T, typename Acc = typename T::access >
-T& _detach_left( T& node ) noexcept
+T& _detach_left( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *Acc::get( node ).left;
         Acc::get( tmp ).parent = nullptr;
@@ -1129,7 +1130,7 @@ T& _detach_left( T& node ) noexcept
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare >
-T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept
+T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *parent.top;
         Acc::get( tmp ).parent = nullptr;
@@ -1138,7 +1139,7 @@ T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept
 }
 
 template < typename T, typename Acc = typename T::access >
-auto _detach_parent( T& node ) noexcept
+auto _detach_parent( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto tmp = Acc::get( node ).parent;
 
@@ -1164,28 +1165,29 @@ bool detached( T& node ) noexcept( _nothrow_access< Acc, T > )
 }
 
 template < typename T, typename Acc = typename T::access >
-void _attach_right( T& parent, T& node ) noexcept
+void _attach_right( T& parent, T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( parent ).right = &node;
         Acc::get( node ).parent  = parent;
 }
 
 template < typename T, typename Acc = typename T::access >
-void _attach_left( T& parent, T& node ) noexcept
+void _attach_left( T& parent, T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( parent ).left = &node;
         Acc::get( node ).parent = parent;
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare >
-void _attach_top( sh_heap< T, Acc, Compare >& parent, T& node ) noexcept
+void _attach_top( sh_heap< T, Acc, Compare >& parent, T& node ) noexcept(
+    _nothrow_access< Acc, T > )
 {
         parent.top              = &node;
         Acc::get( node ).parent = parent;
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare >
-void _attach_parent( T& node, _sh_ptr< T, Acc, Compare > p ) noexcept
+void _attach_parent( T& node, _sh_ptr< T, Acc, Compare > p ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( node ).parent = p;
         if ( auto* n = _node( p ) ) {
@@ -1199,10 +1201,12 @@ void _attach_parent( T& node, _sh_ptr< T, Acc, Compare > p ) noexcept
 }
 
 template < typename T, typename Acc, typename Compare >
-T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept;
+T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept(
+    _nothrow_access_compare< Acc, T, Compare > );
 
 template < typename T, typename Acc, typename Compare >
-T& _sh_merge_impl( T& left, T& right, Compare&& comp ) noexcept
+T& _sh_merge_impl( T& left, T& right, Compare&& comp ) noexcept(
+    _nothrow_access_compare< Acc, T, Compare > )
 {
         T* left_left = nullptr;
         if ( Acc::get( left ).left )
@@ -1222,7 +1226,8 @@ T& _sh_merge_impl( T& left, T& right, Compare&& comp ) noexcept
 }
 
 template < typename T, typename Acc, typename Compare >
-T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept
+T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept(
+    _nothrow_access_compare< Acc, T, Compare > )
 {
         ZLL_ASSERT( !Acc::get( left ).parent );
         ZLL_ASSERT( !Acc::get( right ).parent );
@@ -1234,7 +1239,7 @@ T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept
 }
 
 template < typename T, typename Acc = typename T::access >
-void _replace_in_parent( T& node, T& new_node ) noexcept
+void _replace_in_parent( T& node, T& new_node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& parent = Acc::get( node ).parent;
 
@@ -1252,7 +1257,7 @@ void _replace_in_parent( T& node, T& new_node ) noexcept
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-void move_from_to( T& from, T& to ) noexcept
+void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( detached( to ) );
 
@@ -1268,16 +1273,17 @@ void move_from_to( T& from, T& to ) noexcept
                 _replace_in_parent( from, to );
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 requires( _provides_sh_header< T, Acc > )
-void link_detached_copy_of( T& node, T& cpy ) noexcept
+void link_detached_copy_of( T& node, T& cpy, Compare&& comp = std::less<>{} ) noexcept(
+    _nothrow_access_compare< Acc, T, Compare > )
 {
         ZLL_ASSERT( detached( cpy ) );
 
         T* n = nullptr;
         if ( Acc::get( node ).right ) {
                 auto& r = _detach_right( node );
-                n       = &_sh_merge< T, Acc >( r, cpy, std::less<>{} );
+                n       = &_sh_merge< T, Acc >( r, cpy, comp );
         } else {
                 n = &cpy;
         }
@@ -1287,7 +1293,7 @@ void link_detached_copy_of( T& node, T& cpy ) noexcept
 
 template < typename T, typename Acc = typename T::access, typename Compare >
 requires( _provides_sh_header< T, Acc, Compare > )
-void detach( T& node, Compare&& comp ) noexcept( _nothrow_access< Acc, T > )
+void detach( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T, Compare > )
 {
         T* n = nullptr;
         if ( Acc::get( node ).left && Acc::get( node ).right ) {
@@ -1305,7 +1311,7 @@ void detach( T& node, Compare&& comp ) noexcept( _nothrow_access< Acc, T > )
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-void inorder_traverse( T& n, std::invocable< T& > auto&& f )
+void inorder_traverse( T& n, std::invocable< T& > auto&& f ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& h = Acc::get( n );
         if ( h.left )
@@ -1317,7 +1323,7 @@ void inorder_traverse( T& n, std::invocable< T& > auto&& f )
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-void preorder_traverse( T& n, std::invocable< T& > auto&& f )
+void preorder_traverse( T& n, std::invocable< T& > auto&& f ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& h = Acc::get( n );
         f( n );
@@ -1329,7 +1335,7 @@ void preorder_traverse( T& n, std::invocable< T& > auto&& f )
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-void postorder_traverse( T& n, std::invocable< T& > auto&& f )
+void postorder_traverse( T& n, std::invocable< T& > auto&& f ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& h = Acc::get( n );
         if ( h.left )
@@ -1339,21 +1345,22 @@ void postorder_traverse( T& n, std::invocable< T& > auto&& f )
         f( n );
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 requires( _provides_sh_header< T, Acc > )
-void link_detached( T& n1, T& n2 ) noexcept
+void link_detached( T& n1, T& n2, Compare&& comp = std::less<>{} ) noexcept(
+    _nothrow_access_compare< Acc, T, Compare > )
 {
         ZLL_ASSERT( detached( n2 ) );
 
         auto p = _detach_parent( n1 );
 
-        auto& n = _sh_merge< T, Acc >( n1, n2, std::less<>{} );
+        auto& n = _sh_merge< T, Acc >( n1, n2, comp );
         _attach_parent( n, p );
 }
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-T& top_node_of( T& node ) noexcept
+T& top_node_of( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto* n = &node;
         for ( auto p = Acc::get( node ).parent; p; p = Acc::get( *n ).parent )
@@ -1366,7 +1373,7 @@ T& top_node_of( T& node ) noexcept
 
 template < typename T, typename Acc = typename T::access, typename Compare >
 requires( _provides_sh_header< T, Acc, Compare > )
-T* _sh_pop( T& node, Compare&& comp ) noexcept
+T* _sh_pop( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T, Compare > )
 {
         auto& h = Acc::get( node );
         T*    n = nullptr;
@@ -1442,18 +1449,18 @@ struct sh_base
                 return *this;
         }
 
-        ~sh_base()
+        ~sh_base() noexcept
         {
                 detach< Derived, access >( derived(), _comp );
         }
 
 protected:
-        Derived& derived()
+        Derived& derived() noexcept
         {
                 return *static_cast< Derived* >( this );
         }
 
-        Derived const& derived() const
+        Derived const& derived() const noexcept
         {
                 return *static_cast< Derived const* >( this );
         }

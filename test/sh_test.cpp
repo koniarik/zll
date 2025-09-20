@@ -37,7 +37,7 @@ struct node_t
 
         node_t( node_t& o ) noexcept
         {
-                link_detached_copy_of< node_t, hdr_access >( o, *this );
+                link_detached_copy_of< node_t, hdr_access >( o, *this, std::less<>{} );
         }
 
         node_t& operator=( node_t&& o ) noexcept
@@ -50,7 +50,7 @@ struct node_t
         node_t& operator=( node_t& o ) noexcept
         {
                 detach< node_t, hdr_access >( *this, std::less<>{} );
-                link_detached_copy_of< node_t, hdr_access >( o, *this );
+                link_detached_copy_of< node_t, hdr_access >( o, *this, std::less<>{} );
                 return *this;
         }
 
