@@ -100,7 +100,8 @@ std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& val
 {
         os << "{ ";
         for ( auto* v : value )
-                os << v << "(" << v->hdr.left << ", " << v->hdr.right << ") ";
+                os << (void*) v << "(" << (void*) v->hdr.left << ", " << (void*) v->hdr.right
+                   << ") ";
         os << "}";
         return os;
 }
@@ -109,8 +110,8 @@ std::ostream& operator<<( std::ostream& os, std::set< der const* > const& value 
 {
         os << "{ ";
         for ( auto* v : value )
-                os << v << "(" << der::access::get( *v ).left << ", "
-                   << der::access::get( *v ).right << ") ";
+                os << (void*) v << "(" << (void*) der::access::get( *v ).left << ", "
+                   << (void*) der::access::get( *v ).right << ") ";
         os << "}";
         return os;
 }
