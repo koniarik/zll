@@ -165,21 +165,21 @@ TEST_CASE_TEMPLATE( "dual", T, node_t, der )
 
 TEST_CASE_TEMPLATE( "triple", T, node_t, der )
 {
-        node_t d1, d2, d3;
+        T d1, d2, d3;
         SUBCASE( "link as last" )
         {
-                link_detached_as_last< node_t, hdr_access >( d1, d2 );
-                link_detached_as_last< node_t, hdr_access >( d2, d3 );
+                link_detached_as_last< T, typename T::access >( d1, d2 );
+                link_detached_as_last< T, typename T::access >( d2, d3 );
         }
         SUBCASE( "link as next" )
         {
-                link_detached_as_next< node_t, hdr_access >( d1, d2 );
-                link_detached_as_next< node_t, hdr_access >( d2, d3 );
+                link_detached_as_next< T, typename T::access >( d1, d2 );
+                link_detached_as_next< T, typename T::access >( d2, d3 );
         }
         check_links( d1 );
         check_for_each_node( d1, { &d1, &d2, &d3 } );
 
-        d2 = node_t{};
+        d2 = T{};
         check_links( d1 );
         check_for_each_node( d1, { &d1, &d3 } );
 }

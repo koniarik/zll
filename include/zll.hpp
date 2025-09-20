@@ -1081,30 +1081,31 @@ T* find_if_node( T& n, std::invocable< T& > auto&& f ) noexcept(
         return nullptr;
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 struct sh_header;
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 struct sh_heap;
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 concept _provides_sh_header = requires( T t ) {
         {
                 Acc::get( t )
-        } -> std::convertible_to< sh_header< std::remove_const_t< T >, Acc > const& >;
+        } -> std::convertible_to<
+            sh_header< std::remove_const_t< T >, Acc, std::remove_cvref_t< Compare > > const& >;
 };
 
-template < typename T, typename Acc = typename T::access >
-using _sh_ptr = _vptr< T, sh_heap< T, Acc > >;
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+using _sh_ptr = _vptr< T, sh_heap< T, Acc, Compare > >;
 
-template < typename T, typename Acc = typename T::access >
-auto* _node( _sh_ptr< T, Acc > p )
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+auto* _node( _sh_ptr< T, Acc, Compare > p )
 {
         return p.a();
 }
 
-template < typename T, typename Acc = typename T::access >
-auto* _heap( _sh_ptr< T, Acc > p )
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+auto* _heap( _sh_ptr< T, Acc, Compare > p )
 {
         return p.b();
 }
@@ -1127,19 +1128,19 @@ T& _detach_left( T& node ) noexcept
         return tmp;
 }
 
-template < typename T, typename Acc = typename T::access >
-T& _detach_first( sh_heap< T >& parent ) noexcept
+template < typename T, typename Acc = typename T::access, typename Compare >
+T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept
 {
-        T& tmp                 = *parent.first;
+        T& tmp                 = *parent.top;
         Acc::get( tmp ).parent = nullptr;
-        parent.first           = nullptr;
+        parent.top             = nullptr;
         return tmp;
 }
 
 template < typename T, typename Acc = typename T::access >
-_sh_ptr< T, Acc > _detach_parent( T& node ) noexcept
+auto _detach_parent( T& node ) noexcept
 {
-        _sh_ptr< T, Acc > tmp = Acc::get( node ).parent;
+        auto tmp = Acc::get( node ).parent;
 
         if ( auto* n = _node( tmp ) ) {
                 if ( Acc::get( *n ).left == &node )
@@ -1147,15 +1148,15 @@ _sh_ptr< T, Acc > _detach_parent( T& node ) noexcept
                 else if ( Acc::get( *n ).right == &node )
                         Acc::get( *n ).right = nullptr;
         } else if ( auto* h = _heap( tmp ) ) {
-                h->first = nullptr;
+                h->top = nullptr;
         }
         Acc::get( node ).parent = nullptr;
         return tmp;
 }
 
 /// Returns true if the node is detached from heap.
-template < typename T, typename Acc = typename T::access >
-requires( _provides_sh_header< T, Acc > )
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+requires( _provides_sh_header< T, Acc, Compare > )
 bool detached( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& n_hdr = Acc::get( node );
@@ -1176,15 +1177,15 @@ void _attach_left( T& parent, T& node ) noexcept
         Acc::get( node ).parent = parent;
 }
 
-template < typename T, typename Acc = typename T::access >
-void _attach_first( sh_heap< T, Acc >& parent, T& node ) noexcept
+template < typename T, typename Acc = typename T::access, typename Compare >
+void _attach_top( sh_heap< T, Acc, Compare >& parent, T& node ) noexcept
 {
-        parent.first            = &node;
+        parent.top              = &node;
         Acc::get( node ).parent = parent;
 }
 
-template < typename T, typename Acc = typename T::access >
-void _attach_parent( T& node, _sh_ptr< T, Acc > p ) noexcept
+template < typename T, typename Acc = typename T::access, typename Compare >
+void _attach_parent( T& node, _sh_ptr< T, Acc, Compare > p ) noexcept
 {
         Acc::get( node ).parent = p;
         if ( auto* n = _node( p ) ) {
@@ -1193,7 +1194,7 @@ void _attach_parent( T& node, _sh_ptr< T, Acc > p ) noexcept
                 else if ( !Acc::get( *n ).right )
                         Acc::get( *n ).right = &node;
         } else if ( auto* h = _heap( p ) ) {
-                h->first = &node;
+                h->top = &node;
         }
 }
 
@@ -1206,6 +1207,7 @@ T& _sh_merge_impl( T& left, T& right, Compare&& comp ) noexcept
         T* left_left = nullptr;
         if ( Acc::get( left ).left )
                 left_left = &_detach_left( left );
+
         if ( Acc::get( left ).right ) {
                 auto& left_right = _detach_right( left );
                 auto& new_left   = _sh_merge< T, Acc >( left_right, right, comp );
@@ -1225,7 +1227,7 @@ T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept
         ZLL_ASSERT( !Acc::get( left ).parent );
         ZLL_ASSERT( !Acc::get( right ).parent );
 
-        if ( comp( left, right ) )
+        if ( comp( right, left ) )
                 return _sh_merge_impl< T, Acc >( right, left, comp );
         else
                 return _sh_merge_impl< T, Acc >( left, right, comp );
@@ -1234,7 +1236,7 @@ T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept
 template < typename T, typename Acc = typename T::access >
 void _replace_in_parent( T& node, T& new_node ) noexcept
 {
-        _sh_ptr< T, Acc >& parent = Acc::get( node ).parent;
+        auto& parent = Acc::get( node ).parent;
 
         if ( auto* n = _node( parent ) ) {
                 if ( Acc::get( *n ).left == &node )
@@ -1242,7 +1244,7 @@ void _replace_in_parent( T& node, T& new_node ) noexcept
                 else if ( Acc::get( *n ).right == &node )
                         _attach_right( *n, new_node );
         } else if ( auto* h = _heap( parent ) ) {
-                _attach_first( *h, new_node );
+                _attach_top( *h, new_node );
         }
 
         parent = nullptr;
@@ -1283,15 +1285,15 @@ void link_detached_copy_of( T& node, T& cpy ) noexcept
         _attach_right( node, *n );
 }
 
-template < typename T, typename Acc = typename T::access >
-requires( _provides_sh_header< T, Acc > )
-void detach( T& node ) noexcept( _nothrow_access< Acc, T > )
+template < typename T, typename Acc = typename T::access, typename Compare >
+requires( _provides_sh_header< T, Acc, Compare > )
+void detach( T& node, Compare&& comp ) noexcept( _nothrow_access< Acc, T > )
 {
         T* n = nullptr;
         if ( Acc::get( node ).left && Acc::get( node ).right ) {
                 auto& l = _detach_left( node );
                 auto& r = _detach_right( node );
-                n       = &_sh_merge< T, Acc >( l, r, std::less<>{} );
+                n       = &_sh_merge< T, Acc >( l, r, comp );
         } else if ( Acc::get( node ).left ) {
                 n = &_detach_left( node );
         } else if ( Acc::get( node ).right ) {
@@ -1303,14 +1305,38 @@ void detach( T& node ) noexcept( _nothrow_access< Acc, T > )
 
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
-void for_each_node( T& n, std::invocable< T& > auto&& f )
+void inorder_traverse( T& n, std::invocable< T& > auto&& f )
 {
         auto& h = Acc::get( n );
         if ( h.left )
-                for_each_node< T, Acc >( *h.left, f );
+                inorder_traverse< T, Acc >( *h.left, f );
         f( n );
         if ( h.right )
-                for_each_node< T, Acc >( *h.right, f );
+                inorder_traverse< T, Acc >( *h.right, f );
+}
+
+template < typename T, typename Acc = typename T::access >
+requires( _provides_sh_header< T, Acc > )
+void preorder_traverse( T& n, std::invocable< T& > auto&& f )
+{
+        auto& h = Acc::get( n );
+        f( n );
+        if ( h.left )
+                preorder_traverse< T, Acc >( *h.left, f );
+        if ( h.right )
+                preorder_traverse< T, Acc >( *h.right, f );
+}
+
+template < typename T, typename Acc = typename T::access >
+requires( _provides_sh_header< T, Acc > )
+void postorder_traverse( T& n, std::invocable< T& > auto&& f )
+{
+        auto& h = Acc::get( n );
+        if ( h.left )
+                postorder_traverse< T, Acc >( *h.left, f );
+        if ( h.right )
+                postorder_traverse< T, Acc >( *h.right, f );
+        f( n );
 }
 
 template < typename T, typename Acc = typename T::access >
@@ -1325,12 +1351,43 @@ void link_detached( T& n1, T& n2 ) noexcept
         _attach_parent( n, p );
 }
 
-template < typename T, typename Acc >
+template < typename T, typename Acc = typename T::access >
+requires( _provides_sh_header< T, Acc > )
+T& top_node_of( T& node ) noexcept
+{
+        auto* n = &node;
+        for ( auto p = Acc::get( node ).parent; p; p = Acc::get( *n ).parent )
+                if ( auto* k = _node( p ) )
+                        n = k;
+                else
+                        break;
+        return *n;
+}
+
+template < typename T, typename Acc = typename T::access, typename Compare >
+requires( _provides_sh_header< T, Acc, Compare > )
+T* _sh_pop( T& node, Compare&& comp ) noexcept
+{
+        auto& h = Acc::get( node );
+        T*    n = nullptr;
+        if ( h.left && h.right ) {
+                auto& l = _detach_left( node );
+                auto& r = _detach_right( node );
+                n       = &_sh_merge< T, Acc >( l, r, comp );
+        } else if ( h.left ) {
+                n = &_detach_left( node );
+        } else if ( h.right ) {
+                n = &_detach_right( node );
+        }
+        return n;
+}
+
+template < typename T, typename Acc, typename Compare >
 struct sh_header
 {
-        T*                left   = nullptr;
-        T*                right  = nullptr;
-        _sh_ptr< T, Acc > parent = nullptr;
+        T*                         left   = nullptr;
+        T*                         right  = nullptr;
+        _sh_ptr< T, Acc, Compare > parent = nullptr;
 
         sh_header() noexcept                         = default;
         sh_header( sh_header const& )                = delete;
@@ -1339,7 +1396,7 @@ struct sh_header
         sh_header& operator=( sh_header&& ) noexcept = delete;
 };
 
-template < typename Derived >
+template < typename Derived, typename Compare = std::less<> >
 struct sh_base
 {
         struct access
@@ -1362,9 +1419,32 @@ struct sh_base
                 move_from_to< Derived, access >( o.derived(), derived() );
         }
 
+        sh_base& operator=( sh_base&& o ) noexcept
+        {
+                if ( this == &o )
+                        return *this;
+                detach< Derived, access >( derived(), _comp );
+                move_from_to< Derived, access >( o.derived(), derived() );
+                return *this;
+        }
+
+        sh_base( sh_base& o ) noexcept
+        {
+                link_detached_copy_of< Derived, access >( o.derived(), derived() );
+        }
+
+        sh_base& operator=( sh_base& o ) noexcept
+        {
+                if ( this == &o )
+                        return *this;
+                detach< Derived, access >( derived(), _comp );
+                link_detached_copy_of< Derived, access >( o.derived(), derived() );
+                return *this;
+        }
+
         ~sh_base()
         {
-                detach< Derived, access >( derived() );
+                detach< Derived, access >( derived(), _comp );
         }
 
 protected:
@@ -1379,63 +1459,115 @@ protected:
         }
 
 private:
-        sh_header< Derived, access > _hdr;
+        sh_header< Derived, access, Compare > _hdr;
+        [[no_unique_address]] Compare         _comp;
 };
 
-template < typename T, typename Acc >
+template < typename T, typename Acc, typename Compare >
 struct sh_heap
 {
-        T* first = nullptr;
-
-        sh_heap() noexcept                       = default;
-        sh_heap( sh_heap const& )                = delete;
-        sh_heap( sh_heap&& ) noexcept            = delete;
-        sh_heap& operator=( sh_heap const& )     = delete;
-        sh_heap& operator=( sh_heap&& ) noexcept = delete;
-
         static constexpr bool noexcept_access = _nothrow_access< Acc, T >;
+
+        sh_heap() noexcept                   = default;
+        sh_heap( sh_heap const& )            = delete;
+        sh_heap& operator=( sh_heap const& ) = delete;
+
+        sh_heap( Compare comp )
+          : _comp( std::move( comp ) )
+        {
+        }
+
+        sh_heap( sh_heap&& other ) noexcept
+          : _comp( std::move( other._comp ) )
+        {
+                if ( other.top ) {
+                        auto& n = _detach_top( other );
+                        _attach_top( *this, n );
+                }
+        }
+
+        sh_heap& operator=( sh_heap&& other ) noexcept
+        {
+                if ( this == &other )
+                        return *this;
+                _comp = std::move( other._comp );
+                if ( top )
+                        _detach_top( *this );
+                if ( other.top ) {
+                        auto& n = _detach_top( other );
+                        _attach_top( *this, n );
+                }
+                return *this;
+        }
+
+        sh_heap( std::initializer_list< T* > il ) noexcept( noexcept_access )
+        {
+                // XXX: well, this could be more optimal
+                for ( auto* n : il ) {
+                        ZLL_ASSERT( n );
+                        ZLL_ASSERT( detached( *n ) );
+                        link( *n );
+                }
+        }
 
         ~sh_heap() noexcept( noexcept_access )
         {
-                if ( first )
-                        _detach_first( *this );
+                if ( top )
+                        _detach_top( *this );
         }
 
         void link( T& node ) noexcept( noexcept_access )
         {
                 T* n = nullptr;
-                if ( first ) {
-                        auto& f = _detach_first( *this );
-                        n       = &_sh_merge< T, Acc >( f, node, std::less<>{} );
+                if ( top ) {
+                        auto& f = _detach_top( *this );
+                        n       = &_sh_merge< T, Acc >( f, node, _comp );
                 } else {
                         n = &node;
                 }
-                _attach_first( *this, *n );
+                _attach_top( *this, *n );
+        }
+
+        void merge( sh_heap&& other ) noexcept
+        {
+                if ( this == &other )
+                        return;
+                if ( empty() || other.empty() ) {
+                        *this = std::move( other );
+                        return;
+                }
+                auto& l   = _detach_top( *this );
+                auto& r   = _detach_top( other );
+                top       = &_sh_merge< T, Acc >( l, r, _comp );
+                other.top = nullptr;
         }
 
         bool empty() const noexcept
         {
-                return !first;
-        }
-
-        T& top() noexcept
-        {
-                ZLL_ASSERT( first );
-                return *first;
+                return !top;
         }
 
         void pop() noexcept( noexcept_access )
         {
-                ZLL_ASSERT( first );
-                _detach_first( *this );
+                ZLL_ASSERT( top );
+                auto& t = _detach_top( *this );
+                top     = _sh_pop( t, _comp );
+                if ( top )
+                        Acc::get( *top ).parent = *this;
         }
 
         T& take() noexcept( noexcept_access )
         {
-                ZLL_ASSERT( first );
-                T* n = _detach_first( *this );
-                return *n;
+                ZLL_ASSERT( top );
+                T& n = *top;
+                pop();
+                return n;
         }
+
+        T* top = nullptr;
+
+private:
+        [[no_unique_address]] Compare _comp{};
 };
 
 }  // namespace zll
