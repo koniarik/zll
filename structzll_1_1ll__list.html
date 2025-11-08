@@ -195,6 +195,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0f65edbf200d33be29439b31ee648f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">splice</a> (<a class="el" href="structzll_1_1ll__list.html#a67cee329308019f60f1006e7e7a3db32">iterator</a> pos, <a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
 <tr class="memdesc:a0f65edbf200d33be29439b31ee648f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts the nodes from <code>other</code> into this list before position <code>pos</code>.  <a href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">More...</a><br /></td></tr>
 <tr class="separator:a0f65edbf200d33be29439b31ee648f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a0b085be0b1e6066fde21c9e151fdf7fc">take_back</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
+<tr class="memdesc:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the last element of the list.  <a href="structzll_1_1ll__list.html#a0b085be0b1e6066fde21c9e151fdf7fc">More...</a><br /></td></tr>
+<tr class="separator:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf286c5d86f76f747a472a5e119b1f6e"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#abf286c5d86f76f747a472a5e119b1f6e">take_front</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
+<tr class="memdesc:abf286c5d86f76f747a472a5e119b1f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the first element of the list.  <a href="structzll_1_1ll__list.html#abf286c5d86f76f747a472a5e119b1f6e">More...</a><br /></td></tr>
+<tr class="separator:abf286c5d86f76f747a472a5e119b1f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1359bd94fbc097676904c240f76a063"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#af1359bd94fbc097676904c240f76a063">unique</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(std::equal_to&lt;&gt;{}(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
 <tr class="memdesc:af1359bd94fbc097676904c240f76a063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the list for which <code>std::equal_to&lt;&gt;</code> returns true.  <a href="structzll_1_1ll__list.html#af1359bd94fbc097676904c240f76a063">More...</a><br /></td></tr>
 <tr class="separator:af1359bd94fbc097676904c240f76a063"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1169,6 +1175,66 @@ template&lt;typename T , typename Acc &gt; </div>
 
 <p>Inserts the nodes from <code>other</code> into this list before position <code>pos</code>. </p>
 <p >If <code>pos</code> is equal to <code><a class="el" href="structzll_1_1ll__list.html#a1b82a94331b62555ae82bfa06c7648ed">end()</a></code>, the nodes are appended to the end of the list. </p>
+
+</div>
+</div>
+<a id="a0b085be0b1e6066fde21c9e151fdf7fc" name="a0b085be0b1e6066fde21c9e151fdf7fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b085be0b1e6066fde21c9e151fdf7fc">&#9670;&#160;</a></span>take_back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="structzll_1_1ll__list.html">zll::ll_list</a>&lt; T, Acc &gt;::take_back </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Detaches and returns the last element of the list. </p>
+<p >The second last element becomes the last element. Undefined behavior if the list is empty. </p>
+
+</div>
+</div>
+<a id="abf286c5d86f76f747a472a5e119b1f6e" name="abf286c5d86f76f747a472a5e119b1f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf286c5d86f76f747a472a5e119b1f6e">&#9670;&#160;</a></span>take_front()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="structzll_1_1ll__list.html">zll::ll_list</a>&lt; T, Acc &gt;::take_front </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Detaches and returns the first element of the list. </p>
+<p >The second element becomes the first element. Undefined behavior if the list is empty. </p>
 
 </div>
 </div>

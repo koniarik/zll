@@ -33,6 +33,8 @@ var structzll_1_1ll__list =
     [ "sort", "structzll_1_1ll__list.html#a4b49b3c7d230c92b47d0d333c22cf9bd", null ],
     [ "sort", "structzll_1_1ll__list.html#a2361dd25285cc5e663c90b974167d4a2", null ],
     [ "splice", "structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f", null ],
+    [ "take_back", "structzll_1_1ll__list.html#a0b085be0b1e6066fde21c9e151fdf7fc", null ],
+    [ "take_front", "structzll_1_1ll__list.html#abf286c5d86f76f747a472a5e119b1f6e", null ],
     [ "unique", "structzll_1_1ll__list.html#af1359bd94fbc097676904c240f76a063", null ],
     [ "unique", "structzll_1_1ll__list.html#a5d61b57194c6a5eb65ff9641af5d6895", null ],
     [ "first", "structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993", null ],
