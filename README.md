@@ -31,7 +31,7 @@ a.link_next(b);
 
 {
     // `b` will unlink itself and `c` will get linked after `a`
-    node c{std::move(b)}; 
+    node c{std::move(b)};
 }
 
 // here `a` has no successor as `c` unlinked itself in destructor
@@ -49,7 +49,7 @@ struct R2D2{
         leg left_leg;
         leg right_leg;
         wheel bot_wheel;
-        
+
         arm arm1;
         arm arm2;
     } chassis;
@@ -95,7 +95,7 @@ R2D2 build_R2D2(zll::ll_list< comp_iface >& l){
 ```
 
 Hence once for example `voice_synth` is built, it can be just
-moved out of the build_voice function, the R2D2 can be built 
+moved out of the build_voice function, the R2D2 can be built
 by itself in similar way, and during any move or destruction
 the components will stay registered in the linkd list itself.
 
@@ -137,14 +137,12 @@ For the library to work, given `node` it needs a way of accessing the header sto
 The `accessor` is customization point to provide ability to extract the header, anytime
 the library wants to access the header of node it uses `auto& node_header = Acc::get(my_node);`.
 
-This give the user ultimate flexibility to store the header anywhere in the type or to 
+This give the user ultimate flexibility to store the header anywhere in the type or to
 have multiple headers at once (each usable for different linked list).
 
 `ll_base` is jut convenience base class that contains the `ll_header` and provides
-accessor for it. 
+accessor for it.
 
 `ll_header` needs capability to point to the list structure itself in case
 last or first item of the list is being operated on - these are pointed-to
 by the list, so the node needs the pointer to list to unlink itself.
-
-## 

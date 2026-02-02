@@ -6,10 +6,8 @@ project(zll)
 
 add_library(zll INTERFACE include/zll.hpp)
 target_include_directories(
-  zll INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
+  zll INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                $<INSTALL_INTERFACE:include>)
 target_compile_features(zll INTERFACE cxx_std_20)
 
 add_library(zll::zll ALIAS zll)
@@ -19,14 +17,13 @@ install(FILES include/zll.hpp DESTINATION include/)
 install(
   TARGETS zll
   EXPORT zll
-  INCLUDES DESTINATION include/
-)
+  INCLUDES
+  DESTINATION include/)
 install(
   EXPORT zll
   FILE zll-config.cmake
   NAMESPACE zll::
-  DESTINATION lib/cmake/zll/
-)
+  DESTINATION lib/cmake/zll/)
 
 # Tests configuration
 if(ZLL_TESTS_ENABLED)

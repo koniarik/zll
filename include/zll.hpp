@@ -1,6 +1,6 @@
 /// MIT License
 ///
-/// Copyright (c) 2024 koniarik
+/// Copyright (c) 2024-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -1111,7 +1111,7 @@ concept _provides_sh_header = requires( T t ) {
         {
                 Acc::get( t )
         } -> std::convertible_to<
-            sh_header< std::remove_const_t< T >, Acc, std::remove_cvref_t< Compare > > const& >;
+              sh_header< std::remove_const_t< T >, Acc, std::remove_cvref_t< Compare > > const& >;
 };
 
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
@@ -1563,8 +1563,8 @@ struct sh_heap
                         *this = std::move( other );
                         return;
                 }
-                auto& l   = _detach_top( *this );
-                auto& r   = _detach_top( other );
+                auto& l      = _detach_top( *this );
+                auto& r      = _detach_top( other );
                 auto& merged = _sh_merge< T, Acc >( l, r, _comp );
                 _attach_top( *this, merged );
                 other.top = nullptr;
