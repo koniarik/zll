@@ -1,0 +1,29 @@
+name: clang-tidy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - name: update apt
+        run: sudo apt update
+
+      - name: install deps
+        run: sudo apt install ninja-build ccache clang-tidy parallel
+
+      - name: configure
+        run: make configure
+
+      - name: clang-tidy
+        run: make clang-tidy

@@ -1,3 +1,30 @@
+# Build directories
 build/
+
+# IDE and editor files
 .vscode
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment configuration
 .envrc
+
+# Compilation database and caches
+.cache/
+compile_commands.json
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+coverage.info
+coverage_html/
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

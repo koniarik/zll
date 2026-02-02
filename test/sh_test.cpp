@@ -289,6 +289,41 @@ void check_heap_property( T& node, Compare comp = {} )
         }
 }
 
+template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+void check_heap_coherence( sh_heap< T, Acc, Compare > const& heap )
+{
+        if ( !heap.top )
+                return;
+
+        // Check that top node's parent points back to the heap
+        auto& top_hdr = Acc::get( *heap.top );
+        auto* h       = _heap( top_hdr.parent );
+        CHECK_EQ( h, &heap );
+
+        // Recursively check all nodes in the tree
+        std::function< void( T const& ) > check_node = [&]( T const& node ) {
+                auto& hdr = Acc::get( node );
+
+                if ( hdr.left ) {
+                        // Check that left child's parent points back to this node
+                        auto& left_hdr = Acc::get( *hdr.left );
+                        auto* n        = _node( left_hdr.parent );
+                        CHECK_EQ( n, &node );
+                        check_node( *hdr.left );
+                }
+
+                if ( hdr.right ) {
+                        // Check that right child's parent points back to this node
+                        auto& right_hdr = Acc::get( *hdr.right );
+                        auto* n         = _node( right_hdr.parent );
+                        CHECK_EQ( n, &node );
+                        check_node( *hdr.right );
+                }
+        };
+
+        check_node( *heap.top );
+}
+
 TEST_CASE( "merge" )
 {
         struct comparable_node : public sh_base< comparable_node >
@@ -640,14 +675,19 @@ TEST_CASE( "custom_comparator" )
                 h1.link( n1 );
                 h1.link( n3 );
                 h1.link( n5 );
+                check_heap_coherence( h1 );
+
                 h2.link( n2 );
                 h2.link( n4 );
                 h2.link( n6 );
+                check_heap_coherence( h2 );
 
                 CHECK_EQ( h1.top->value, 5 );
                 CHECK_EQ( h2.top->value, 6 );
 
                 h1.merge( std::move( h2 ) );
+                check_heap_coherence( h1 );
+                check_heap_coherence( h2 );
 
                 CHECK( h2.empty() );
                 CHECK_FALSE( h1.empty() );
@@ -657,6 +697,7 @@ TEST_CASE( "custom_comparator" )
                 count_nodes( *h1.top, node_count );
                 CHECK_EQ( node_count, 6 );
                 check_heap_property( *h1.top, std::greater<>{} );
+                check_heap_coherence( h1 );
         }
 }
 }  // namespace

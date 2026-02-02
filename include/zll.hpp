@@ -1325,7 +1325,7 @@ void detach( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T
         }
         if ( n )
                 _replace_in_parent( node, *n );
-        else if ( Acc::get( node ).parent )
+        else
                 _detach_parent( node );
 }
 
@@ -1565,7 +1565,8 @@ struct sh_heap
                 }
                 auto& l   = _detach_top( *this );
                 auto& r   = _detach_top( other );
-                top       = &_sh_merge< T, Acc >( l, r, _comp );
+                auto& merged = _sh_merge< T, Acc >( l, r, _comp );
+                _attach_top( *this, merged );
                 other.top = nullptr;
         }
 
