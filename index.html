@@ -139,7 +139,11 @@ Example</h2>
 <div class="line"><span class="keyword">struct </span>voice_synth : comp_iface { ... };</div>
 <div class="line"><span class="keyword">struct </span>leg : comp_iface { ... };</div>
 </div><!-- fragment --><p >The key thing: we just made the components something that can be part of linked list, but is still movable, or can unregister by itself:</p>
-<div class="fragment"><div class="line">voice_synth build_voice(<a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a>&amp;);</div>
+<div class="fragment"><div class="line">voice_synth build_voice(<a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a>&amp; l){</div>
+<div class="line">    voice_synth v;</div>
+<div class="line">    l.<a class="code hl_function" href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">link_back</a>(v);</div>
+<div class="line">    <span class="keywordflow">return</span> v;</div>
+<div class="line">}</div>
 <div class="line"> </div>
 <div class="line">R2D2 build_R2D2(<a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a>&amp; l){</div>
 <div class="line">    <span class="keywordflow">return</span> R2D2{</div>
@@ -148,8 +152,41 @@ Example</h2>
 <div class="line">    };</div>
 <div class="line">}</div>
 <div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:641</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html_a0f5fbc8c0b897d6c0a31e7006203fcd9"><div class="ttname"><a href="structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9">zll::ll_list::link_back</a></div><div class="ttdeci">void link_back(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node as the last element of the list.</div><div class="ttdef"><b>Definition:</b> zll.hpp:896</div></div>
 </div><!-- fragment --><p >Hence once for example <code>voice_synth</code> is built, it can be just moved out of the build_voice function, the R2D2 can be built by itself in similar way, and during any move or destruction the components will stay registered in the linkd list itself.</p>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a> status_list;</div>
+<div class="line">R2D2 r2d2 = build_R2D2(status_list);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// list is iterable</span></div>
+<div class="line"><span class="keywordflow">for</span>(<span class="keyword">auto</span>&amp; comp : status_list){</div>
+<div class="line">    std::cout &lt;&lt; comp.get_status() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// or we can iterate just by having one node</span></div>
+<div class="line">for_each_node(r2d2.chassis.left_leg, [](comp_iface&amp; comp){</div>
+<div class="line">    std::cout &lt;&lt; comp.get_status() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// if we move r2d2 it still works</span></div>
+<div class="line"><span class="keyword">struct </span>millennium_falcon {</div>
+<div class="line">    R2D2 r2d2;</div>
+<div class="line">}</div>
+<div class="line">millennium_falcon falcon{ .r2d2 = std::move(r2d2) };</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span>(<span class="keyword">auto</span>&amp; comp : status_list){</div>
+<div class="line">    <span class="comment">// note that same status list as above is used, the components are still registered in it</span></div>
+<div class="line">    std::cout &lt;&lt; comp.get_status() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// re-link first and last node to new list</span></div>
+<div class="line">    <a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a> another_list = std::move(status_list);</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// here, first and last node unlinked from the another list - the nodes are list-less.</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+Usage</h2>
+<p >Library is provided as single header file <code><a class="el" href="zll_8hpp.html">zll.hpp</a></code>, just include it where needed, or use this as any other cmake library. Bare minimum is C++20. No dependency except for the standard library.</p>
+<h2><a class="anchor" id="autotoc_md3"></a>
 How it works</h2>
 <p >Any member of the linked list has to contain <code>ll_header</code> which looks similar to this:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc &gt;</div>
@@ -178,7 +215,72 @@ How it works</h2>
 </div><!-- fragment --><p >For the library to work, given <code>node</code> it needs a way of accessing the header stored inside. The <code>accessor</code> is customization point to provide ability to extract the header, anytime the library wants to access the header of node it uses <code>auto&amp; node_header = Acc::get(my_node);</code>.</p>
 <p >This give the user ultimate flexibility to store the header anywhere in the type or to have multiple headers at once (each usable for different linked list).</p>
 <p ><code>ll_base</code> is jut convenience base class that contains the <code>ll_header</code> and provides accessor for it.</p>
-<p ><code>ll_header</code> needs capability to point to the list structure itself in case last or first item of the list is being operated on - these are pointed-to by the list, so the node needs the pointer to list to unlink itself. </p>
+<p ><code>ll_header</code> needs capability to point to the list structure itself in case last or first item of the list is being operated on - these are pointed-to by the list, so the node needs the pointer to list to unlink itself.</p>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Skew heap</h2>
+<p >For the sake of all purposes the skew heap is implemented in similar way as the linked list above, the nodes are intrusive, non-owning, movable, and unlink during destruction. Skep heap provides partial sort of nodes and is usabel for priority queue or similar structures. More about the data structure here: (<a href="https://en.wikipedia.org/wiki/Skew_heap">https://en.wikipedia.org/wiki/Skew_heap</a>)[<a href="https://en.wikipedia.org/wiki/Skew_heap">https://en.wikipedia.org/wiki/Skew_heap</a>].</p>
+<p >They key value of the skew heap of binary heap is that skew heap does not require efficient access to last element to insert new item, at the cost of less optimal structure.</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Timer Example</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="zll_8hpp.html">zll.hpp</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>timer_event : <a class="code hl_struct" href="structzll_1_1sh__base.html">zll::sh_base</a>&lt;timer_event&gt; {</div>
+<div class="line">    uint64_t deadline;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span>* name;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">bool</span> operator&lt;(<span class="keyword">const</span> timer_event&amp; other)<span class="keyword"> const </span>{</div>
+<div class="line">        <span class="keywordflow">return</span> deadline &lt; other.deadline;  <span class="comment">// earliest deadline first</span></div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <a class="code hl_struct" href="structzll_1_1sh__heap.html">zll::sh_heap&lt;timer_event&gt;</a> timers;</div>
+<div class="line">    uint64_t now = 0;</div>
+<div class="line"> </div>
+<div class="line">    timer_event t1(100, <span class="stringliteral">&quot;timeout_1&quot;</span>);</div>
+<div class="line">    timer_event t2(50, <span class="stringliteral">&quot;timeout_2&quot;</span>);</div>
+<div class="line">    timer_event t3(150, <span class="stringliteral">&quot;timeout_3&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a>(t1);</div>
+<div class="line">    timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a>(t2);</div>
+<div class="line">    timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a>(t3);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Process timers</span></div>
+<div class="line">    <span class="keywordflow">while</span> (!timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a>()) {</div>
+<div class="line">        <span class="keyword">auto</span>&amp; next = *timers.<a class="code hl_variable" href="structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164">top</a>;</div>
+<div class="line">        now = next.deadline;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Fire: &quot;</span> &lt;&lt; next.name &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; now &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">        timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213">take</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Demonstrate auto-cancel: timer removes itself when destroyed</span></div>
+<div class="line">    {</div>
+<div class="line">        timer_event short_lived(200, <span class="stringliteral">&quot;canceled&quot;</span>);</div>
+<div class="line">        timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a>(short_lived);</div>
+<div class="line">        <span class="comment">// short_lived auto-unlinks here when going out of scope</span></div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Heap empty: &quot;</span> &lt;&lt; timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a>() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;  <span class="comment">// true</span></div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructzll_1_1sh__base_html"><div class="ttname"><a href="structzll_1_1sh__base.html">zll::sh_base</a></div><div class="ttdoc">CRTP base class for skew heap nodes containing sh_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1451</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html"><div class="ttname"><a href="structzll_1_1sh__heap.html">zll::sh_heap</a></div><div class="ttdoc">Skew heap implementation.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1521</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_a98e961c5fb278fd3ab7f9b6099df46af"><div class="ttname"><a href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">zll::sh_heap::link</a></div><div class="ttdeci">void link(T &amp;node) noexcept(noexcept_access)</div><div class="ttdoc">Links the node node into the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1586</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_ad21dc27a8ed200cb10035c1dabc73213"><div class="ttname"><a href="structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213">zll::sh_heap::take</a></div><div class="ttdeci">T &amp; take() noexcept(noexcept_access)</div><div class="ttdoc">Unlinks and returns the top node from the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1635</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_adfcc52f4d05a15e7c95870cf28da6ecb"><div class="ttname"><a href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">zll::sh_heap::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Returns true if the heap is empty, i.e. contains no nodes.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1616</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_afa77a00b10a34e2749b17faad0587164"><div class="ttname"><a href="structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164">zll::sh_heap::top</a></div><div class="ttdeci">T * top</div><div class="ttdef"><b>Definition:</b> zll.hpp:1643</div></div>
+<div class="ttc" id="azll_8hpp_html"><div class="ttname"><a href="zll_8hpp.html">zll.hpp</a></div></div>
+</div><!-- fragment --><p >Key benefits:</p><ul>
+<li>Timer objects can live anywhere (stack, member variable, container)</li>
+<li>Automatic cancellation on destruction - no manual cleanup</li>
+<li>Move timer object freely - it stays registered in heap</li>
+<li>No dynamic allocation required for heap structure</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Assert</h2>
+<p >Library asserts by using custom <code>ZLL_ASSERT</code> macro, by default it maps to standard <code>assert</code>, but user can override it before including the header to use custom assert mechanism. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

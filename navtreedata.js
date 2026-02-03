@@ -27,7 +27,12 @@ var NAVTREE =
   [ "zll", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Example", "index.html#autotoc_md1", null ],
-      [ "How it works", "index.html#autotoc_md2", null ],
+      [ "Usage", "index.html#autotoc_md2", null ],
+      [ "How it works", "index.html#autotoc_md3", null ],
+      [ "Skew heap", "index.html#autotoc_md4", [
+        [ "Timer Example", "index.html#autotoc_md5", null ]
+      ] ],
+      [ "Assert", "index.html#autotoc_md6", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
@@ -57,7 +62,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structzll_1_1sh__base.html#ab65bc283b898691cd1251419d0465238"
+"structzll_1_1sh__base.html#a8018e7c256d237e0349027fcfff7cef3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
