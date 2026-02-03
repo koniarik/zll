@@ -22,6 +22,7 @@
 #include "zll.hpp"
 
 #include <doctest/doctest.h>
+#include <functional>
 #include <iostream>
 #include <list>
 #include <set>
