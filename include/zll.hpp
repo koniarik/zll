@@ -380,12 +380,12 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
     _nothrow_access< Acc, T > && noexcept( comp( lhf, rhf ) ) )
 {
         detach_range( rhf, rhl );
-        T*      lh    = &lhf;
-        T*      rh    = &rhf;
-        T*      first = nullptr;
-        T*      last  = nullptr;
-        _ll_ptr pred  = Acc::get( lhf ).prev;
-        _ll_ptr succ  = Acc::get( lhl ).next;
+        T*                lh    = &lhf;
+        T*                rh    = &rhf;
+        T*                first = nullptr;
+        T*                last  = nullptr;
+        _ll_ptr< T, Acc > pred  = Acc::get( lhf ).prev;
+        _ll_ptr< T, Acc > succ  = Acc::get( lhl ).next;
         while ( lh && rh ) {
                 T* tmp = nullptr;
                 if ( comp( *rh, *lh ) ) {
