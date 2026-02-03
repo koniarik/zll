@@ -1546,12 +1546,13 @@ $(document).ready(function(){initNavTree('zll_8hpp_source.html',''); initResizab
 <div class="line"><a id="l01640" name="l01640"></a><span class="lineno"> 1640</span>                <span class="keywordflow">return</span> n;</div>
 <div class="line"><a id="l01641" name="l01641"></a><span class="lineno"> 1641</span>        }</div>
 <div class="line"><a id="l01642" name="l01642"></a><span class="lineno"> 1642</span> </div>
-<div class="line"><a id="l01643" name="l01643"></a><span class="lineno"> 1643</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l01644" name="l01644"></a><span class="lineno"> 1644</span>        T*                            top = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l01645" name="l01645"></a><span class="lineno"> 1645</span>        [[no_unique_address]] Compare _comp{};</div>
-<div class="line"><a id="l01646" name="l01646"></a><span class="lineno"> 1646</span>};</div>
-<div class="line"><a id="l01647" name="l01647"></a><span class="lineno"> 1647</span> </div>
-<div class="line"><a id="l01648" name="l01648"></a><span class="lineno"> 1648</span>}  <span class="comment">// namespace zll</span></div>
+<div class="line"><a id="l01643" name="l01643"></a><span class="lineno"><a class="line" href="structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164"> 1643</a></span>        T* top = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l01644" name="l01644"></a><span class="lineno"> 1644</span> </div>
+<div class="line"><a id="l01645" name="l01645"></a><span class="lineno"> 1645</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l01646" name="l01646"></a><span class="lineno"> 1646</span>        [[no_unique_address]] Compare _comp{};</div>
+<div class="line"><a id="l01647" name="l01647"></a><span class="lineno"> 1647</span>};</div>
+<div class="line"><a id="l01648" name="l01648"></a><span class="lineno"> 1648</span> </div>
+<div class="line"><a id="l01649" name="l01649"></a><span class="lineno"> 1649</span>}  <span class="comment">// namespace zll</span></div>
 <div class="ttc" id="anamespacezll_html"><div class="ttname"><a href="namespacezll.html">zll</a></div><div class="ttdef"><b>Definition:</b> zll.hpp:43</div></div>
 <div class="ttc" id="anamespacezll_html_a0f5d6a98fc40a5b09ff7b6db2f55dff5"><div class="ttname"><a href="namespacezll.html#a0f5d6a98fc40a5b09ff7b6db2f55dff5">zll::range_unique</a></div><div class="ttdeci">std::size_t range_unique(T &amp;first, T &amp;last, BinPred &amp;&amp;p=std::equal_to&lt;&gt;{}) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(p(first, last)))</div><div class="ttdoc">Removes all consecutive nodes in the range [first, last] for which p returns true.</div><div class="ttdef"><b>Definition:</b> zll.hpp:471</div></div>
 <div class="ttc" id="anamespacezll_html_a144697c395d7e039e0aca2a585fbe792"><div class="ttname"><a href="namespacezll.html#a144697c395d7e039e0aca2a585fbe792">zll::move_from_to</a></div><div class="ttdeci">void move_from_to(T &amp;from, T &amp;to) noexcept(_nothrow_access&lt; Acc, T &gt;)</div><div class="ttdoc">Links predecessor and successor of from node as predecessor and successor of to node.</div><div class="ttdef"><b>Definition:</b> zll.hpp:221</div></div>
