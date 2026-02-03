@@ -3,7 +3,7 @@ ZLL - Z Linked List
 
 ---
 
-[Documentation](https://koniarik.github.io/zll/)
+[Documentation](https://koniarik.github.io/zll/namespacezll.html)
 
 </div>
 
