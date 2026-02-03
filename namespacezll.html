@@ -115,10 +115,13 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-owning linked list container, expects nodes to contain <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a> as member.  <a href="structzll_1_1ll__list.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html">sh_base</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRTP base class for skew heap nodes containing <code><a class="el" href="structzll_1_1sh__header.html" title="Skew heap header containing pointers to left and right children and to the parent node or heap.">sh_header</a></code>.  <a href="structzll_1_1sh__base.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__header.html">sh_header</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skew heap header containing pointers to left and right children and to the parent node or heap.  <a href="structzll_1_1sh__header.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skew heap implementation.  <a href="structzll_1_1sh__heap.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -126,11 +129,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a6d418476eff4046b39fc5d0335ff6693"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a6d418476eff4046b39fc5d0335ff6693"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">detach</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
-<tr class="memdesc:a6d418476eff4046b39fc5d0335ff6693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink a node from existing list.  <a href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">More...</a><br /></td></tr>
+<tr class="memdesc:a6d418476eff4046b39fc5d0335ff6693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink a node from the list.  <a href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">More...</a><br /></td></tr>
 <tr class="separator:a6d418476eff4046b39fc5d0335ff6693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a639d609c33a126597e38011900c08364"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare &gt; <br />
 requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</td></tr>
 <tr class="memitem:a639d609c33a126597e38011900c08364"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a639d609c33a126597e38011900c08364">detach</a> (T &amp;node, Compare &amp;&amp;comp) noexcept(_nothrow_access_compare&lt; Acc, T, Compare &gt;)</td></tr>
+<tr class="memdesc:a639d609c33a126597e38011900c08364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink a node from the heap.  <a href="namespacezll.html#a639d609c33a126597e38011900c08364">More...</a><br /></td></tr>
 <tr class="separator:a639d609c33a126597e38011900c08364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aee72801f82d0cebea0f695436f422f"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
@@ -170,6 +174,7 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a18cb8f77ce9ca47bc8d873ec2bda5a7a"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a18cb8f77ce9ca47bc8d873ec2bda5a7a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a18cb8f77ce9ca47bc8d873ec2bda5a7a">inorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a18cb8f77ce9ca47bc8d873ec2bda5a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverse the heap in-order and call <code>f</code> for each node.  <a href="namespacezll.html#a18cb8f77ce9ca47bc8d873ec2bda5a7a">More...</a><br /></td></tr>
 <tr class="separator:a18cb8f77ce9ca47bc8d873ec2bda5a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71541bac40e1e9feef56f551b0bbe9ce"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
@@ -179,6 +184,7 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a1d8e37f363fceef88778368b5d5dc860"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a1d8e37f363fceef88778368b5d5dc860"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1d8e37f363fceef88778368b5d5dc860">link_detached</a> (T &amp;n1, T &amp;n2, Compare &amp;&amp;comp=std::less&lt;&gt;{}) noexcept(_nothrow_access_compare&lt; Acc, T, Compare &gt;)</td></tr>
+<tr class="memdesc:a1d8e37f363fceef88778368b5d5dc860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link a detached node <code>n2</code> to the parent of <code>n1</code>.  <a href="namespacezll.html#a1d8e37f363fceef88778368b5d5dc860">More...</a><br /></td></tr>
 <tr class="separator:a1d8e37f363fceef88778368b5d5dc860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad06c452ca25356a01e4ac1a88d341add"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
@@ -200,10 +206,11 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:aaec58819ce3b46a79a6ba5beef9f2fc1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#aaec58819ce3b46a79a6ba5beef9f2fc1">link_detached_as_prev</a> (T &amp;n, T &amp;d) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
 <tr class="memdesc:aaec58819ce3b46a79a6ba5beef9f2fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link detached node <code>d</code> before node <code>n</code>, any predecessor of <code>n</code> will be predecessor of <code>d</code>.  <a href="namespacezll.html#aaec58819ce3b46a79a6ba5beef9f2fc1">More...</a><br /></td></tr>
 <tr class="separator:aaec58819ce3b46a79a6ba5beef9f2fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3735f9abc58f2c4a5775a9ee0008df7e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; <br />
+<tr class="memitem:a856b79e5297c4978343fc0e99dc5088d"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
-<tr class="memitem:a3735f9abc58f2c4a5775a9ee0008df7e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a3735f9abc58f2c4a5775a9ee0008df7e">link_detached_copy_of</a> (T &amp;node, T &amp;cpy, Compare &amp;&amp;comp=std::less&lt;&gt;{}) noexcept(_nothrow_access_compare&lt; Acc, T, Compare &gt;)</td></tr>
-<tr class="separator:a3735f9abc58f2c4a5775a9ee0008df7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a856b79e5297c4978343fc0e99dc5088d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a856b79e5297c4978343fc0e99dc5088d">link_detached_to</a> (T &amp;node, T &amp;other, Compare &amp;&amp;comp=std::less&lt;&gt;{}) noexcept(_nothrow_access_compare&lt; Acc, T, Compare &gt;)</td></tr>
+<tr class="memdesc:a856b79e5297c4978343fc0e99dc5088d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link a detached node <code>other</code> to <code>node</code>.  <a href="namespacezll.html#a856b79e5297c4978343fc0e99dc5088d">More...</a><br /></td></tr>
+<tr class="separator:a856b79e5297c4978343fc0e99dc5088d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60d848eba83fa0a8aa19aa4a6496328e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a60d848eba83fa0a8aa19aa4a6496328e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a60d848eba83fa0a8aa19aa4a6496328e">link_group</a> (std::initializer_list&lt; T * &gt; nodes)</td></tr>
@@ -232,14 +239,17 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a24b2449a29846b12ecb477ed4a52f8f0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a24b2449a29846b12ecb477ed4a52f8f0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a24b2449a29846b12ecb477ed4a52f8f0">move_from_to</a> (T &amp;from, T &amp;to) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a24b2449a29846b12ecb477ed4a52f8f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links all children from <code>from</code> node to <code>to</code> node. The <code>to</code> node must be detached.  <a href="namespacezll.html#a24b2449a29846b12ecb477ed4a52f8f0">More...</a><br /></td></tr>
 <tr class="separator:a24b2449a29846b12ecb477ed4a52f8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8daf6432db70018790a23a5b9bad24a6"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a8daf6432db70018790a23a5b9bad24a6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a8daf6432db70018790a23a5b9bad24a6">postorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a8daf6432db70018790a23a5b9bad24a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverse the heap post-order and call <code>f</code> for each node.  <a href="namespacezll.html#a8daf6432db70018790a23a5b9bad24a6">More...</a><br /></td></tr>
 <tr class="separator:a8daf6432db70018790a23a5b9bad24a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73348745e5791eb7557fd8367a7e14ff"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a73348745e5791eb7557fd8367a7e14ff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a73348745e5791eb7557fd8367a7e14ff">preorder_traverse</a> (T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a73348745e5791eb7557fd8367a7e14ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverse the heap pre-order and call <code>f</code> for each node.  <a href="namespacezll.html#a73348745e5791eb7557fd8367a7e14ff">More...</a><br /></td></tr>
 <tr class="separator:a73348745e5791eb7557fd8367a7e14ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ccc5e1d745179f3326f0ff913454176"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc , typename Compare  = std::less&lt;&gt;&gt; <br />
 requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
@@ -264,6 +274,7 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a71983897a243ee29a1a0d1ce5f1ad236"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; <br />
 requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 <tr class="memitem:a71983897a243ee29a1a0d1ce5f1ad236"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a71983897a243ee29a1a0d1ce5f1ad236">top_node_of</a> (T &amp;node) noexcept(_nothrow_access&lt; Acc, T &gt;)</td></tr>
+<tr class="memdesc:a71983897a243ee29a1a0d1ce5f1ad236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the top node of the heap that <code>node</code> is in.  <a href="namespacezll.html#a71983897a243ee29a1a0d1ce5f1ad236">More...</a><br /></td></tr>
 <tr class="separator:a71983897a243ee29a1a0d1ce5f1ad236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -294,7 +305,7 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 </table>
 </div><div class="memdoc">
 
-<p>Unlink a node from existing list. </p>
+<p>Unlink a node from the list. </p>
 <p >Previous or following node are linked together instead. Node itself does not keep any connections. </p>
 
 </div>
@@ -335,6 +346,9 @@ requires ( _provides_sh_header&lt; T, Acc, Compare &gt; )</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Unlink a node from the heap. </p>
+<p >If the node has two children, they are merged using <code>comp</code> and the result is linked to the parent of the detached node. If the node has one child, that child is linked to the parent of the detached node. If the node has no children, the parent pointer is set to nullptr. </p>
 
 </div>
 </div>
@@ -636,6 +650,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
 </table>
 </div><div class="memdoc">
 
+<p>Traverse the heap in-order and call <code>f</code> for each node. </p>
+<p >The order of the nodes is: left child, node, right child. </p>
+
 </div>
 </div>
 <a id="a71541bac40e1e9feef56f551b0bbe9ce" name="a71541bac40e1e9feef56f551b0bbe9ce"></a>
@@ -711,6 +728,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Link a detached node <code>n2</code> to the parent of <code>n1</code>. </p>
+<p >Maintains the heap property using <code>comp</code>. The <code>n2</code> node must be detached before calling this function. </p>
 
 </div>
 </div>
@@ -882,8 +902,8 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 
 </div>
 </div>
-<a id="a3735f9abc58f2c4a5775a9ee0008df7e" name="a3735f9abc58f2c4a5775a9ee0008df7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3735f9abc58f2c4a5775a9ee0008df7e">&#9670;&#160;</a></span>link_detached_copy_of()</h2>
+<a id="a856b79e5297c4978343fc0e99dc5088d" name="a856b79e5297c4978343fc0e99dc5088d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a856b79e5297c4978343fc0e99dc5088d">&#9670;&#160;</a></span>link_detached_to()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -895,7 +915,7 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void zll::link_detached_copy_of </td>
+          <td class="memname">void zll::link_detached_to </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>node</em>, </td>
@@ -904,7 +924,7 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>cpy</em>, </td>
+          <td class="paramname"><em>other</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -924,6 +944,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Link a detached node <code>other</code> to <code>node</code>. </p>
+<p >Maintains the heap property using <code>comp</code>. The <code>other</code> node must be detached before calling this function. </p>
 
 </div>
 </div>
@@ -1145,7 +1168,7 @@ requires ( _provides_ll_header&lt; T, Acc &gt; )</div>
 </div><div class="memdoc">
 
 <p>Links predecessor and successor of <code>from</code> node as predecessor and successor of <code>to</code> node. </p>
-<p >Can be used to implement move semantics of custom nodes. Undefined behavior if <code>to</code> is not detached. </p>
+<p >The <code>to</code> node must be detached. </p>
 
 </div>
 </div>
@@ -1186,6 +1209,8 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
 </table>
 </div><div class="memdoc">
 
+<p>Links all children from <code>from</code> node to <code>to</code> node. The <code>to</code> node must be detached. </p>
+
 </div>
 </div>
 <a id="a8daf6432db70018790a23a5b9bad24a6" name="a8daf6432db70018790a23a5b9bad24a6"></a>
@@ -1225,6 +1250,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
 </table>
 </div><div class="memdoc">
 
+<p>Traverse the heap post-order and call <code>f</code> for each node. </p>
+<p >The order of the nodes is: left child, right child, node. </p>
+
 </div>
 </div>
 <a id="a73348745e5791eb7557fd8367a7e14ff" name="a73348745e5791eb7557fd8367a7e14ff"></a>
@@ -1263,6 +1291,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Traverse the heap pre-order and call <code>f</code> for each node. </p>
+<p >The order of the nodes is: node, left child, right child. </p>
 
 </div>
 </div>
@@ -1477,6 +1508,9 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns the top node of the heap that <code>node</code> is in. </p>
+<p >The top node is the node that has no parent and is an ancestor of <code>node</code>. If <code>node</code> is detached, it is returned. </p>
 
 </div>
 </div>

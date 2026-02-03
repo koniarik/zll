@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><div align="center"><a href="https://koniarik.github.io/zll/">Documentation</a></div><div align="center"></div><p >Single-file header-only implementation of intrusive double-linked list and skew heap. The container does not own the data, but rather provides secondary data structure for example for registration of callbacks.</p>
 <p >The linked list pointers are embed into the nodes of the list, easier is using CRTP baseclass:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>node : <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt; node &gt;{};</div>
-<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:961</div></div>
+<div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:960</div></div>
 </div><!-- fragment --><p >This gives the node api to link itself to another node: </p><div class="fragment"><div class="line">node a, b;</div>
 <div class="line"> </div>
 <div class="line">a.link_next(b);</div>
@@ -147,7 +147,7 @@ Example</h2>
 <div class="line">        ...</div>
 <div class="line">    };</div>
 <div class="line">}</div>
-<div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:642</div></div>
+<div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:641</div></div>
 </div><!-- fragment --><p >Hence once for example <code>voice_synth</code> is built, it can be just moved out of the build_voice function, the R2D2 can be built by itself in similar way, and during any move or destruction the components will stay registered in the linkd list itself.</p>
 <h2><a class="anchor" id="autotoc_md2"></a>
 How it works</h2>

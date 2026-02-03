@@ -27,7 +27,7 @@ var zll_8hpp =
     [ "link_detached_as_last", "zll_8hpp.html#a19c1bab91c3855c29f296a9899f43341", null ],
     [ "link_detached_as_next", "zll_8hpp.html#a528cd753e28cd0fab24c8ce781d7776c", null ],
     [ "link_detached_as_prev", "zll_8hpp.html#aaec58819ce3b46a79a6ba5beef9f2fc1", null ],
-    [ "link_detached_copy_of", "zll_8hpp.html#a3735f9abc58f2c4a5775a9ee0008df7e", null ],
+    [ "link_detached_to", "zll_8hpp.html#a856b79e5297c4978343fc0e99dc5088d", null ],
     [ "link_group", "zll_8hpp.html#a60d848eba83fa0a8aa19aa4a6496328e", null ],
     [ "link_range_as_next", "zll_8hpp.html#abc80f9ef1f7cebd1cfb3d12751a72366", null ],
     [ "link_range_as_prev", "zll_8hpp.html#a86fc7485c5d05f2dc303cbb342d05eef", null ],

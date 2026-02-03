@@ -92,55 +92,66 @@ $(document).ready(function(){initNavTree('structzll_1_1sh__heap.html',''); initR
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structzll_1_1sh__heap-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">zll::sh_heap&lt; T, Acc, Compare &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
+<p>Skew heap implementation.  
+ <a href="structzll_1_1sh__heap.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="zll_8hpp_source.html">zll.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the heap is empty, i.e. contains no nodes.  <a href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">More...</a><br /></td></tr>
 <tr class="separator:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98e961c5fb278fd3ab7f9b6099df46af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">link</a> (T &amp;node) noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="memdesc:a98e961c5fb278fd3ab7f9b6099df46af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links the node <code>node</code> into the heap.  <a href="structzll_1_1sh__heap.html#a98e961c5fb278fd3ab7f9b6099df46af">More...</a><br /></td></tr>
 <tr class="separator:a98e961c5fb278fd3ab7f9b6099df46af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6bf715751fc5c3f7aa5868d039c7026"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#aa6bf715751fc5c3f7aa5868d039c7026">merge</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:aa6bf715751fc5c3f7aa5868d039c7026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges the <code>other</code> heap into this heap.  <a href="structzll_1_1sh__heap.html#aa6bf715751fc5c3f7aa5868d039c7026">More...</a><br /></td></tr>
 <tr class="separator:aa6bf715751fc5c3f7aa5868d039c7026"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6c3dd72675ba198da938fe0c4848a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a0e6c3dd72675ba198da938fe0c4848a1">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:a0e6c3dd72675ba198da938fe0c4848a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator, moved-from heap becomes empty.  <a href="structzll_1_1sh__heap.html#a0e6c3dd72675ba198da938fe0c4848a1">More...</a><br /></td></tr>
 <tr class="separator:a0e6c3dd72675ba198da938fe0c4848a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5276451b49a75e429fe0aaf9baaa8465"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a5276451b49a75e429fe0aaf9baaa8465">operator=</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
 <tr class="separator:a5276451b49a75e429fe0aaf9baaa8465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af687a550d64320a23db144905e51edf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#af687a550d64320a23db144905e51edf2">pop</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="memdesc:af687a550d64320a23db144905e51edf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlinks the top node from the heap and returns it.  <a href="structzll_1_1sh__heap.html#af687a550d64320a23db144905e51edf2">More...</a><br /></td></tr>
 <tr class="separator:af687a550d64320a23db144905e51edf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a480877817290a799c27f8bd7bd34f824"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a480877817290a799c27f8bd7bd34f824">sh_heap</a> () noexcept=default</td></tr>
 <tr class="separator:a480877817290a799c27f8bd7bd34f824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8">sh_heap</a> (Compare comp)</td></tr>
+<tr class="memdesc:a80f50ef05b133d1c4c97ae270e165cd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a heap with the given comparison function.  <a href="structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8">More...</a><br /></td></tr>
 <tr class="separator:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor, moved-from heap becomes empty.  <a href="structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5">More...</a><br /></td></tr>
 <tr class="separator:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63e7ad9869aaff7f5a1c025c29dbf81f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a63e7ad9869aaff7f5a1c025c29dbf81f">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> const &amp;)=delete</td></tr>
 <tr class="separator:a63e7ad9869aaff7f5a1c025c29dbf81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75e7233e03981176e23ee6a9b8101220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a75e7233e03981176e23ee6a9b8101220">sh_heap</a> (std::initializer_list&lt; T * &gt; il) noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="memdesc:a75e7233e03981176e23ee6a9b8101220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a heap from an initializer list of nodes.  <a href="structzll_1_1sh__heap.html#a75e7233e03981176e23ee6a9b8101220">More...</a><br /></td></tr>
 <tr class="separator:a75e7233e03981176e23ee6a9b8101220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad21dc27a8ed200cb10035c1dabc73213"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213">take</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="memdesc:ad21dc27a8ed200cb10035c1dabc73213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlinks and returns the top node from the heap.  <a href="structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213">More...</a><br /></td></tr>
 <tr class="separator:ad21dc27a8ed200cb10035c1dabc73213"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a3c5f1a302f04b0ca7605883e4dc83d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a6a3c5f1a302f04b0ca7605883e4dc83d">~sh_heap</a> () noexcept(<a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a>)</td></tr>
+<tr class="memdesc:a6a3c5f1a302f04b0ca7605883e4dc83d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor, detaches the top node if present.  <a href="structzll_1_1sh__heap.html#a6a3c5f1a302f04b0ca7605883e4dc83d">More...</a><br /></td></tr>
 <tr class="separator:a6a3c5f1a302f04b0ca7605883e4dc83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:afa77a00b10a34e2749b17faad0587164"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164">top</a> = nullptr</td></tr>
-<tr class="separator:afa77a00b10a34e2749b17faad0587164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a761590954a055db058fb09d7c7837f1d"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a761590954a055db058fb09d7c7837f1d">noexcept_access</a> = _nothrow_access&lt; Acc, T &gt;</td></tr>
 <tr class="separator:a761590954a055db058fb09d7c7837f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Acc, typename Compare&gt;<br />
+struct zll::sh_heap&lt; T, Acc, Compare &gt;</div><p >Skew heap implementation. </p>
+<p >Provides API for linking and merging nodes, merging and popping the heap, checking if the heap is empty and accessing the top node of the heap. The top node is the node with the smallest value in the heap according to the comparison function <code>Compare</code>. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a480877817290a799c27f8bd7bd34f824" name="a480877817290a799c27f8bd7bd34f824"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a480877817290a799c27f8bd7bd34f824">&#9670;&#160;</a></span>sh_heap() <span class="overload">[1/5]</span></h2>
 
@@ -222,6 +233,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a heap with the given comparison function. </p>
+<p >The comparison function is used to maintain the heap property when linking and merging nodes. The top node of the heap is the node with the smallest value according to the comparison function. </p>
+
 </div>
 </div>
 <a id="a53ec2c6a9bbd14d86725820f7dd890a5" name="a53ec2c6a9bbd14d86725820f7dd890a5"></a>
@@ -249,6 +263,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Move constructor, moved-from heap becomes empty. </p>
+<p >If top node is present in the moved-from heap, it is detached and attached to the new heap. </p>
 
 </div>
 </div>
@@ -278,6 +295,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a heap from an initializer list of nodes. </p>
+<p >All nodes in the initializer list must be detached. The nodes are linked together to form the heap using the comparison function <code>Compare</code>. </p>
+
 </div>
 </div>
 <a id="a6a3c5f1a302f04b0ca7605883e4dc83d" name="a6a3c5f1a302f04b0ca7605883e4dc83d"></a>
@@ -304,6 +324,8 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Destructor, detaches the top node if present. </p>
 
 </div>
 </div>
@@ -333,6 +355,8 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Returns true if the heap is empty, i.e. contains no nodes. </p>
+
 </div>
 </div>
 <a id="a98e961c5fb278fd3ab7f9b6099df46af" name="a98e961c5fb278fd3ab7f9b6099df46af"></a>
@@ -360,6 +384,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Links the node <code>node</code> into the heap. </p>
+<p >The node must be detached before calling this function. The heap property is maintained using the comparison function <code>Compare</code>. </p>
 
 </div>
 </div>
@@ -389,6 +416,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Merges the <code>other</code> heap into this heap. </p>
+<p >The <code>other</code> heap becomes empty after this operation. The heap property is maintained using the comparison function <code>Compare</code>. </p>
+
 </div>
 </div>
 <a id="a0e6c3dd72675ba198da938fe0c4848a1" name="a0e6c3dd72675ba198da938fe0c4848a1"></a>
@@ -416,6 +446,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Move assignment operator, moved-from heap becomes empty. </p>
+<p >If top node is present in the moved-from heap, it is detached and attached to the new heap. If the current heap has a top node, it is detached before attaching the new top node. </p>
 
 </div>
 </div>
@@ -472,6 +505,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Unlinks the top node from the heap and returns it. </p>
+<p >The new top node is determined by merging the left and right children of the detached top node. Undefined behavior if the heap is empty. </p>
+
 </div>
 </div>
 <a id="ad21dc27a8ed200cb10035c1dabc73213" name="ad21dc27a8ed200cb10035c1dabc73213"></a>
@@ -499,6 +535,9 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Unlinks and returns the top node from the heap. </p>
+<p >The new top node is determined as if <code>top</code> is used. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -522,22 +561,6 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 <span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afa77a00b10a34e2749b17faad0587164" name="afa77a00b10a34e2749b17faad0587164"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa77a00b10a34e2749b17faad0587164">&#9670;&#160;</a></span>top</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc , typename Compare &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::top = nullptr</td>
-        </tr>
-      </table>
 </div><div class="memdoc">
 
 </div>

@@ -12,6 +12,5 @@ var structzll_1_1sh__heap =
     [ "operator=", "structzll_1_1sh__heap.html#a0e6c3dd72675ba198da938fe0c4848a1", null ],
     [ "operator=", "structzll_1_1sh__heap.html#a5276451b49a75e429fe0aaf9baaa8465", null ],
     [ "pop", "structzll_1_1sh__heap.html#af687a550d64320a23db144905e51edf2", null ],
-    [ "take", "structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213", null ],
-    [ "top", "structzll_1_1sh__heap.html#afa77a00b10a34e2749b17faad0587164", null ]
+    [ "take", "structzll_1_1sh__heap.html#ad21dc27a8ed200cb10035c1dabc73213", null ]
 ];
