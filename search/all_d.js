@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['parent_0',['parent',['../structzll_1_1sh__header.html#a445d3f7f384b4a6c51ffdd84adce02ad',1,'zll::sh_header']]],
-  ['pointer_1',['pointer',['../structzll_1_1ll__iterator.html#adaf9f5d4ea29392f35d23b779fb7b499',1,'zll::ll_iterator::pointer()'],['../structzll_1_1ll__const__iterator.html#a4c23e8346977e7cbe8de14befcc4c753',1,'zll::ll_const_iterator::pointer()']]],
-  ['pop_2',['pop',['../structzll_1_1sh__heap.html#af687a550d64320a23db144905e51edf2',1,'zll::sh_heap']]],
-  ['postorder_5ftraverse_3',['postorder_traverse',['../namespacezll.html#a8daf6432db70018790a23a5b9bad24a6',1,'zll']]],
-  ['preorder_5ftraverse_4',['preorder_traverse',['../namespacezll.html#a73348745e5791eb7557fd8367a7e14ff',1,'zll']]],
-  ['prev_5',['prev',['../structzll_1_1ll__header.html#a47fe347eb009eda3af9c9518097cb6b2',1,'zll::ll_header::prev()'],['../structzll_1_1ll__base.html#a6838a1d8a24a0db9e11133ace208edb7',1,'zll::ll_base::prev()'],['../structzll_1_1ll__base.html#a02d4621933e6b1d69ec4f83179616684',1,'zll::ll_base::prev() const']]]
+  ['range_5fqsort_0',['range_qsort',['../namespacezll.html#a1ccc5e1d745179f3326f0ff913454176',1,'zll']]],
+  ['range_5fremove_1',['range_remove',['../namespacezll.html#a4bd2dd1625cac198e1fc0e293555e9f0',1,'zll']]],
+  ['range_5freverse_2',['range_reverse',['../namespacezll.html#a34016023d1d718ae8bfb47426a3a7c39',1,'zll']]],
+  ['range_5funique_3',['range_unique',['../namespacezll.html#a0f5d6a98fc40a5b09ff7b6db2f55dff5',1,'zll']]],
+  ['readme_2emd_4',['README.md',['../README_8md.html',1,'']]],
+  ['reference_5',['reference',['../structzll_1_1ll__iterator.html#a772e6c3e8940d336ed6483f9c8c90042',1,'zll::ll_iterator::reference()'],['../structzll_1_1ll__const__iterator.html#aa5efd159eb2a742af1400a6851cded00',1,'zll::ll_const_iterator::reference()']]],
+  ['remove_6',['remove',['../structzll_1_1ll__list.html#aa27815cb2485ef793996d215fb30b839',1,'zll::ll_list']]],
+  ['remove_5fif_7',['remove_if',['../structzll_1_1ll__list.html#a5f3cad130a78a33b1fd08b9ea7fddec5',1,'zll::ll_list']]],
+  ['reverse_8',['reverse',['../structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a',1,'zll::ll_list']]],
+  ['right_9',['right',['../structzll_1_1sh__header.html#a7af8f1e24bb59deda4f21cb77d44182b',1,'zll::sh_header']]]
 ];

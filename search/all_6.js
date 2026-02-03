@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['find_5fif_5fnode_0',['find_if_node',['../namespacezll.html#a2ace8082eb072c3286742c3b17b825b9',1,'zll']]],
-  ['first_1',['first',['../structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993',1,'zll::ll_list']]],
-  ['first_5fnode_5fof_2',['first_node_of',['../namespacezll.html#a5b8723bf61a7e944036fb5dfce168d70',1,'zll']]],
-  ['for_5feach_5fnode_3',['for_each_node',['../namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7',1,'zll']]],
-  ['front_4',['front',['../structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46',1,'zll::ll_list::front() noexcept'],['../structzll_1_1ll__list.html#a82c5250b49be0d213030e2748907e210',1,'zll::ll_list::front() const noexcept']]]
+  ['get_0',['get',['../structzll_1_1ll__iterator.html#aef8bc1a977b388ef069fb6d534a59fb7',1,'zll::ll_iterator::get()'],['../structzll_1_1ll__base_1_1access.html#a61c04fad72f7da3f2236af8262ec9a6d',1,'zll::ll_base::access::get(Derived &amp;d) noexcept'],['../structzll_1_1ll__base_1_1access.html#a9a23c6e22c56cfeb47c2d1c0c487abce',1,'zll::ll_base::access::get(Derived const &amp;d) noexcept'],['../structzll_1_1sh__base_1_1access.html#aff92c93c61559fa2ccdb72648175a18d',1,'zll::sh_base::access::get(Derived &amp;d) noexcept'],['../structzll_1_1sh__base_1_1access.html#ac2de36e0645a2f18d9f9dc47a38db8c8',1,'zll::sh_base::access::get(Derived const &amp;d) noexcept']]]
 ];
