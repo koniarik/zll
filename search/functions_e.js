@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['range_5fqsort_0',['range_qsort',['../namespacezll.html#a1ccc5e1d745179f3326f0ff913454176',1,'zll']]],
-  ['range_5fremove_1',['range_remove',['../namespacezll.html#a4bd2dd1625cac198e1fc0e293555e9f0',1,'zll']]],
-  ['range_5freverse_2',['range_reverse',['../namespacezll.html#a34016023d1d718ae8bfb47426a3a7c39',1,'zll']]],
-  ['range_5funique_3',['range_unique',['../namespacezll.html#a0f5d6a98fc40a5b09ff7b6db2f55dff5',1,'zll']]],
-  ['remove_4',['remove',['../structzll_1_1ll__list.html#aa27815cb2485ef793996d215fb30b839',1,'zll::ll_list']]],
-  ['remove_5fif_5',['remove_if',['../structzll_1_1ll__list.html#a5f3cad130a78a33b1fd08b9ea7fddec5',1,'zll::ll_list']]],
-  ['reverse_6',['reverse',['../structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a',1,'zll::ll_list']]]
+  ['sh_5fbase_0',['sh_base',['../structzll_1_1sh__base.html#a77a6479c3b32129a97fbd6572e736106',1,'zll::sh_base::sh_base() noexcept=default'],['../structzll_1_1sh__base.html#a0adf8b17a324dec9a3db14d179d6316e',1,'zll::sh_base::sh_base(sh_base &amp;&amp;o) noexcept'],['../structzll_1_1sh__base.html#ab65bc283b898691cd1251419d0465238',1,'zll::sh_base::sh_base(sh_base &amp;o) noexcept']]],
+  ['sh_5fheader_1',['sh_header',['../structzll_1_1sh__header.html#af46a4225c1766ed251a237e3c60f6fa6',1,'zll::sh_header::sh_header() noexcept=default'],['../structzll_1_1sh__header.html#a3b9aedcb715683bbd1909a2698029a39',1,'zll::sh_header::sh_header(sh_header const &amp;)=delete'],['../structzll_1_1sh__header.html#aa12c0de6a536a1e55fdcb22db911dcb3',1,'zll::sh_header::sh_header(sh_header &amp;&amp;) noexcept=delete']]],
+  ['sh_5fheap_2',['sh_heap',['../structzll_1_1sh__heap.html#a480877817290a799c27f8bd7bd34f824',1,'zll::sh_heap::sh_heap() noexcept=default'],['../structzll_1_1sh__heap.html#a63e7ad9869aaff7f5a1c025c29dbf81f',1,'zll::sh_heap::sh_heap(sh_heap const &amp;)=delete'],['../structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8',1,'zll::sh_heap::sh_heap(Compare comp)'],['../structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5',1,'zll::sh_heap::sh_heap(sh_heap &amp;&amp;other) noexcept'],['../structzll_1_1sh__heap.html#a75e7233e03981176e23ee6a9b8101220',1,'zll::sh_heap::sh_heap(std::initializer_list&lt; T * &gt; il) noexcept(noexcept_access)']]],
+  ['sort_3',['sort',['../structzll_1_1ll__list.html#a2361dd25285cc5e663c90b974167d4a2',1,'zll::ll_list::sort(Compare &amp;&amp;cmp) noexcept(noexcept_access &amp;&amp;noexcept(cmp(*first, *last)))'],['../structzll_1_1ll__list.html#a4b49b3c7d230c92b47d0d333c22cf9bd',1,'zll::ll_list::sort() noexcept(noexcept_access &amp;&amp;noexcept(std::less&lt;&gt;{}(*first, *last)))']]],
+  ['splice_4',['splice',['../structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f',1,'zll::ll_list']]]
 ];

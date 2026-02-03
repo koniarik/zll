@@ -1,6 +1,5 @@
 var zll_8hpp =
 [
-    [ "zll::_vptr< A, B >", "structzll_1_1__vptr.html", "structzll_1_1__vptr" ],
     [ "zll::ll_base< Derived >::access", "structzll_1_1ll__base_1_1access.html", null ],
     [ "zll::sh_base< Derived, Compare >::access", "structzll_1_1sh__base_1_1access.html", null ],
     [ "zll::ll_base< Derived >", "structzll_1_1ll__base.html", "structzll_1_1ll__base" ],
@@ -11,10 +10,6 @@ var zll_8hpp =
     [ "zll::sh_base< Derived, Compare >", "structzll_1_1sh__base.html", "structzll_1_1sh__base" ],
     [ "zll::sh_header< T, Acc, Compare >", "structzll_1_1sh__header.html", "structzll_1_1sh__header" ],
     [ "zll::sh_heap< T, Acc, Compare >", "structzll_1_1sh__heap.html", "structzll_1_1sh__heap" ],
-    [ "zll::_nothrow_access", "conceptzll_1_1__nothrow__access.html", null ],
-    [ "zll::_nothrow_access_compare", "conceptzll_1_1__nothrow__access__compare.html", null ],
-    [ "zll::_provides_ll_header", "conceptzll_1_1__provides__ll__header.html", null ],
-    [ "zll::_provides_sh_header", "conceptzll_1_1__provides__sh__header.html", null ],
     [ "ZLL_ASSERT", "zll_8hpp.html#ad557a40b4b74453a753885c38a99630e", null ],
     [ "_ll_ptr", "zll_8hpp.html#a1d61dbaf61de26105350353407fec4dc", null ],
     [ "_sh_ptr", "zll_8hpp.html#a9a4103d2220bdc7be9c33845fca16a88", null ],

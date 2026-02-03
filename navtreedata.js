@@ -26,14 +26,8 @@ var NAVTREE =
 [
   [ "zll", "index.html", [
     [ "Namespaces", "namespaces.html", [
-      [ "Quick Start", "index.html#autotoc_md1", [
-        [ "Basic Usage with CRTP <tt>ll_base</tt>", "index.html#autotoc_md2", null ],
-        [ "Advanced Usage with Custom Accessors", "index.html#autotoc_md3", null ],
-        [ "Using with <tt>ll_list</tt>", "index.html#autotoc_md4", null ]
-      ] ],
-      [ "Building and Testing", "index.html#autotoc_md5", null ],
-      [ "Project Status", "index.html#autotoc_md6", null ],
-      [ "License", "index.html#autotoc_md7", null ],
+      [ "Example", "index.html#autotoc_md1", null ],
+      [ "How it works", "index.html#autotoc_md2", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
@@ -41,7 +35,6 @@ var NAVTREE =
         [ "Typedefs", "namespacemembers_type.html", null ]
       ] ]
     ] ],
-    [ "Concepts", "concepts.html", "concepts" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -49,8 +42,7 @@ var NAVTREE =
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ],
-        [ "Related Functions", "functions_rela.html", null ]
+        [ "Typedefs", "functions_type.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -66,7 +58,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structzll_1_1ll__list.html#a5f3cad130a78a33b1fd08b9ea7fddec5"
+"structzll_1_1ll__list.html#ae1f443d853251d47e876273fdf7a1c38"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -94,113 +94,91 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_README"></a> </p><div align="center"> ZLL - Z Linked List</div><div align="center"><hr  />
-</div><div align="center"><a href="https://koniarik.github.io/zll/">Documentation</a></div><div align="center"></div><p >A C++20 single-file header-only library providing an non-owning intrusive doubly-linked list implementation. The nodes of the list are movable, copyable, while still keeping presence in the list. The nodes can be just linked together without root list structure. Any node of the list can also automatically unlink itself on destruction.</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
-Quick Start</h2>
-<h3><a class="anchor" id="autotoc_md2"></a>
-Basic Usage with CRTP &lt;tt&gt;ll_base&lt;/tt&gt;</h3>
-<p >The simplest way to use ZLL is by inheriting from <code>ll_base</code>:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;zll.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>MyNode : <span class="keyword">public</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt;MyNode&gt; {</div>
-<div class="line">    <span class="keywordtype">int</span> value;</div>
-<div class="line">    MyNode(<span class="keywordtype">int</span> v) : value(v) {}</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    MyNode node1(1);</div>
-<div class="line">    MyNode node2(2);</div>
-<div class="line">    MyNode node3(3);</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// Link nodes: node1 -&gt; node2 -&gt; node3</span></div>
-<div class="line">    node1.link_as_last(node2);</div>
-<div class="line">    node2.link_as_last(node3);</div>
-<div class="line">    </div>
-<div class="line">    MyNode copied_from_node1(node1);  <span class="comment">// Automatically links after node1</span></div>
-<div class="line">    MyNode moved_from_node2(std::move(node2));  <span class="comment">// Takes node2&#39;s position</span></div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Traverse the list, prints: 1, 1, 2, 3</span></div>
-<div class="line">    <a class="code hl_function" href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">zll::for_each_node</a>(node1, [](<span class="keyword">const</span> MyNode&amp; node) {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Value: &quot;</span> &lt;&lt; node.value &lt;&lt; std::endl;</div>
-<div class="line">    });</div>
-<div class="line">    </div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespacezll_html_ab55da35af7a7e04b1898f7562f8274b7"><div class="ttname"><a href="namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7">zll::for_each_node</a></div><div class="ttdeci">void for_each_node(T &amp;n, std::invocable&lt; T &amp; &gt; auto &amp;&amp;f) noexcept(_nothrow_access&lt; Acc, T &gt; &amp;&amp;noexcept(f(n)))</div><div class="ttdoc">Iterate over all nodes in the list starting from n and call f for each node.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1071</div></div>
+</div><div align="center"><a href="https://koniarik.github.io/zll/">Documentation</a></div><div align="center"></div><p >Single-file header-only implementation of intrusive double-linked list and skew heap. The container does not own the data, but rather provides secondary data structure for example for registration of callbacks.</p>
+<p >The linked list pointers are embed into the nodes of the list, easier is using CRTP baseclass:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>node : <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt; node &gt;{};</div>
 <div class="ttc" id="astructzll_1_1ll__base_html"><div class="ttname"><a href="structzll_1_1ll__base.html">zll::ll_base</a></div><div class="ttdoc">CRTP base class for linked list nodes containing ll_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:961</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
-Advanced Usage with Custom Accessors</h3>
-<p >For more control over where the list header is stored:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;zll.h&quot;</span></div>
+</div><!-- fragment --><p >This gives the node api to link itself to another node: </p><div class="fragment"><div class="line">node a, b;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>MyAccessor {</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get(MyData* data) <span class="keyword">noexcept</span> {</div>
-<div class="line">        <span class="keywordflow">return</span> data-&gt;list_header;</div>
-<div class="line">    }</div>
-<div class="line">};</div>
+<div class="line">a.link_next(b);</div>
+</div><!-- fragment --><p >Any linked node is movable and unlinks on destruction: </p><div class="fragment"><div class="line">node a, b;</div>
+<div class="line">a.link_next(b);</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>MyData {</div>
-<div class="line">    <span class="keywordtype">int</span> value;</div>
-<div class="line">    <a class="code hl_struct" href="structzll_1_1ll__header.html">zll::ll_header&lt;MyData, MyAccessor&gt;</a> list_header;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    MyData data1{42};</div>
-<div class="line">    MyData data2{84};</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Link data2 after data1</span></div>
-<div class="line">    zll::link_empty_as_next&lt;MyData, MyAccessor&gt;(data1, data2);</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Iterate through linked data</span></div>
-<div class="line">    zll::for_each_node&lt;MyAccessor&gt;(data1, [](MyData&amp; data) {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Data: &quot;</span> &lt;&lt; data.value &lt;&lt; std::endl;</div>
-<div class="line">    });</div>
-<div class="line">    </div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// `b` will unlink itself and `c` will get linked after `a`</span></div>
+<div class="line">    node c{std::move(b)};</div>
 <div class="line">}</div>
-<div class="ttc" id="astructzll_1_1ll__header_html"><div class="ttname"><a href="structzll_1_1ll__header.html">zll::ll_header</a></div><div class="ttdoc">Linked-list header containing pointers to the next and previous elements or the list itself.</div><div class="ttdef"><b>Definition:</b> zll.hpp:155</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
-Using with &lt;tt&gt;ll_list&lt;/tt&gt;</h3>
-<p >For managing lists with explicit list objects:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;zll.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>Node : <span class="keyword">public</span> <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt;Node&gt; {</div>
-<div class="line">    std::string name;</div>
-<div class="line">    Node(std::string n) : name(std::move(n)) {}</div>
+<div class="line"><span class="comment">// here `a` has no successor as `c` unlinked itself in destructor</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1"></a>
+Example</h2>
+<p >Assume we are implementing R2D2 and want to break the system into components:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>R2D2{</div>
+<div class="line">    voice_synth voice;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        leg left_leg;</div>
+<div class="line">        leg right_leg;</div>
+<div class="line">        wheel bot_wheel;</div>
+<div class="line"> </div>
+<div class="line">        arm arm1;</div>
+<div class="line">        arm arm2;</div>
+<div class="line">    } chassis;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        motor spinner;</div>
+<div class="line">    } head;</div>
 <div class="line">};</div>
+</div><!-- fragment --><p >Let's assume that we want to monitor each component for status, this happens sporadically and we don't want to polute the main structure too much.</p>
+<div class="fragment"><div class="line"><span class="keyword">enum class</span> status { NOMINAL, FAULTY };</div>
+<div class="line"><span class="keyword">struct </span>comp_iface : <a class="code hl_struct" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt; comp_iface &gt; {</div>
+<div class="line">    <span class="keyword">virtual</span> status get_status() = 0;</div>
+<div class="line">};</div>
+</div><!-- fragment --><p >For any component of R2D2, we just have to inherit:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>motor : comp_iface { ... };</div>
+<div class="line"><span class="keyword">struct </span>voice_synth : comp_iface { ... };</div>
+<div class="line"><span class="keyword">struct </span>leg : comp_iface { ... };</div>
+</div><!-- fragment --><p >The key thing: we just made the components something that can be part of linked list, but is still movable, or can unregister by itself:</p>
+<div class="fragment"><div class="line">voice_synth build_voice(<a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a>&amp;);</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    <a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt;Node, Node::access&gt;</a> my_list;</div>
-<div class="line">    </div>
-<div class="line">    Node node1(<span class="stringliteral">&quot;first&quot;</span>);</div>
-<div class="line">    Node node2(<span class="stringliteral">&quot;second&quot;</span>);</div>
-<div class="line">    </div>
-<div class="line">    my_list.link_as_last(node1);</div>
-<div class="line">    my_list.link_as_last(node2);</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// List automatically manages node relationships</span></div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">R2D2 build_R2D2(<a class="code hl_struct" href="structzll_1_1ll__list.html">zll::ll_list&lt; comp_iface &gt;</a>&amp; l){</div>
+<div class="line">    <span class="keywordflow">return</span> R2D2{</div>
+<div class="line">        .voice = build_voice(l),</div>
+<div class="line">        ...</div>
+<div class="line">    };</div>
 <div class="line">}</div>
 <div class="ttc" id="astructzll_1_1ll__list_html"><div class="ttname"><a href="structzll_1_1ll__list.html">zll::ll_list</a></div><div class="ttdoc">Non-owning linked list container, expects nodes to contain ll_header as member.</div><div class="ttdef"><b>Definition:</b> zll.hpp:642</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
-Building and Testing</h2>
-<div class="fragment"><div class="line"># Configure with tests enabled</div>
-<div class="line">cmake --preset default -DZLL_TESTS_ENABLED=ON</div>
+</div><!-- fragment --><p >Hence once for example <code>voice_synth</code> is built, it can be just moved out of the build_voice function, the R2D2 can be built by itself in similar way, and during any move or destruction the components will stay registered in the linkd list itself.</p>
+<h2><a class="anchor" id="autotoc_md2"></a>
+How it works</h2>
+<p >Any member of the linked list has to contain <code>ll_header</code> which looks similar to this:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc &gt;</div>
+<div class="line"><span class="keyword">struct </span>ll_header {</div>
+<div class="line">    _ll_ptr&lt; T, Acc &gt; next;</div>
+<div class="line">    _ll_ptr&lt; T, Acc &gt; prev;</div>
 <div class="line"> </div>
-<div class="line"># Build</div>
-<div class="line">cmake --build --preset default</div>
+<div class="line">    ~ll_header();</div>
+<div class="line">};</div>
+</div><!-- fragment --><p >where:</p><ul>
+<li><code>T</code> is the base type of the nodes that is being used</li>
+</ul>
+<p ><code>Acc</code> is utility type used to access the header within a <code>T</code></p><ul>
+<li><code>_ll_ptr</code> is pointer that points either to <code>T</code> or <code>ll_list&lt;T,A&gt;</code></li>
+<li><code>~ll_header()</code> automatically unlinks next/prev pointers if their link to something.</li>
+</ul>
+<p >To use the header: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>node {</div>
+<div class="line">    <span class="keyword">struct </span>access {</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">auto</span>&amp; get(node&amp; n) {</div>
+<div class="line">            <span class="keywordflow">return</span> n.hdr;</div>
+<div class="line">        }</div>
+<div class="line">    };</div>
 <div class="line"> </div>
-<div class="line"># Run tests</div>
-<div class="line">ctest --preset default</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
-Project Status</h2>
-<p ><b>Early Beta</b> - The API is stabilizing but may still change. The core functionality is implemented and tested, but some edge cases may exist.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
-License</h2>
-<p >MIT License - see [LICENSE](LICENSE) file for details. </p>
+<div class="line">    ll_header&lt; node, access &gt; hdr;</div>
+<div class="line">};</div>
+</div><!-- fragment --><p >For the library to work, given <code>node</code> it needs a way of accessing the header stored inside. The <code>accessor</code> is customization point to provide ability to extract the header, anytime the library wants to access the header of node it uses <code>auto&amp; node_header = Acc::get(my_node);</code>.</p>
+<p >This give the user ultimate flexibility to store the header anywhere in the type or to have multiple headers at once (each usable for different linked list).</p>
+<p ><code>ll_base</code> is jut convenience base class that contains the <code>ll_header</code> and provides accessor for it.</p>
+<p ><code>ll_header</code> needs capability to point to the list structure itself in case last or first item of the list is being operated on - these are pointed-to by the list, so the node needs the pointer to list to unlink itself. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('namespacezll.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#concepts">Concepts</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">zll Namespace Reference</div></div>
@@ -101,8 +100,6 @@ $(document).ready(function(){initNavTree('namespacezll.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1__vptr.html">_vptr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__base.html">ll_base</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRTP base class for linked list nodes containing <code><a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a></code>.  <a href="structzll_1_1ll__base.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,25 +122,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html">sh_heap</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
-Concepts</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptzll_1_1__nothrow__access.html">_nothrow_access</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptzll_1_1__nothrow__access__compare.html">_nothrow_access_compare</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptzll_1_1__provides__ll__header.html">_provides_ll_header</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptzll_1_1__provides__sh__header.html">_provides_sh_header</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a1d61dbaf61de26105350353407fec4dc"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access&gt; </td></tr>
-<tr class="memitem:a1d61dbaf61de26105350353407fec4dc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a> = <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1ll__list.html">ll_list</a>&lt; T, Acc &gt; &gt;</td></tr>
+<tr class="memitem:a1d61dbaf61de26105350353407fec4dc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">_ll_ptr</a> = _vptr&lt; T, <a class="el" href="structzll_1_1ll__list.html">ll_list</a>&lt; T, Acc &gt; &gt;</td></tr>
 <tr class="memdesc:a1d61dbaf61de26105350353407fec4dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variadic ptr wrapper pointer either to <a class="el" href="structzll_1_1ll__list.html" title="Non-owning linked list container, expects nodes to contain ll_header as member.">ll_list</a> or node with <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a>.  <a href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">More...</a><br /></td></tr>
 <tr class="separator:a1d61dbaf61de26105350353407fec4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a4103d2220bdc7be9c33845fca16a88"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </td></tr>
-<tr class="memitem:a9a4103d2220bdc7be9c33845fca16a88"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a> = <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td></tr>
+<tr class="memitem:a9a4103d2220bdc7be9c33845fca16a88"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">_sh_ptr</a> = _vptr&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td></tr>
 <tr class="separator:a9a4103d2220bdc7be9c33845fca16a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -356,7 +342,7 @@ requires ( _provides_sh_header&lt; T, Acc &gt; )</td></tr>
 template&lt;typename T , typename Acc  = typename T::access&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">zll::_ll_ptr</a> = typedef <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1ll__list.html">ll_list</a>&lt; T, Acc &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacezll.html#a1d61dbaf61de26105350353407fec4dc">zll::_ll_ptr</a> = typedef _vptr&lt; T, <a class="el" href="structzll_1_1ll__list.html">ll_list</a>&lt; T, Acc &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -374,7 +360,7 @@ template&lt;typename T , typename Acc  = typename T::access&gt; </div>
 template&lt;typename T , typename Acc  = typename T::access, typename Compare  = std::less&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">zll::_sh_ptr</a> = typedef <a class="el" href="structzll_1_1__vptr.html">_vptr</a>&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88">zll::_sh_ptr</a> = typedef _vptr&lt; T, <a class="el" href="structzll_1_1sh__heap.html">sh_heap</a>&lt; T, Acc, Compare &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">

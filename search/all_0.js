@@ -18,10 +18,5 @@ var searchData=
   ['_5fsh_5fmerge_15',['_sh_merge',['../namespacezll.html#a91e4c778914020642ccfc3ddd833a260',1,'zll']]],
   ['_5fsh_5fmerge_5fimpl_16',['_sh_merge_impl',['../namespacezll.html#a96f11d2c10e737aac00294f05f0f352d',1,'zll']]],
   ['_5fsh_5fpop_17',['_sh_pop',['../namespacezll.html#aa9cd4fcb105442fbcbb359050182f988',1,'zll']]],
-  ['_5fsh_5fptr_18',['_sh_ptr',['../namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88',1,'zll']]],
-  ['_5fvptr_19',['_vptr',['../structzll_1_1__vptr.html#acef0cc7173bdfd76e493e94ca53488f6',1,'zll::_vptr::_vptr(B &amp;n) noexcept'],['../structzll_1_1__vptr.html#afdff811463b7026b1c581e2772633d7a',1,'zll::_vptr::_vptr(A &amp;n) noexcept'],['../structzll_1_1__vptr.html#a81c700340c24e7c307356c97a0d5c86d',1,'zll::_vptr::_vptr(std::nullptr_t) noexcept'],['../structzll_1_1__vptr.html',1,'zll::_vptr&lt; A, B &gt;']]],
-  ['_5fvptr_3c_20derived_2c_20zll_3a_3all_5fbase_3a_3aaccess_20_3e_20',['_vptr&lt; Derived, zll::ll_base::access &gt;',['../structzll_1_1__vptr.html',1,'zll']]],
-  ['_5fvptr_3c_20derived_2c_20zll_3a_3ash_5fbase_3a_3aaccess_2c_20std_3a_3aless_3c_3e_20_3e_21',['_vptr&lt; Derived, zll::sh_base::access, std::less&lt;&gt; &gt;',['../structzll_1_1__vptr.html',1,'zll']]],
-  ['_5fvptr_3c_20t_2c_20acc_20_3e_22',['_vptr&lt; T, Acc &gt;',['../structzll_1_1__vptr.html',1,'zll']]],
-  ['_5fvptr_3c_20t_2c_20acc_2c_20compare_20_3e_23',['_vptr&lt; T, Acc, Compare &gt;',['../structzll_1_1__vptr.html',1,'zll']]]
+  ['_5fsh_5fptr_18',['_sh_ptr',['../namespacezll.html#a9a4103d2220bdc7be9c33845fca16a88',1,'zll']]]
 ];

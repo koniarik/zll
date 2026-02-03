@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['empty_0',['empty',['../structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca',1,'zll::ll_list::empty()'],['../structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb',1,'zll::sh_heap::empty()']]],
-  ['end_1',['end',['../structzll_1_1ll__list.html#a1b82a94331b62555ae82bfa06c7648ed',1,'zll::ll_list::end() noexcept'],['../structzll_1_1ll__list.html#a0e0a1ed602706749c2fdf5de9b40cb51',1,'zll::ll_list::end() const noexcept']]]
+  ['find_5fif_5fnode_0',['find_if_node',['../namespacezll.html#a2ace8082eb072c3286742c3b17b825b9',1,'zll']]],
+  ['first_5fnode_5fof_1',['first_node_of',['../namespacezll.html#a5b8723bf61a7e944036fb5dfce168d70',1,'zll']]],
+  ['for_5feach_5fnode_2',['for_each_node',['../namespacezll.html#ab55da35af7a7e04b1898f7562f8274b7',1,'zll']]],
+  ['front_3',['front',['../structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46',1,'zll::ll_list::front() noexcept'],['../structzll_1_1ll__list.html#a82c5250b49be0d213030e2748907e210',1,'zll::ll_list::front() const noexcept']]]
 ];

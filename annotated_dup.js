@@ -1,7 +1,6 @@
 var annotated_dup =
 [
     [ "zll", "namespacezll.html", [
-      [ "_vptr", "structzll_1_1__vptr.html", "structzll_1_1__vptr" ],
       [ "ll_base", "structzll_1_1ll__base.html", "structzll_1_1ll__base" ],
       [ "ll_const_iterator", "structzll_1_1ll__const__iterator.html", "structzll_1_1ll__const__iterator" ],
       [ "ll_header", "structzll_1_1ll__header.html", "structzll_1_1ll__header" ],
