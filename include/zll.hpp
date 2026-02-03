@@ -1640,8 +1640,9 @@ struct sh_heap
                 return n;
         }
 
+        T* top = nullptr;
+
 private:
-        T*                            top = nullptr;
         [[no_unique_address]] Compare _comp{};
 };
 
