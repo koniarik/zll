@@ -83,7 +83,11 @@ is still movable, or can unregister by itself:
 
 ```cpp
 
-voice_synth build_voice(zll::ll_list< comp_iface >&);
+voice_synth build_voice(zll::ll_list< comp_iface >& l){
+    voice_synth v;
+    l.link_back(v);
+    return v;
+}
 
 R2D2 build_R2D2(zll::ll_list< comp_iface >& l){
     return R2D2{
@@ -98,6 +102,45 @@ Hence once for example `voice_synth` is built, it can be just
 moved out of the build_voice function, the R2D2 can be built
 by itself in similar way, and during any move or destruction
 the components will stay registered in the linkd list itself.
+
+```cpp
+zll::ll_list< comp_iface > status_list;
+R2D2 r2d2 = build_R2D2(status_list);
+
+// list is iterable
+for(auto& comp : status_list){
+    std::cout << comp.get_status() << "\n";
+}
+
+// or we can iterate just by having one node
+for_each_node(r2d2.chassis.left_leg, [](comp_iface& comp){
+    std::cout << comp.get_status() << "\n";
+});
+
+// if we move r2d2 it still works
+struct millennium_falcon {
+    R2D2 r2d2;
+}
+millennium_falcon falcon{ .r2d2 = std::move(r2d2) };
+
+for(auto& comp : status_list){
+    // note that same status list as above is used, the components are still registered in it
+    std::cout << comp.get_status() << "\n";
+}
+
+{
+    // re-link first and last node to new list
+    zll::ll_list< comp_iface > another_list = std::move(status_list);
+}
+// here, first and last node unlinked from the another list - the nodes are list-less.
+
+```
+
+## Usage
+
+Library is provided as single header file `zll.hpp`, just include it
+where needed, or use this as any other cmake library. Bare minimum is C++20.
+No dependency except for the standard library.
 
 ##  How it works
 
@@ -146,3 +189,70 @@ accessor for it.
 `ll_header` needs capability to point to the list structure itself in case
 last or first item of the list is being operated on - these are pointed-to
 by the list, so the node needs the pointer to list to unlink itself.
+
+## Skew heap
+
+For the sake of all purposes the skew heap is implemented in similar way as the linked list above, the nodes are intrusive, non-owning, movable, and unlink during destruction.
+Skep heap provides partial sort of nodes and is usabel for priority queue or similar structures. More about the data structure here: (https://en.wikipedia.org/wiki/Skew_heap)[https://en.wikipedia.org/wiki/Skew_heap].
+
+They key value of the skew heap of binary heap is that skew heap does not require efficient
+access to last element to insert new item, at the cost of less optimal structure.
+
+### Timer Example
+
+```cpp
+#include "zll.hpp"
+#include <iostream>
+#include <cstdint>
+
+struct timer_event : zll::sh_base<timer_event> {
+    uint64_t deadline;
+    const char* name;
+
+    bool operator<(const timer_event& other) const {
+        return deadline < other.deadline;  // earliest deadline first
+    }
+};
+
+int main() {
+    zll::sh_heap<timer_event> timers;
+    uint64_t now = 0;
+
+    timer_event t1(100, "timeout_1");
+    timer_event t2(50, "timeout_2");
+    timer_event t3(150, "timeout_3");
+
+    timers.link(t1);
+    timers.link(t2);
+    timers.link(t3);
+
+    // Process timers
+    while (!timers.empty()) {
+        auto& next = *timers.top;
+        now = next.deadline;
+        std::cout << "Fire: " << next.name << " at " << now << "\n";
+        timers.take();
+    }
+
+    // Demonstrate auto-cancel: timer removes itself when destroyed
+    {
+        timer_event short_lived(200, "canceled");
+        timers.link(short_lived);
+        // short_lived auto-unlinks here when going out of scope
+    }
+
+    std::cout << "Heap empty: " << timers.empty() << "\n";  // true
+    return 0;
+}
+```
+
+Key benefits:
+- Timer objects can live anywhere (stack, member variable, container)
+- Automatic cancellation on destruction - no manual cleanup
+- Move timer object freely - it stays registered in heap
+- No dynamic allocation required for heap structure
+
+## Assert
+
+Library asserts by using custom `ZLL_ASSERT` macro, by default it maps to standard `assert`,
+but user can override it before including the header to use custom assert mechanism.
