@@ -489,19 +489,19 @@ $(document).ready(function(){initNavTree('zll_8hpp_source.html',''); initResizab
 <div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span><span class="keyword">requires</span>( _provides_ll_header&lt; T, Acc &gt; )</div>
 <div class="line"><a id="l00456" name="l00456"></a><span class="lineno"><a class="line" href="namespacezll.html#a34016023d1d718ae8bfb47426a3a7c39">  456</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespacezll.html#a34016023d1d718ae8bfb47426a3a7c39">range_reverse</a>( T&amp; first, T&amp; last ) <span class="keyword">noexcept</span>( _nothrow_access&lt; Acc, T &gt; )</div>
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>{</div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>        T* n = &amp;last;</div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        <span class="keywordflow">while</span> ( n != &amp;first ) {</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>                T* p = _node( Acc::get( last ).prev );</div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>                <a class="code hl_define" href="zll_8hpp.html#ad557a40b4b74453a753885c38a99630e">ZLL_ASSERT</a>( p != <span class="keyword">nullptr</span> );</div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span><span class="comment">// GCC false positive: it inlines detach() and thinks `p` could be null because _node()</span></div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span><span class="comment">// can return nullptr in the general case, but here the invariant guarantees it is not.</span></div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span><span class="preprocessor">#pragma GCC diagnostic push</span></div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wnull-dereference&quot;</span></div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span><span class="comment">// GCC false positive: when it inlines detach()/link_detached_as_next() it thinks the</span></div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span><span class="comment">// pointer returned by _node() could be null, but the range invariant guarantees it is not.</span></div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span><span class="preprocessor">#pragma GCC diagnostic push</span></div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span><span class="preprocessor">#pragma GCC diagnostic ignored &quot;-Wnull-dereference&quot;</span></div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        T* n = &amp;last;</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        <span class="keywordflow">while</span> ( n != &amp;first ) {</div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>                T* p = _node( Acc::get( last ).prev );</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>                <a class="code hl_define" href="zll_8hpp.html#ad557a40b4b74453a753885c38a99630e">ZLL_ASSERT</a>( p != <span class="keyword">nullptr</span> );</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>                <a class="code hl_function" href="namespacezll.html#a6d418476eff4046b39fc5d0335ff6693">detach</a>( *p );</div>
-<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
-<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>                <a class="code hl_function" href="namespacezll.html#a528cd753e28cd0fab24c8ce781d7776c">link_detached_as_next</a>( *n, *p );</div>
-<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>                n = p;</div>
-<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>        }</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>                <a class="code hl_function" href="namespacezll.html#a528cd753e28cd0fab24c8ce781d7776c">link_detached_as_next</a>( *n, *p );</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>                n = p;</div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>        }</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span><span class="preprocessor">#pragma GCC diagnostic pop</span></div>
 <div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>}</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span> </div>
 <div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span> Acc, <span class="keyword">typename</span> BinPred = std::equal_to&lt;&gt; &gt;</div>
