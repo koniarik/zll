@@ -20,7 +20,7 @@ jobs:
         run: sudo apt update
 
       - name: install deps
-        run: sudo apt install ninja-build ccache clang-tidy parallel
+        run: sudo apt install ninja-build clang-tidy parallel
 
       - name: configure
         run: make configure

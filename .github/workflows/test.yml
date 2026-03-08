@@ -5,11 +5,22 @@ on:
     branches:
       - main
   pull_request:
-    branches: [deleter]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [debug, release, asan, ubsan]
+        compiler:
+          - { cc: gcc, cxx: g++ }
+          - { cc: clang, cxx: clang++ }
+    env:
+      CC: ${{ matrix.compiler.cc }}
+      CXX: ${{ matrix.compiler.cxx }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,13 +30,13 @@ jobs:
         run: sudo apt update
 
       - name: install deps
-        run: sudo apt install ninja-build ccache gdb
+        run: sudo apt install ninja-build clang
 
       - name: configure
-        run: make configure SANITIZER=address
+        run: cmake --preset ${{ matrix.preset }}
 
       - name: build
-        run: make build
+        run: cmake --build --preset ${{ matrix.preset }}
 
       - name: test
-        run: make test
+        run: ctest --preset ${{ matrix.preset }} --output-on-failure --verbose
