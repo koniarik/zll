@@ -113,6 +113,11 @@ struct _vptr
 template < typename T, typename Acc = typename T::access >
 using _ll_ptr = _vptr< T, ll_list< T, Acc > >;
 
+// GCC false positive: after inlining _node()/_list() into callers it incorrectly
+// infers a potential null dereference on the return value of _vptr::a()/b().
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnull-dereference"
+
 template < typename T, typename Acc = typename T::access >
 constexpr auto* _node( _ll_ptr< T, Acc > p ) noexcept
 {
@@ -124,6 +129,8 @@ constexpr auto* _list( _ll_ptr< T, Acc > p ) noexcept
 {
         return p.b();
 }
+
+#pragma GCC diagnostic pop
 
 template < typename T, typename Acc = typename T::access >
 void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
@@ -455,10 +462,6 @@ template < typename T, typename Acc = typename T::access >
 requires( _provides_ll_header< T, Acc > )
 void range_reverse( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
-// GCC false positive: when it inlines detach()/link_detached_as_next() it thinks the
-// pointer returned by _node() could be null, but the range invariant guarantees it is not.
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnull-dereference"
         T* n = &last;
         while ( n != &first ) {
                 T* p = _node( Acc::get( last ).prev );
@@ -467,7 +470,6 @@ void range_reverse( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
                 link_detached_as_next( *n, *p );
                 n = p;
         }
-#pragma GCC diagnostic pop
 }
 
 /// Removes all consecutive nodes in the range [first, last] for which `p` returns true. Only first
