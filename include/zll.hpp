@@ -115,9 +115,6 @@ using _ll_ptr = _vptr< T, ll_list< T, Acc > >;
 
 // GCC false positive: after inlining _node()/_list() into callers it incorrectly
 // infers a potential null dereference on the return value of _vptr::a()/b().
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnull-dereference"
-
 template < typename T, typename Acc = typename T::access >
 constexpr auto* _node( _ll_ptr< T, Acc > p ) noexcept
 {
@@ -129,8 +126,6 @@ constexpr auto* _list( _ll_ptr< T, Acc > p ) noexcept
 {
         return p.b();
 }
-
-#pragma GCC diagnostic pop
 
 template < typename T, typename Acc = typename T::access >
 void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
