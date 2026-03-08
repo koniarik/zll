@@ -458,7 +458,13 @@ void range_reverse( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
         T* n = &last;
         while ( n != &first ) {
                 T* p = _node( Acc::get( last ).prev );
+                ZLL_ASSERT( p != nullptr );
+// GCC false positive: it inlines detach() and thinks `p` could be null because _node()
+// can return nullptr in the general case, but here the invariant guarantees it is not.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnull-dereference"
                 detach( *p );
+#pragma GCC diagnostic pop
                 link_detached_as_next( *n, *p );
                 n = p;
         }
