@@ -16,8 +16,10 @@ jobs:
       matrix:
         preset: [debug, release, asan, ubsan]
         compiler:
-          - { cc: gcc, cxx: g++ }
-          - { cc: clang, cxx: clang++ }
+          - { cc: gcc-13, cxx: g++-13, pkg: g++-13 }
+          - { cc: gcc-14, cxx: g++-14, pkg: g++-14 }
+          - { cc: clang-17, cxx: clang++-17, pkg: clang-17 }
+          - { cc: clang-18, cxx: clang++-18, pkg: clang-18 }
     env:
       CC: ${{ matrix.compiler.cc }}
       CXX: ${{ matrix.compiler.cxx }}
@@ -30,7 +32,7 @@ jobs:
         run: sudo apt update
 
       - name: install deps
-        run: sudo apt install ninja-build clang
+        run: sudo apt install -y ninja-build ${{ matrix.compiler.pkg }}
 
       - name: configure
         run: cmake --preset ${{ matrix.preset }}
@@ -40,3 +42,39 @@ jobs:
 
       - name: test
         run: ctest --preset ${{ matrix.preset }} --output-on-failure --verbose
+
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - name: update apt
+        run: sudo apt update
+
+      - name: install deps
+        run: sudo apt install -y ninja-build
+
+      - name: configure
+        run: cmake -B build/install -G Ninja -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/_install
+
+      - name: build and install
+        run: cmake --build build/install --target install
+
+      - name: verify find_package
+        run: |
+          cat > /tmp/test_consumer.cpp << 'EOF'
+          #include <zll.hpp>
+          int main() { return 0; }
+          EOF
+          cat > /tmp/CMakeLists.txt << 'EOF'
+          cmake_minimum_required(VERSION 3.19)
+          project(consumer)
+          find_package(zll REQUIRED)
+          add_executable(consumer test_consumer.cpp)
+          target_link_libraries(consumer zll::zll)
+          EOF
+          cmake -S /tmp -B /tmp/build -G Ninja \
+            -DCMAKE_PREFIX_PATH=${{ github.workspace }}/_install
+          cmake --build /tmp/build
