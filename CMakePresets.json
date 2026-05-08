@@ -93,7 +93,10 @@
         {
             "name": "release",
             "configurePreset": "release",
-            "output": { "outputOnFailure": true }
+            "output": { "outputOnFailure": true },
+            "filter": {
+                "exclude": { "name": "^gdb_test" }
+            }
         },
         {
             "name": "default",

@@ -246,16 +246,16 @@ void run_tests( mode m, auto& st )
 
         // sh_header: top of a 1-node heap — parent = heap, left/right = null
         {
-                zll::sh_heap< sh_node, sh_access > h;
                 sh_node                            n( 1 );
+                zll::sh_heap< sh_node, sh_access > h;
                 h.link( n );
                 CHECK( m, n.hdr, "{parent = {{...}}, left = null, right = null}", st );
         }
 
         // sh_header: top and child in a 2-node heap (n1=1 < n2=2)
         {
-                zll::sh_heap< sh_node, sh_access > h;
                 sh_node                            n1( 1 ), n2( 2 );
+                zll::sh_heap< sh_node, sh_access > h;
                 h.link( n1 );
                 h.link( n2 );
                 CHECK(
@@ -269,16 +269,16 @@ void run_tests( mode m, auto& st )
 
         // sh_heap: 1-node printer output
         {
-                zll::sh_heap< sh_node, sh_access > h;
                 sh_node                            n( 42 );
+                zll::sh_heap< sh_node, sh_access > h;
                 h.link( n );
                 CHECK( m, h, "{{hdr = {...}, x = 42}}", st );
         }
 
         // sh_heap: 10 nodes — in-order DFS ends with x=6
         {
-                zll::sh_heap< sh_node, sh_access > h;
                 sh_node                            nodes[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+                zll::sh_heap< sh_node, sh_access > h;
                 for ( auto& n : nodes )
                         h.link( n );
                 CHECK( m, h, "{{hdr = {...}, x = 10}, {hdr = {...}, x = 6}}", st );
