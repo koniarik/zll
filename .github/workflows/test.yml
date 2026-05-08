@@ -32,16 +32,10 @@ jobs:
         run: sudo apt update
 
       - name: install deps
-        run: sudo apt install -y ninja-build ${{ matrix.compiler.pkg }}
+        run: sudo apt install -y ninja-build gdb python3 ${{ matrix.compiler.pkg }}
 
-      - name: configure
-        run: cmake --preset ${{ matrix.preset }}
-
-      - name: build
-        run: cmake --build --preset ${{ matrix.preset }}
-
-      - name: test
-        run: ctest --preset ${{ matrix.preset }} --output-on-failure --verbose
+      - name: workflow
+        run: cmake --workflow --preset ${{ matrix.preset }}
 
   install:
     runs-on: ubuntu-latest

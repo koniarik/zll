@@ -256,3 +256,17 @@ Key benefits:
 
 Library asserts by using custom `ZLL_ASSERT` macro, by default it maps to standard `assert`,
 but user can override it before including the header to use custom assert mechanism.
+
+## GDB pretty printer
+
+`pprinter.py` provides GDB pretty printers for all `zll` types. Load it in your GDB session:
+
+```
+(gdb) source /path/to/zll/pprinter.py
+```
+
+Or add it to `~/.gdbinit` to load automatically:
+
+```
+source /path/to/zll/pprinter.py
+```

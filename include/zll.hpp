@@ -22,6 +22,7 @@
 
 #pragma once
 
+#include <bit>
 #include <concepts>
 #include <cstdint>
 #include <iterator>
@@ -55,7 +56,7 @@ template < typename Acc, typename T, typename Compare >
 concept _nothrow_access_compare =
     _nothrow_access< Acc, T > && requires( T& a, T& b, Compare comp ) { noexcept( comp( a, b ) ); };
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 concept _provides_ll_header = requires( T& t ) {
         {
                 Acc::get( t )
@@ -110,24 +111,24 @@ struct _vptr
 };
 
 /// Variadic ptr wrapper pointer either to ll_list or node with ll_header.
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 using _ll_ptr = _vptr< T, ll_list< T, Acc > >;
 
 // GCC false positive: after inlining _node()/_list() into callers it incorrectly
 // infers a potential null dereference on the return value of _vptr::a()/b().
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 constexpr auto* _node( _ll_ptr< T, Acc > p ) noexcept
 {
         return p.a();
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 constexpr auto* _list( _ll_ptr< T, Acc > p ) noexcept
 {
         return p.b();
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
     _nothrow_access< Acc, T > )
 {
@@ -137,7 +138,7 @@ void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
                 h->last = _node( n );
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
     _nothrow_access< Acc, T > )
 {
@@ -242,7 +243,7 @@ template < typename T, typename Acc = typename T::access >
 requires( _provides_ll_header< T, Acc > )
 void link_detached_as_next( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
-        ZLL_ASSERT( detached( d ) );
+        ZLL_ASSERT( ( detached< T, Acc >( d ) ) );
         auto& e_hdr = Acc::get( d );
         auto& n_hdr = Acc::get( n );
 
@@ -657,7 +658,7 @@ struct ll_list
         {
                 for ( auto* n : il ) {
                         ZLL_ASSERT( n );
-                        ZLL_ASSERT( detached( *n ) );
+                        ZLL_ASSERT( ( detached< T, Acc >( *n ) ) );
                         link_back( *n );
                 }
         }
@@ -1108,7 +1109,7 @@ struct sh_header;
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 struct sh_heap;
 
-template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+template < typename T, typename Acc, typename Compare = std::less<> >
 concept _provides_sh_header = requires( T t ) {
         {
                 Acc::get( t )
@@ -1116,22 +1117,22 @@ concept _provides_sh_header = requires( T t ) {
               sh_header< std::remove_const_t< T >, Acc, std::remove_cvref_t< Compare > > const& >;
 };
 
-template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+template < typename T, typename Acc, typename Compare = std::less<> >
 using _sh_ptr = _vptr< T, sh_heap< T, Acc, Compare > >;
 
-template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+template < typename T, typename Acc, typename Compare = std::less<> >
 auto* _node( _sh_ptr< T, Acc, Compare > p ) noexcept
 {
         return p.a();
 }
 
-template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
+template < typename T, typename Acc, typename Compare = std::less<> >
 auto* _heap( _sh_ptr< T, Acc, Compare > p ) noexcept
 {
         return p.b();
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 T& _detach_right( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *Acc::get( node ).right;
@@ -1140,7 +1141,7 @@ T& _detach_right( T& node ) noexcept( _nothrow_access< Acc, T > )
         return tmp;
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 T& _detach_left( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *Acc::get( node ).left;
@@ -1149,7 +1150,7 @@ T& _detach_left( T& node ) noexcept( _nothrow_access< Acc, T > )
         return tmp;
 }
 
-template < typename T, typename Acc = typename T::access, typename Compare >
+template < typename T, typename Acc, typename Compare >
 T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept( _nothrow_access< Acc, T > )
 {
         T& tmp                 = *parent.top;
@@ -1158,7 +1159,7 @@ T& _detach_top( sh_heap< T, Acc, Compare >& parent ) noexcept( _nothrow_access< 
         return tmp;
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 auto _detach_parent( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto tmp = Acc::get( node ).parent;
@@ -1184,21 +1185,21 @@ bool detached( T& node ) noexcept( _nothrow_access< Acc, T > )
         return !n_hdr.left && !n_hdr.right && !n_hdr.parent;
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 void _attach_right( T& parent, T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( parent ).right = &node;
         Acc::get( node ).parent  = parent;
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 void _attach_left( T& parent, T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( parent ).left = &node;
         Acc::get( node ).parent = parent;
 }
 
-template < typename T, typename Acc = typename T::access, typename Compare >
+template < typename T, typename Acc, typename Compare >
 void _attach_top( sh_heap< T, Acc, Compare >& parent, T& node ) noexcept(
     _nothrow_access< Acc, T > )
 {
@@ -1206,7 +1207,7 @@ void _attach_top( sh_heap< T, Acc, Compare >& parent, T& node ) noexcept(
         Acc::get( node ).parent = parent;
 }
 
-template < typename T, typename Acc = typename T::access, typename Compare >
+template < typename T, typename Acc, typename Compare >
 void _attach_parent( T& node, _sh_ptr< T, Acc, Compare > p ) noexcept( _nothrow_access< Acc, T > )
 {
         Acc::get( node ).parent = p;
@@ -1230,17 +1231,17 @@ T& _sh_merge_impl( T& left, T& right, Compare&& comp ) noexcept(
 {
         T* left_left = nullptr;
         if ( Acc::get( left ).left )
-                left_left = &_detach_left( left );
+                left_left = &_detach_left< T, Acc >( left );
 
         if ( Acc::get( left ).right ) {
-                auto& left_right = _detach_right( left );
+                auto& left_right = _detach_right< T, Acc >( left );
                 auto& new_left   = _sh_merge< T, Acc >( left_right, right, comp );
-                _attach_left( left, new_left );
+                _attach_left< T, Acc >( left, new_left );
         } else {
-                _attach_left( left, right );
+                _attach_left< T, Acc >( left, right );
         }
         if ( left_left )
-                _attach_right( left, *left_left );
+                _attach_right< T, Acc >( left, *left_left );
 
         return left;
 }
@@ -1258,16 +1259,16 @@ T& _sh_merge( T& left, T& right, Compare&& comp ) noexcept(
                 return _sh_merge_impl< T, Acc >( left, right, comp );
 }
 
-template < typename T, typename Acc = typename T::access >
+template < typename T, typename Acc >
 void _replace_in_parent( T& node, T& new_node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& parent = Acc::get( node ).parent;
 
         if ( auto* n = _node( parent ) ) {
                 if ( Acc::get( *n ).left == &node )
-                        _attach_left( *n, new_node );
+                        _attach_left< T, Acc >( *n, new_node );
                 else if ( Acc::get( *n ).right == &node )
-                        _attach_right( *n, new_node );
+                        _attach_right< T, Acc >( *n, new_node );
         } else if ( auto* h = _heap( parent ) ) {
                 _attach_top( *h, new_node );
         }
@@ -1283,15 +1284,15 @@ void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
         ZLL_ASSERT( detached( to ) );
 
         if ( Acc::get( from ).left ) {
-                auto& l = _detach_left( from );
-                _attach_left( to, l );
+                auto& l = _detach_left< T, Acc >( from );
+                _attach_left< T, Acc >( to, l );
         }
         if ( Acc::get( from ).right ) {
-                auto& r = _detach_right( from );
-                _attach_right( to, r );
+                auto& r = _detach_right< T, Acc >( from );
+                _attach_right< T, Acc >( to, r );
         }
         if ( Acc::get( from ).parent )
-                _replace_in_parent( from, to );
+                _replace_in_parent< T, Acc >( from, to );
 }
 
 /// Link a detached node `other` to `node`. Maintains the heap property using `comp`. The `other`
@@ -1305,13 +1306,13 @@ void link_detached_to( T& node, T& other, Compare&& comp = std::less<>{} ) noexc
 
         T* n = nullptr;
         if ( Acc::get( node ).right ) {
-                auto& r = _detach_right( node );
+                auto& r = _detach_right< T, Acc >( node );
                 n       = &_sh_merge< T, Acc >( r, other, comp );
         } else {
                 n = &other;
         }
         ZLL_ASSERT( n );
-        _attach_right( node, *n );
+        _attach_right< T, Acc >( node, *n );
 }
 
 /// Unlink a node from the heap. If the node has two children, they are merged using `comp` and the
@@ -1324,18 +1325,18 @@ void detach( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T
 {
         T* n = nullptr;
         if ( Acc::get( node ).left && Acc::get( node ).right ) {
-                auto& l = _detach_left( node );
-                auto& r = _detach_right( node );
+                auto& l = _detach_left< T, Acc >( node );
+                auto& r = _detach_right< T, Acc >( node );
                 n       = &_sh_merge< T, Acc >( l, r, comp );
         } else if ( Acc::get( node ).left ) {
-                n = &_detach_left( node );
+                n = &_detach_left< T, Acc >( node );
         } else if ( Acc::get( node ).right ) {
-                n = &_detach_right( node );
+                n = &_detach_right< T, Acc >( node );
         }
         if ( n )
-                _replace_in_parent( node, *n );
+                _replace_in_parent< T, Acc >( node, *n );
         else
-                _detach_parent( node );
+                _detach_parent< T, Acc >( node );
 }
 
 /// Traverse the heap in-order and call `f` for each node. The order of the nodes is: left child,
@@ -1389,7 +1390,7 @@ void link_detached( T& n1, T& n2, Compare&& comp = std::less<>{} ) noexcept(
 {
         ZLL_ASSERT( detached( n2 ) );
 
-        auto p = _detach_parent( n1 );
+        auto p = _detach_parent< T, Acc >( n1 );
 
         auto& n = _sh_merge< T, Acc >( n1, n2, comp );
         _attach_parent( n, p );
@@ -1410,20 +1411,20 @@ T& top_node_of( T& node ) noexcept( _nothrow_access< Acc, T > )
         return *n;
 }
 
-template < typename T, typename Acc = typename T::access, typename Compare >
+template < typename T, typename Acc, typename Compare >
 requires( _provides_sh_header< T, Acc, Compare > )
 T* _sh_pop( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T, Compare > )
 {
         auto& h = Acc::get( node );
         T*    n = nullptr;
         if ( h.left && h.right ) {
-                auto& l = _detach_left( node );
-                auto& r = _detach_right( node );
+                auto& l = _detach_left< T, Acc >( node );
+                auto& r = _detach_right< T, Acc >( node );
                 n       = &_sh_merge< T, Acc >( l, r, comp );
         } else if ( h.left ) {
-                n = &_detach_left( node );
+                n = &_detach_left< T, Acc >( node );
         } else if ( h.right ) {
-                n = &_detach_right( node );
+                n = &_detach_right< T, Acc >( node );
         }
         return n;
 }
@@ -1572,7 +1573,7 @@ struct sh_heap
                 // XXX: well, this could be more optimal
                 for ( auto* n : il ) {
                         ZLL_ASSERT( n );
-                        ZLL_ASSERT( detached( *n ) );
+                        ZLL_ASSERT( ( detached< T, Acc >( *n ) ) );
                         link( *n );
                 }
         }
@@ -1628,7 +1629,7 @@ struct sh_heap
         {
                 ZLL_ASSERT( top );
                 auto& t = _detach_top( *this );
-                top     = _sh_pop( t, _comp );
+                top     = _sh_pop< T, Acc >( t, _comp );
                 if ( top )
                         Acc::get( *top ).parent = *this;
         }

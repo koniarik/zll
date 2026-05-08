@@ -77,23 +77,62 @@
     "testPresets": [
         {
             "name": "debug",
-            "configurePreset": "debug"
+            "configurePreset": "debug",
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "asan",
-            "configurePreset": "asan"
+            "configurePreset": "asan",
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "ubsan",
-            "configurePreset": "ubsan"
+            "configurePreset": "ubsan",
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "release",
-            "configurePreset": "release"
+            "configurePreset": "release",
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "default",
-            "configurePreset": "default"
+            "configurePreset": "default",
+            "output": { "outputOnFailure": true }
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "debug",
+            "steps": [
+                { "type": "configure", "name": "debug" },
+                { "type": "build",     "name": "debug" },
+                { "type": "test",      "name": "debug" }
+            ]
+        },
+        {
+            "name": "asan",
+            "steps": [
+                { "type": "configure", "name": "asan" },
+                { "type": "build",     "name": "asan" },
+                { "type": "test",      "name": "asan" }
+            ]
+        },
+        {
+            "name": "ubsan",
+            "steps": [
+                { "type": "configure", "name": "ubsan" },
+                { "type": "build",     "name": "ubsan" },
+                { "type": "test",      "name": "ubsan" }
+            ]
+        },
+        {
+            "name": "release",
+            "steps": [
+                { "type": "configure", "name": "release" },
+                { "type": "build",     "name": "release" },
+                { "type": "test",      "name": "release" }
+            ]
         }
     ]
 }

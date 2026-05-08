@@ -2,6 +2,7 @@
 .PHONY: build configure test clang-tidy clean
 .PHONY: build-debug build-release build-asan build-ubsan
 .PHONY: test-debug test-release test-asan test-ubsan
+.PHONY: test-pprinter
 
 # Default preset (debug)
 PRESET ?= debug
@@ -45,6 +46,16 @@ test-ubsan: build-ubsan
 # Static analysis
 clang-tidy:
 	find include/ \( -iname "*.h" -or -iname "*.hpp" -or -iname "*.cpp" \) -print0 | parallel -0 clang-tidy -p build/$(PRESET) {}
+
+# Pretty-printer tests (runs inside Alpine Docker with GDB)
+GDB_IMAGE ?= zll-gdb
+
+test-pprinter:
+	docker build -f docker/Dockerfile.gdb -t $(GDB_IMAGE) .
+	docker run --rm -v "$(CURDIR):/src" $(GDB_IMAGE) sh -c \
+		"cmake -B /build -S /src -G Ninja -DZLL_TESTS_ENABLED=ON -DCMAKE_BUILD_TYPE=Debug && \
+		 cmake --build /build && \
+		 ctest --test-dir /build -R 'gdb_test' --output-on-failure --verbose"
 
 # Cleanup
 clean:
