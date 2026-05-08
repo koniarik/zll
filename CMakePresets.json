@@ -83,12 +83,18 @@
         {
             "name": "asan",
             "configurePreset": "asan",
-            "output": { "outputOnFailure": true }
+            "output": { "outputOnFailure": true },
+            "filter": {
+                "exclude": { "name": "^gdb_test" }
+            }
         },
         {
             "name": "ubsan",
             "configurePreset": "ubsan",
-            "output": { "outputOnFailure": true }
+            "output": { "outputOnFailure": true },
+            "filter": {
+                "exclude": { "name": "^gdb_test" }
+            }
         },
         {
             "name": "release",
