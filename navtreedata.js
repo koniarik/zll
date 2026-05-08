@@ -33,6 +33,7 @@ var NAVTREE =
         [ "Timer Example", "index.html#autotoc_md5", null ]
       ] ],
       [ "Assert", "index.html#autotoc_md6", null ],
+      [ "GDB pretty printer", "index.html#autotoc_md7", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
@@ -62,7 +63,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structzll_1_1sh__base.html#a8018e7c256d237e0349027fcfff7cef3"
+"structzll_1_1sh__base.html#a77a6479c3b32129a97fbd6572e736106"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
