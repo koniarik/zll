@@ -16,10 +16,10 @@ jobs:
       matrix:
         preset: [debug, release, asan, ubsan]
         compiler:
-          - { cc: gcc-13, cxx: g++-13, pkg: g++-13 }
-          - { cc: gcc-14, cxx: g++-14, pkg: g++-14 }
-          - { cc: clang-17, cxx: clang++-17, pkg: clang-17 }
-          - { cc: clang-18, cxx: clang++-18, pkg: clang-18 }
+          - { cc: gcc-13, cxx: g++-13, pkg: g++-13, gdb: true }
+          - { cc: gcc-14, cxx: g++-14, pkg: g++-14, gdb: true }
+          - { cc: clang-17, cxx: clang++-17, pkg: clang-17, gdb: false }
+          - { cc: clang-18, cxx: clang++-18, pkg: clang-18, gdb: false }
     env:
       CC: ${{ matrix.compiler.cc }}
       CXX: ${{ matrix.compiler.cxx }}
@@ -36,6 +36,10 @@ jobs:
 
       - name: workflow
         run: cmake --workflow --preset ${{ matrix.preset }}
+
+      - name: gdb tests
+        if: matrix.compiler.gdb && matrix.preset == 'debug'
+        run: ctest --preset debug -R ^gdb_test --output-on-failure
 
   install:
     runs-on: ubuntu-latest

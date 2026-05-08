@@ -44,12 +44,6 @@
                 "CMAKE_CXX_FLAGS": "-Wall -Wextra -Werror -Wfatal-errors -Wno-comment -Wpedantic -Wcast-qual -Wshadow -Wnon-virtual-dtor -Wunused -Wcast-align -Wdouble-promotion -Wfloat-equal -Wsign-conversion -Wconversion -fvisibility=hidden",
                 "ZLL_TESTS_ENABLED": "ON"
             }
-        },
-        {
-            "name": "default",
-            "displayName": "Default (alias for debug)",
-            "description": "Default configuration - same as debug",
-            "inherits": "debug"
         }
     ],
     "buildPresets": [
@@ -68,17 +62,16 @@
         {
             "name": "release",
             "configurePreset": "release"
-        },
-        {
-            "name": "default",
-            "configurePreset": "default"
         }
     ],
     "testPresets": [
         {
             "name": "debug",
             "configurePreset": "debug",
-            "output": { "outputOnFailure": true }
+            "output": { "outputOnFailure": true },
+            "filter": {
+                "exclude": { "name": "^gdb_test" }
+            }
         },
         {
             "name": "asan",
@@ -103,11 +96,6 @@
             "filter": {
                 "exclude": { "name": "^gdb_test" }
             }
-        },
-        {
-            "name": "default",
-            "configurePreset": "default",
-            "output": { "outputOnFailure": true }
         }
     ],
     "workflowPresets": [
