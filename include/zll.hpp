@@ -148,6 +148,28 @@ void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
                 _list( p )->first = _node( n );
 }
 
+/// Unlinks range [first, last], linking its predecessor and successor together.
+template < typename T, typename Acc >
+void _unlink( ll_header< T, Acc >& first, ll_header< T, Acc >& last ) noexcept(
+    _nothrow_access< Acc, T > )
+{
+        _prev_or_last_set( last.next, first.prev );
+        _next_or_first_set( first.prev, last.next );
+        first.prev = nullptr;
+        last.next  = nullptr;
+}
+
+/// Links detached range [first, last] between `prev` and `next`.
+template < typename T, typename Acc >
+void _link( T& first, T& last, _ll_ptr< T, Acc > prev, _ll_ptr< T, Acc > next ) noexcept(
+    _nothrow_access< Acc, T > )
+{
+        Acc::get( first ).prev = prev;
+        Acc::get( last ).next  = next;
+        _prev_or_last_set< T, Acc >( next, last );
+        _next_or_first_set< T, Acc >( prev, first );
+}
+
 /// Linked-list header containing pointers to the next and previous elements or the list itself.
 /// Will detach itself from the linked list on destruction.
 ///
@@ -167,8 +189,7 @@ struct ll_header
 
         ~ll_header() noexcept( _nothrow_access< Acc, T > )
         {
-                _prev_or_last_set( next, prev );
-                _next_or_first_set( prev, next );
+                _unlink( *this, *this );
         }
 };
 
@@ -179,12 +200,7 @@ requires( _provides_ll_header< T, Acc > )
 void detach( T& node ) noexcept( _nothrow_access< Acc, T > )
 {
         auto& n_hdr = Acc::get( node );
-
-        _prev_or_last_set( n_hdr.next, n_hdr.prev );
-        _next_or_first_set( n_hdr.prev, n_hdr.next );
-
-        n_hdr.next = nullptr;
-        n_hdr.prev = nullptr;
+        _unlink< T, Acc >( n_hdr, n_hdr );
 }
 
 /// Returns true if the node is detached from list.
@@ -202,11 +218,7 @@ template < typename T, typename Acc = typename T::access >
 requires( _provides_ll_header< T, Acc > )
 void detach_range( T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
-        _prev_or_last_set( Acc::get( last ).next, Acc::get( first ).prev );
-        _next_or_first_set( Acc::get( first ).prev, Acc::get( last ).next );
-
-        Acc::get( first ).prev = nullptr;
-        Acc::get( last ).next  = nullptr;
+        _unlink< T, Acc >( Acc::get( first ), Acc::get( last ) );
 }
 
 /// Returns true if the range is detached from list.
@@ -225,13 +237,8 @@ void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( detached( to ) );
         auto& from_hdr = Acc::get( from );
-        auto& to_hdr   = Acc::get( to );
 
-        to_hdr.next = from_hdr.next;
-        to_hdr.prev = from_hdr.prev;
-
-        _prev_or_last_set< T, Acc >( to_hdr.next, to );
-        _next_or_first_set< T, Acc >( to_hdr.prev, to );
+        _link< T, Acc >( to, to, from_hdr.prev, from_hdr.next );
 
         from_hdr.next = nullptr;
         from_hdr.prev = nullptr;
@@ -244,14 +251,7 @@ requires( _provides_ll_header< T, Acc > )
 void link_detached_as_next( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( ( detached< T, Acc >( d ) ) );
-        auto& e_hdr = Acc::get( d );
-        auto& n_hdr = Acc::get( n );
-
-        e_hdr.next = n_hdr.next;
-        _prev_or_last_set< T, Acc >( e_hdr.next, d );
-
-        n_hdr.next = d;
-        e_hdr.prev = n;
+        _link< T, Acc >( d, d, n, Acc::get( n ).next );
 }
 
 /// Link detached node `d` before node `n`, any predecessor of `n` will be predecessor of `d`.
@@ -261,14 +261,7 @@ requires( _provides_ll_header< T, Acc > )
 void link_detached_as_prev( T& n, T& d ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( detached( d ) );
-        auto& e_hdr = Acc::get( d );
-        auto& n_hdr = Acc::get( n );
-
-        e_hdr.prev = n_hdr.prev;
-        _next_or_first_set< T, Acc >( e_hdr.prev, d );
-
-        n_hdr.prev = d;
-        e_hdr.next = n;
+        _link< T, Acc >( d, d, Acc::get( n ).prev, n );
 }
 
 /// Iterate over predecessors of node `n` and return the first node in the list.
@@ -332,11 +325,7 @@ requires( _provides_ll_header< T, Acc > )
 void link_range_as_next( T& n, T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( detached_range( first, last ) );
-        Acc::get( last ).next = Acc::get( n ).next;
-        _prev_or_last_set< T, Acc >( Acc::get( n ).next, last );
-
-        Acc::get( first ).prev = n;
-        Acc::get( n ).next     = first;
+        _link< T, Acc >( first, last, n, Acc::get( n ).next );
 }
 
 /// Link detached range [first, last] as predecessor of node `n`.
@@ -348,11 +337,7 @@ requires( _provides_ll_header< T, Acc > )
 void link_range_as_prev( T& n, T& first, T& last ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( detached_range( first, last ) );
-        Acc::get( first ).prev = Acc::get( n ).prev;
-        _next_or_first_set< T, Acc >( Acc::get( n ).prev, first );
-
-        Acc::get( last ).next = n;
-        Acc::get( n ).prev    = last;
+        _link< T, Acc >( first, last, Acc::get( n ).prev, n );
 }
 
 /// Link nodes in `nodes` in order as successors of each other.
@@ -409,9 +394,6 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
         }
         ZLL_ASSERT( first );
         ZLL_ASSERT( last );
-        _next_or_first_set< T, Acc >( pred, *first );
-        Acc::get( *first ).prev = pred;
-
         if ( lh ) {
                 Acc::get( *last ).next = *lh;
                 Acc::get( *lh ).prev   = *last;
@@ -420,10 +402,8 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
                 Acc::get( *last ).next = *rh;
                 Acc::get( *rh ).prev   = *last;
                 last                   = &rhl;
-
-                Acc::get( *last ).next = succ;
-                _prev_or_last_set< T, Acc >( succ, *last );
         }
+        _link< T, Acc >( *first, *last, pred, succ );
 
         return { first, last };
 }
@@ -945,11 +925,7 @@ private:
 
         void link_first( T& node ) noexcept( noexcept_access )
         {
-                first = &node;
-                last  = &node;
-
-                Acc::get( node ).next = *this;
-                Acc::get( node ).prev = *this;
+                _link< T, Acc >( node, node, *this, *this );
         }
 };
 
