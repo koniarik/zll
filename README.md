@@ -11,6 +11,8 @@ Single-file header-only implementation of intrusive double-linked list and skew 
 The container does not own the data, but rather provides secondary data structure for example
 for registration of callbacks.
 
+Code size is a primary design goal, measured with `-Os` on Cortex-M4: the code that relinks nodes
+does not depend on the node type, so it is compiled once and shared by all lists and heaps.
 The linked list pointers are embed into the nodes of the list, easier is using CRTP baseclass:
 
 ```cpp
@@ -150,8 +152,8 @@ looks similar to this:
 ```cpp
 template< typename T, typename Acc >
 struct ll_header {
-    _ll_ptr< T, Acc > next;
-    _ll_ptr< T, Acc > prev;
+    _ll_word _next;
+    _ll_word _prev;
 
     ~ll_header();
 };
@@ -159,31 +161,43 @@ struct ll_header {
 
 where:
  - `T` is the base type of the nodes that is being used
--  `Acc` is utility type used to access the header within a `T`
- - `_ll_ptr` is pointer that points either to `T` or `ll_list<T,A>`
- - `~ll_header()` automatically unlinks next/prev pointers if their link to something.
+ - `Acc` is utility type that maps a `T` to its header and back
+ - `_ll_word` points either to the `ll_header` of the neighbouring node or to the `ll_list`
+ - `~ll_header()` automatically unlinks next/prev pointers if they link to something.
 
 To use the header:
 ```cpp
-struct node {
+struct item {
     struct access {
-        static auto& get(node& n) {
+        static auto& get(item& n) noexcept {
             return n.hdr;
+        }
+        static auto& get(item const& n) noexcept {
+            return n.hdr;
+        }
+        static item& node(ll_header< item, access >& h) noexcept {
+            // `hdr` is the first member of a standard-layout `item`, so both share an address
+            return *static_cast< item* >(static_cast< void* >(&h));
         }
     };
 
-    ll_header< node, access > hdr;
+    ll_header< item, access > hdr;
 };
 ```
 
-For the library to work, given `node` it needs a way of accessing the header stored inside.
-The `accessor` is customization point to provide ability to extract the header, anytime
-the library wants to access the header of node it uses `auto& node_header = Acc::get(my_node);`.
+For the library to work, it needs to get from a node to its header and back. The `accessor` is
+customization point that provides both: anytime a node is handed to the library it uses
+`auto& node_header = Acc::get(my_node);`, and anytime the library hands a node back (`front()`,
+iterators, comparator calls) it uses `T& my_node = Acc::node(node_header);`, which must not
+throw.
 
 This give the user ultimate flexibility to store the header anywhere in the type or to
 have multiple headers at once (each usable for different linked list).
 
-`ll_base` is jut convenience base class that contains the `ll_header` and provides
+Because the links point to headers, the code that relinks nodes does not depend on `T`: it is
+compiled once and shared by all node types.
+
+`ll_base` is just convenience base class that inherits `ll_header` and provides
 accessor for it.
 
 `ll_header` needs capability to point to the list structure itself in case
@@ -228,7 +242,7 @@ int main() {
 
     // Process timers
     while (!timers.empty()) {
-        auto& next = *timers.top;
+        auto& next = *timers.top();
         now = next.deadline;
         std::cout << "Fire: " << next.name << " at " << now << "\n";
         timers.take();

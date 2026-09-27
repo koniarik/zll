@@ -23,9 +23,12 @@
 
 #include "zll.hpp"
 
+#include <algorithm>
+#include <array>
 #include <doctest/doctest.h>
 #include <list>
 #include <set>
+#include <string>
 #include <vector>
 
 namespace zll
@@ -37,6 +40,13 @@ struct hdr_access
         static auto& get( auto& item ) noexcept
         {
                 return item.hdr;
+        }
+
+        // The header is the first member of a standard-layout node, so both share an address.
+        template < typename T >
+        static T& node( ll_header< T, hdr_access >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
         }
 };
 
@@ -78,6 +88,8 @@ struct node_t
         }
 };
 
+static_assert( std::is_standard_layout_v< node_t > );
+
 struct der : public ll_base< der >
 {
         bool operator<( der const& other ) const noexcept
@@ -86,16 +98,90 @@ struct der : public ll_base< der >
         }
 };
 
+// The header sits behind other data, so mapping it back to its node has to undo an offset.
+struct off_access
+{
+        static auto& get( auto& item ) noexcept
+        {
+                return item.hdr;
+        }
+
+        template < typename T >
+        static T& node( ll_header< T, off_access >& h ) noexcept
+        {
+                void* p = reinterpret_cast< char* >( &h ) - offsetof( T, hdr );
+                return *static_cast< T* >( p );
+        }
+};
+
+struct off_node
+{
+        char                              pad[7] = {};
+        ll_header< off_node, off_access > hdr;
+
+        using access = off_access;
+
+        off_node() noexcept = default;
+
+        off_node( off_node&& o ) noexcept
+        {
+                move_from_to< off_node, off_access >( o, *this );
+        }
+
+        off_node( off_node& o ) noexcept
+        {
+                link_detached_as_next< off_node, off_access >( o, *this );
+        }
+
+        off_node& operator=( off_node&& o ) noexcept
+        {
+                detach< off_node, off_access >( *this );
+                move_from_to< off_node, off_access >( o, *this );
+                return *this;
+        }
+
+        off_node& operator=( off_node& o ) noexcept
+        {
+                detach< off_node, off_access >( *this );
+                link_detached_as_next< off_node, off_access >( o, *this );
+                return *this;
+        }
+
+        bool operator<( off_node const& other ) const noexcept
+        {
+                return this < &other;
+        }
+};
+
+// `ll_base` behind a polymorphic base, so its header is not at the start of the node either.
+struct poly_base
+{
+        virtual ~poly_base() = default;
+        char tag             = 0;
+};
+
+struct off_der : poly_base, ll_base< off_der >
+{
+        bool operator<( off_der const& other ) const noexcept
+        {
+                return this < &other;
+        }
+};
+
 template < typename T, typename Acc = typename T::access >
 void check_links( T& first )
 {
-        for ( T* p = _node( Acc::get( first ).next ); p; p = _node( Acc::get( *p ).next ) ) {
-                CHECK( _node( Acc::get( *p ).prev ) );
-                CHECK_EQ( p, _node( Acc::get( *_node( Acc::get( *p ).prev ) ).next ) );
+        for ( T* p = _node< T, Acc >( Acc::get( first )._next ); p;
+              p    = _node< T, Acc >( Acc::get( *p )._next ) ) {
+                CHECK( _node< T, Acc >( Acc::get( *p )._prev ) );
+                CHECK_EQ(
+                    p,
+                    _node< T, Acc >( Acc::get( *_node< T, Acc >( Acc::get( *p )._prev ) )._next ) );
         }
 }
 
-std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& value )
+template < typename T >
+std::ostream& operator<<( std::ostream& os, std::set< T const* > const& value )
 {
         os << "{ ";
         for ( auto* v : value )
@@ -104,33 +190,17 @@ std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& val
         return os;
 }
 
-void check_for_each_node( node_t& n, std::set< node_t const* > const& expected )
+template < typename T >
+void check_for_each_node( T& n, std::set< T const* > const& expected )
 {
-        std::set< node_t const* > s;
-        for_each_node< node_t >( n, [&]( node_t& m ) {
-                s.insert( &m );
-        } );
-        CAPTURE( s.size() );
-        CAPTURE( expected.size() );
-        CHECK_EQ( s, expected );
-
-        std::set< node_t const* > s2;
-        for_each_node< node_t const >( std::as_const( n ), [&]( node_t const& m ) {
-                s2.insert( &m );
-        } );
-        CHECK_EQ( s2, expected );
-}
-
-void check_for_each_node( der& n, std::set< der const* > const& expected )
-{
-        std::set< der const* > s;
-        for_each_node( n, [&]( der& m ) {
+        std::set< T const* > s;
+        for_each_node( n, [&]( T& m ) {
                 s.insert( &m );
         } );
         CHECK_EQ( s, expected );
 
-        std::set< der const* > s2;
-        for_each_node( std::as_const( n ), [&]( der const& m ) {
+        std::set< T const* > s2;
+        for_each_node( std::as_const( n ), [&]( T const& m ) {
                 s2.insert( &m );
         } );
         CHECK_EQ( s2, expected );
@@ -138,7 +208,7 @@ void check_for_each_node( der& n, std::set< der const* > const& expected )
 
 }  // namespace
 
-TEST_CASE_TEMPLATE( "single", T, node_t, der )
+TEST_CASE_TEMPLATE( "single", T, node_t, der, off_node, off_der )
 {
         using access = typename T::access;
 
@@ -160,7 +230,7 @@ TEST_CASE_TEMPLATE( "single", T, node_t, der )
         check_for_each_node( d1, { &d1 } );
 }
 
-TEST_CASE_TEMPLATE( "dual", T, node_t, der )
+TEST_CASE_TEMPLATE( "dual", T, node_t, der, off_node, off_der )
 {
         using access = typename T::access;
 
@@ -184,7 +254,7 @@ TEST_CASE_TEMPLATE( "dual", T, node_t, der )
         check_links( d1 );
 }
 
-TEST_CASE_TEMPLATE( "triple", T, node_t, der )
+TEST_CASE_TEMPLATE( "triple", T, node_t, der, off_node, off_der )
 {
         T d1, d2, d3;
         SUBCASE( "link as last" )
@@ -205,7 +275,7 @@ TEST_CASE_TEMPLATE( "triple", T, node_t, der )
         check_for_each_node( d1, { &d1, &d3 } );
 }
 
-TEST_CASE_TEMPLATE( "cpy", T, node_t, der )
+TEST_CASE_TEMPLATE( "cpy", T, node_t, der, off_node, off_der )
 {
         T d1;
         T d2{ d1 };
@@ -249,7 +319,7 @@ TEST_CASE_TEMPLATE( "cpy", T, node_t, der )
         }
 }
 
-TEST_CASE_TEMPLATE( "vector", T, node_t, der )
+TEST_CASE_TEMPLATE( "vector", T, node_t, der, off_node, off_der )
 {
         std::vector< T > d1;
         for ( int i = 0; i < 42; i++ ) {
@@ -290,7 +360,7 @@ TEST_CASE( "cont" )
         }
 }
 
-TEST_CASE_TEMPLATE( "iters", T, node_t, der )
+TEST_CASE_TEMPLATE( "iters", T, node_t, der, off_node, off_der )
 {
         T            c1, c2, c3;
         ll_list< T > l = { &c1, &c2, &c3 };
@@ -326,7 +396,7 @@ void check_nodes_ptr( T const& l, std::vector< T const* > const& expected )
 {
         check_links( l );
         std::vector< T const* > result;
-        for ( auto* n = &l; n; n = _node( Acc::get( *n ).next ) )
+        for ( auto* n = &l; n; n = _node< T, Acc >( Acc::get( *n )._next ) )
                 result.push_back( n );
         CHECK_EQ( result, expected );
 };
@@ -341,7 +411,7 @@ void check_list_values( ll_list< T > const& l, std::vector< U > const& expected 
         CHECK_EQ( result, expected );
 };
 
-TEST_CASE_TEMPLATE( "merge", T, node_t, der )
+TEST_CASE_TEMPLATE( "merge", T, node_t, der, off_node, off_der )
 {
         using access = typename T::access;
 
@@ -571,6 +641,201 @@ TEST_CASE( "merge_comparable" )
                 CHECK( a == &d2 );
                 CHECK( b == &d5 );
                 check_nodes_ptr( d1, { &d1, &d2, &d4, &d3, &d5, &d6 } );
+        }
+
+        SUBCASE( "merge self is a no-op" )
+        {
+                comparable_node            n1( 1 ), n2( 2 );
+                ll_list< comparable_node > l = { &n1, &n2 };
+                l.merge( std::move( l ) );
+                check_list_ptr( l, { &n1, &n2 } );
+        }
+
+        SUBCASE( "merge two empty lists" )
+        {
+                ll_list< comparable_node > l1, l2;
+                l1.merge( std::move( l2 ) );
+                CHECK( l1.empty() );
+                CHECK( l2.empty() );
+        }
+
+        SUBCASE( "merge into an empty list" )
+        {
+                comparable_node            m1( 1 ), m2( 2 );
+                ll_list< comparable_node > l1, l2 = { &m1, &m2 };
+                l1.merge( std::move( l2 ) );
+                CHECK( l2.empty() );
+                check_list_ptr( l1, { &m1, &m2 } );
+                CHECK_EQ( &l1.back(), &m2 );
+        }
+
+        SUBCASE( "merge an empty list" )
+        {
+                comparable_node            n1( 1 ), n2( 2 );
+                ll_list< comparable_node > l1 = { &n1, &n2 }, l2;
+                l1.merge( std::move( l2 ) );
+                CHECK( l2.empty() );
+                check_list_ptr( l1, { &n1, &n2 } );
+                CHECK_EQ( &l1.back(), &n2 );
+        }
+
+        SUBCASE( "both lists stay usable after merge" )
+        {
+                comparable_node n1( 1 ), n2( 3 ), m1( 2 ), m2( 4 ), x( 0 ), y( 5 ), z( 9 );
+                ll_list< comparable_node > l1 = { &n1, &n2 }, l2 = { &m1, &m2 };
+                l1.merge( std::move( l2 ) );
+                // taking from either end relies on the end nodes pointing back to the list
+                CHECK_EQ( &l1.take_front(), &n1 );
+                CHECK_EQ( &l1.take_back(), &m2 );
+                check_list_ptr( l1, { &m1, &n2 } );
+                l1.link_front( x );
+                l1.link_back( y );
+                check_list_ptr( l1, { &x, &m1, &n2, &y } );
+                l2.link_back( z );
+                check_list_ptr( l2, { &z } );
+        }
+
+        SUBCASE( "merge_ranges in the middle of one list" )
+        {
+                comparable_node            o1( 100 ), l1( 1 ), l2( 4 ), r1( 2 ), r2( 3 ), o2( 200 );
+                ll_list< comparable_node > l = { &o1, &l1, &l2, &r1, &r2, &o2 };
+                auto [f, b] = merge_ranges< comparable_node, typename comparable_node::access >(
+                    l1, l2, r1, r2 );
+                CHECK_EQ( f, &l1 );
+                CHECK_EQ( b, &l2 );
+                check_list_ptr( l, { &o1, &l1, &r1, &r2, &l2, &o2 } );
+                CHECK_EQ( &l.back(), &o2 );
+        }
+
+        SUBCASE( "merge_ranges with the right range before the left one" )
+        {
+                comparable_node            r1( 2 ), r2( 5 ), l1( 1 ), l2( 3 );
+                ll_list< comparable_node > l = { &r1, &r2, &l1, &l2 };
+                auto [f, b] = merge_ranges< comparable_node, typename comparable_node::access >(
+                    l1, l2, r1, r2 );
+                CHECK_EQ( f, &l1 );
+                CHECK_EQ( b, &r2 );
+                check_list_ptr( l, { &l1, &r1, &l2, &r2 } );
+                CHECK_EQ( &l.back(), &r2 );
+        }
+
+        SUBCASE( "merge_ranges with the right range from the middle of another list" )
+        {
+                comparable_node            l1( 1 ), l2( 4 ), o1( 100 ), r1( 2 ), r2( 3 ), o2( 200 );
+                ll_list< comparable_node > la = { &l1, &l2 }, lb = { &o1, &r1, &r2, &o2 };
+                merge_ranges< comparable_node, typename comparable_node::access >( l1, l2, r1, r2 );
+                check_list_ptr( la, { &l1, &r1, &r2, &l2 } );
+                check_list_ptr( lb, { &o1, &o2 } );
+                CHECK_EQ( &la.back(), &l2 );
+                CHECK_EQ( &lb.back(), &o2 );
+        }
+}
+
+TEST_CASE( "merge matches std::merge on every small input" )
+{
+        struct vnode : ll_base< vnode >
+        {
+                int value = 0;
+
+                bool operator<( vnode const& other ) const noexcept
+                {
+                        return value < other.value;
+                }
+        };
+
+        // every sorted sequence of up to 4 values from { 0, 1, 2 }
+        std::vector< std::vector< int > > seqs;
+        for ( int n = 0, count = 1; n <= 4; ++n, count *= 3 )
+                for ( int code = 0; code < count; ++code ) {
+                        std::vector< int > s;
+                        for ( int i = 0, c = code; i < n; ++i, c /= 3 )
+                                s.push_back( c % 3 );
+                        if ( std::is_sorted( s.begin(), s.end() ) )
+                                seqs.push_back( s );
+                }
+
+        auto check_merge =
+            [&]( std::vector< int > const& a, std::vector< int > const& b, auto merge ) {
+                    std::string desc = "a={";
+                    for ( int v : a )
+                            desc += std::to_string( v );
+                    desc += "} b={";
+                    for ( int v : b )
+                            desc += std::to_string( v );
+                    desc += "}";
+                    INFO( desc );
+
+                    std::array< vnode, 4 > an, bn;
+                    ll_list< vnode >       la, lb;
+                    std::vector< vnode* >  pa, pb;
+                    for ( std::size_t i = 0; i < a.size(); ++i ) {
+                            an[i].value = a[i];
+                            la.link_back( an[i] );
+                            pa.push_back( &an[i] );
+                    }
+                    for ( std::size_t i = 0; i < b.size(); ++i ) {
+                            bn[i].value = b[i];
+                            lb.link_back( bn[i] );
+                            pb.push_back( &bn[i] );
+                    }
+
+                    std::vector< vnode* > expected( pa.size() + pb.size() );
+                    merge( la, lb, pa, pb, expected );
+                    CHECK( lb.empty() );
+
+                    // drain from both ends: every step relies on the links and on the list's ends
+                    std::vector< vnode* > got( expected.size() );
+                    for ( std::size_t lo = 0, hi = got.size(); lo < hi; ) {
+                            got[lo++] = &la.take_front();
+                            if ( lo < hi )
+                                    got[--hi] = &la.take_back();
+                    }
+                    CHECK( la.empty() );
+                    CHECK_EQ( got, expected );
+            };
+
+        SUBCASE( "ascending, default comparator" )
+        {
+                for ( auto const& a : seqs )
+                        for ( auto const& b : seqs )
+                                check_merge(
+                                    a, b, []( auto& la, auto& lb, auto& pa, auto& pb, auto& out ) {
+                                            std::merge(
+                                                pa.begin(),
+                                                pa.end(),
+                                                pb.begin(),
+                                                pb.end(),
+                                                out.begin(),
+                                                []( vnode* x, vnode* y ) {
+                                                        return *x < *y;
+                                                } );
+                                            la.merge( std::move( lb ) );
+                                    } );
+        }
+
+        SUBCASE( "descending, custom comparator" )
+        {
+                auto greater = []( vnode const& x, vnode const& y ) {
+                        return x.value > y.value;
+                };
+                for ( auto a : seqs )
+                        for ( auto b : seqs ) {
+                                std::reverse( a.begin(), a.end() );
+                                std::reverse( b.begin(), b.end() );
+                                check_merge(
+                                    a, b, [&]( auto& la, auto& lb, auto& pa, auto& pb, auto& out ) {
+                                            std::merge(
+                                                pa.begin(),
+                                                pa.end(),
+                                                pb.begin(),
+                                                pb.end(),
+                                                out.begin(),
+                                                [&]( vnode* x, vnode* y ) {
+                                                        return greater( *x, *y );
+                                                } );
+                                            la.merge( std::move( lb ), greater );
+                                    } );
+                        }
         }
 }
 
@@ -1639,6 +1904,16 @@ TEST_CASE( "sort_functionality" )
                 CHECK_EQ( &l.back(), &n3 );
         }
 
+        SUBCASE( "sort when the last element moves before the pivot" )
+        {
+                sortable_node            n1( 3 ), n2( 5 ), n3( 4 ), n4( 1 );
+                ll_list< sortable_node > l = { &n1, &n2, &n3, &n4 };
+                l.sort();
+                check_list_ptr( l, { &n4, &n1, &n3, &n2 } );
+                CHECK_EQ( &l.front(), &n4 );
+                CHECK_EQ( &l.back(), &n2 );
+        }
+
         SUBCASE( "sort with duplicates" )
         {
                 sortable_node            n1( 3 ), n2( 1 ), n3( 3 ), n4( 2 ), n5( 1 );
@@ -1812,6 +2087,115 @@ TEST_CASE( "sort_functionality" )
 
                 check_list_values< int >( l, { 1, 2, 3, 8, 9, 10 } );
         }
+}
+
+TEST_CASE( "first_node_of and last_node_of" )
+{
+        SUBCASE( "detached node" )
+        {
+                der d;
+                CHECK_EQ( &first_node_of( d ), &d );
+                CHECK_EQ( &last_node_of( d ), &d );
+        }
+
+        SUBCASE( "nodes linked without a list" )
+        {
+                der d1, d2, d3;
+                link_group< der >( { &d1, &d2, &d3 } );
+                CHECK_EQ( &first_node_of( d3 ), &d1 );
+                CHECK_EQ( &first_node_of( d1 ), &d1 );
+                CHECK_EQ( &last_node_of( d1 ), &d3 );
+                CHECK_EQ( &last_node_of( d3 ), &d3 );
+        }
+
+        SUBCASE( "nodes in a list" )
+        {
+                node_t            n1, n2, n3;
+                ll_list< node_t > l{ &n1, &n2, &n3 };
+                CHECK_EQ( &first_node_of( n2 ), &n1 );
+                CHECK_EQ( &last_node_of( n2 ), &n3 );
+        }
+}
+
+TEST_CASE( "link_detached_as_first and link_detached_as_last" )
+{
+        SUBCASE( "nodes linked without a list" )
+        {
+                der d1, d2, first, last;
+                link_group< der >( { &d1, &d2 } );
+                link_detached_as_last( d1, last );
+                link_detached_as_first( d2, first );
+                check_nodes_ptr( first, { &first, &d1, &d2, &last } );
+        }
+
+        SUBCASE( "nodes in a list" )
+        {
+                node_t            n1, n2, first, last;
+                ll_list< node_t > l{ &n1, &n2 };
+                link_detached_as_last( n1, last );
+                link_detached_as_first( n2, first );
+                check_list_ptr( l, { &first, &n1, &n2, &last } );
+        }
+}
+
+namespace
+{
+struct may_throw_access
+{
+        static auto& get( auto& item )
+        {
+                return item.hdr;
+        }
+
+        template < typename T >
+        static T& node( ll_header< T, may_throw_access >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
+        }
+};
+
+struct may_throw_node
+{
+        ll_header< may_throw_node, may_throw_access > hdr;
+};
+
+struct throwing_node_access
+{
+        static auto& get( auto& item ) noexcept
+        {
+                return item.hdr;
+        }
+
+        template < typename T >
+        static T& node( ll_header< T, throwing_node_access >& h )
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
+        }
+};
+
+struct throwing_node_node
+{
+        ll_header< throwing_node_node, throwing_node_access > hdr;
+};
+
+// mapping a header back to its node must not throw
+static_assert( !_provides_ll_header< throwing_node_node, throwing_node_access > );
+}  // namespace
+
+TEST_CASE( "noexcept follows the accessor" )
+{
+        node_t            a, b;
+        ll_list< node_t > l;
+        CHECK( noexcept( detach( a ) ) );
+        CHECK( noexcept( link_detached_as_next( a, b ) ) );
+        CHECK( noexcept( l.link_back( a ) ) );
+        CHECK( noexcept( l.take_front() ) );
+        CHECK( noexcept( l.sort() ) );
+
+        may_throw_node                              m;
+        ll_list< may_throw_node, may_throw_access > ml;
+        CHECK_FALSE( noexcept( detach< may_throw_node, may_throw_access >( m ) ) );
+        CHECK_FALSE( noexcept( ml.link_back( m ) ) );
 }
 
 }  // namespace zll

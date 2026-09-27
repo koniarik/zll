@@ -1,5 +1,3 @@
-import re
-
 import gdb
 import gdb.printing
 
@@ -23,25 +21,45 @@ def _vptr_decode(vptr_val):
 
 
 # ---------------------------------------------------------------------------
+# header -> node
+# ---------------------------------------------------------------------------
+
+
+def _header_offset(node_type, acc_type, header):
+    """Byte offset of the `header`<node_type, acc_type, ...> inside node_type, as a member or a base."""
+    for field in node_type.strip_typedefs().fields():
+        ftype = field.type.strip_typedefs()
+        if str(ftype).startswith(header + "<") and str(ftype.template_argument(1)) == str(acc_type):
+            return field.bitpos // 8
+        if field.is_base_class:
+            inner = _header_offset(ftype, acc_type, header)
+            if inner is not None:
+                return field.bitpos // 8 + inner
+    return None
+
+
+def _node_at(hdr_addr, node_type, acc_type, header):
+    """The node whose `header` sits at hdr_addr."""
+    addr = hdr_addr - _header_offset(node_type, acc_type, header)
+    return gdb.Value(addr).cast(node_type.pointer()).dereference()
+
+
+# ---------------------------------------------------------------------------
 # ll_header<T,Acc>
 # ---------------------------------------------------------------------------
 
 
-def _ll_vptr_child(vptr_val):
-    """Return (label_suffix, child_value) for one side of an ll_header _vptr.
-
-    child_value is either a gdb.Value (the dereferenced node) or a string
-    ('list' / 'null').
-    """
-    kind, addr = _vptr_decode(vptr_val)
+def _ll_link_child(link_val, hdr_type):
+    """The neighbour a link of an ll_header<T, Acc> points to: the node, the list, or 'null'."""
+    kind, addr = _vptr_decode(link_val)
     if kind == "null":
         return "null"
+    node_type = hdr_type.template_argument(0)
+    acc_type = hdr_type.template_argument(1)
     if kind == "sentinel":
-        list_type = vptr_val.type.template_argument(1)
+        list_type = gdb.lookup_type("zll::ll_list<{}, {}>".format(node_type, acc_type))
         return gdb.Value(addr).cast(list_type.pointer()).dereference()
-    # node — dereference through the stored address
-    node_type = vptr_val.type.template_argument(0)
-    return gdb.Value(addr).cast(node_type.pointer()).dereference()
+    return _node_at(addr, node_type, acc_type, "zll::ll_header")
 
 
 class LlHeaderPrinter(gdb.ValuePrinter):
@@ -54,10 +72,9 @@ class LlHeaderPrinter(gdb.ValuePrinter):
         return None
 
     def children(self):
-        prev_child = _ll_vptr_child(self.__val["prev"])
-        next_child = _ll_vptr_child(self.__val["next"])
-        yield ("prev", prev_child)
-        yield ("next", next_child)
+        hdr_type = self.__val.type.unqualified().strip_typedefs()
+        yield ("prev", _ll_link_child(self.__val["_prev"], hdr_type))
+        yield ("next", _ll_link_child(self.__val["_next"], hdr_type))
 
 
 # ---------------------------------------------------------------------------
@@ -86,40 +103,28 @@ class VptrPrinter(gdb.ValuePrinter):
 
 
 class _LlListIterator:
-    def __init__(self, first_ptr, node_type):
-        self.__cur = first_ptr
+    """Walks the headers from `first`, yielding the node of each."""
+
+    def __init__(self, first_hdr, node_type, acc_type):
+        self.__addr = int(first_hdr)
         self.__node_type = node_type
+        self.__acc_type = acc_type
+        self.__hdr_type = gdb.lookup_type("zll::_ll_hdr")
         self.__idx = 0
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if int(self.__cur) == 0:
+        if self.__addr == 0:
             raise StopIteration
-        node = self.__cur.dereference()
-        hdr = _find_ll_header(node)
+        hdr = gdb.Value(self.__addr).cast(self.__hdr_type.pointer()).dereference()
+        node = _node_at(self.__addr, self.__node_type, self.__acc_type, "zll::ll_header")
         label = "[{}]".format(self.__idx)
         self.__idx += 1
-        if hdr is not None:
-            next_kind, next_addr = _vptr_decode(hdr["next"])
-            if next_kind == "node":
-                self.__cur = gdb.Value(next_addr).cast(self.__node_type.pointer())
-            else:
-                self.__cur = gdb.Value(0).cast(self.__node_type.pointer())
-        else:
-            self.__cur = gdb.Value(0).cast(self.__node_type.pointer())
+        next_kind, next_addr = _vptr_decode(hdr["_next"])
+        self.__addr = next_addr if next_kind == "node" else 0
         return (label, node)
-
-
-def _find_ll_header(node_val):
-    """Walk a node's fields looking for the first ll_header member."""
-    t = node_val.type.strip_typedefs()
-    for field in t.fields():
-        ftype = field.type.strip_typedefs()
-        if re.match(r"^zll::ll_header<", str(ftype)):
-            return node_val[field.name]
-    return None
 
 
 class LlListPrinter(gdb.ValuePrinter):
@@ -137,11 +142,13 @@ class LlListPrinter(gdb.ValuePrinter):
         return None
 
     def children(self):
-        first_ptr = self.__val["first"]
-        if int(first_ptr) == 0:
+        first_hdr = self.__val["first"]
+        if int(first_hdr) == 0:
             return
-        node_type = self.__val.type.strip_typedefs().template_argument(0)
-        yield from _LlListIterator(first_ptr, node_type)
+        list_type = self.__val.type.strip_typedefs()
+        yield from _LlListIterator(
+            first_hdr, list_type.template_argument(0), list_type.template_argument(1)
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -159,25 +166,25 @@ class ShHeaderPrinter(gdb.ValuePrinter):
         return None
 
     def children(self):
-        parent_kind, parent_addr = _vptr_decode(self.__val["parent"])
+        hdr_type = self.__val.type.unqualified().strip_typedefs()
+        node_type = hdr_type.template_argument(0)
+        acc_type = hdr_type.template_argument(1)
+        parent_kind, parent_addr = _vptr_decode(self.__val["_parent"])
         if parent_kind == "sentinel":
-            heap_type = self.__val["parent"].type.template_argument(1)
+            heap_type = gdb.lookup_type(
+                "zll::sh_heap<{}, {}, {}>".format(node_type, acc_type, hdr_type.template_argument(2))
+            )
             yield ("parent", gdb.Value(parent_addr).cast(heap_type.pointer()).dereference())
         elif parent_kind == "node":
-            node_type = self.__val.type.template_argument(0)
-            yield ("parent", gdb.Value(parent_addr).cast(node_type.pointer()).dereference())
+            yield ("parent", _node_at(parent_addr, node_type, acc_type, "zll::sh_header"))
         else:
             yield ("parent", "null")
-        left_ptr = int(self.__val["left"])
-        if left_ptr:
-            yield ("left", self.__val["left"].dereference())
-        else:
-            yield ("left", "null")
-        right_ptr = int(self.__val["right"])
-        if right_ptr:
-            yield ("right", self.__val["right"].dereference())
-        else:
-            yield ("right", "null")
+        for side in ("left", "right"):
+            addr = int(self.__val["_" + side])
+            if addr:
+                yield (side, _node_at(addr, node_type, acc_type, "zll::sh_header"))
+            else:
+                yield (side, "null")
 
 
 # ---------------------------------------------------------------------------
@@ -186,13 +193,15 @@ class ShHeaderPrinter(gdb.ValuePrinter):
 
 
 class _ShHeapIterator:
-    def __init__(self, top_ptr, node_type):
+    def __init__(self, root, node_type, acc_type):
         self.__node_type = node_type
+        self.__acc_type = acc_type
+        self.__hdr_type = gdb.lookup_type("zll::_sh_hdr")
         self.__idx = 0
-        # stack holds (node_val, state): state 0=push left, 1=yield self, 2=push right
+        # stack holds (header address, state): state 0=push left, 1=yield self, 2=push right
         self.__stack = []
-        if int(top_ptr) != 0:
-            self.__stack.append((top_ptr.dereference(), 0))
+        if int(root) != 0:
+            self.__stack.append((int(root), 0))
 
     def __iter__(self):
         return self
@@ -203,41 +212,28 @@ class _ShHeapIterator:
             raise StopIteration
 
         while self.__stack:
-            node, state = self.__stack[-1]
-            hdr = _find_sh_header(node)
-            if hdr is None:
-                self.__stack.pop()
-                continue
+            addr, state = self.__stack[-1]
+            hdr = gdb.Value(addr).cast(self.__hdr_type.pointer()).dereference()
 
             if state == 0:
-                self.__stack[-1] = (node, 1)
-                left_ptr = hdr["left"]
-                if int(left_ptr) != 0:
-                    self.__stack.append((left_ptr.dereference(), 0))
+                self.__stack[-1] = (addr, 1)
+                left = int(hdr["_left"])
+                if left != 0:
+                    self.__stack.append((left, 0))
                 continue
             elif state == 1:
-                self.__stack[-1] = (node, 2)
+                self.__stack[-1] = (addr, 2)
                 label = "[{}]".format(self.__idx)
                 self.__idx += 1
-                return (label, node)
+                return (label, _node_at(addr, self.__node_type, self.__acc_type, "zll::sh_header"))
             else:
                 self.__stack.pop()
-                right_ptr = hdr["right"]
-                if int(right_ptr) != 0:
-                    self.__stack.append((right_ptr.dereference(), 0))
+                right = int(hdr["_right"])
+                if right != 0:
+                    self.__stack.append((right, 0))
                 continue
 
         raise StopIteration
-
-
-def _find_sh_header(node_val):
-    """Walk a node's fields looking for the first sh_header member."""
-    t = node_val.type.strip_typedefs()
-    for field in t.fields():
-        ftype = field.type.strip_typedefs()
-        if re.match(r"^zll::sh_header<", str(ftype)):
-            return node_val[field.name]
-    return None
 
 
 class ShHeapPrinter(gdb.ValuePrinter):
@@ -250,16 +246,18 @@ class ShHeapPrinter(gdb.ValuePrinter):
         return "array"
 
     def to_string(self):
-        if int(self.__val["top"]) == 0:
+        if int(self.__val["root"]) == 0:
             return "{}"
         return None
 
     def children(self):
-        top_ptr = self.__val["top"]
-        if int(top_ptr) == 0:
+        root = self.__val["root"]
+        if int(root) == 0:
             return
-        node_type = self.__val.type.strip_typedefs().template_argument(0)
-        yield from _ShHeapIterator(top_ptr, node_type)
+        heap_type = self.__val.type.strip_typedefs()
+        yield from _ShHeapIterator(
+            root, heap_type.template_argument(0), heap_type.template_argument(1)
+        )
 
 
 # ---------------------------------------------------------------------------

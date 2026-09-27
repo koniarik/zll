@@ -23,6 +23,7 @@
 #include "zll.hpp"
 
 #include <cassert>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <source_location>
@@ -97,6 +98,13 @@ struct ll_access
         {
                 return n.hdr;
         }
+
+        // The header is the first member of a standard-layout node, so both share an address.
+        template < typename T >
+        static T& node( zll::ll_header< T, ll_access >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
+        }
 };
 
 struct ll_node
@@ -111,6 +119,13 @@ struct sh_access
         static auto& get( auto& n ) noexcept
         {
                 return n.hdr;
+        }
+
+        // The header is the first member of a standard-layout node, so both share an address.
+        template < typename T, typename C >
+        static T& node( zll::sh_header< T, sh_access, C >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
         }
 };
 
@@ -160,6 +175,13 @@ struct dual_ll_access
         {
                 return n.ll_hdr;
         }
+
+        // The header is the first member of a standard-layout node, so both share an address.
+        template < typename T >
+        static T& node( zll::ll_header< T, dual_ll_access >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
+        }
 };
 
 struct dual_sh_access
@@ -167,6 +189,13 @@ struct dual_sh_access
         static auto& get( auto& n ) noexcept
         {
                 return n.sh_hdr;
+        }
+
+        template < typename T, typename C >
+        static T& node( zll::sh_header< T, dual_sh_access, C >& h ) noexcept
+        {
+                void* p = reinterpret_cast< char* >( &h ) - offsetof( T, sh_hdr );
+                return *static_cast< T* >( p );
         }
 };
 

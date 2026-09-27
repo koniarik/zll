@@ -3,6 +3,7 @@
 .PHONY: build-debug build-release build-asan build-ubsan
 .PHONY: test-debug test-release test-asan test-ubsan
 .PHONY: test-pprinter
+.PHONY: size-build size size-baseline
 
 # Default preset (debug)
 PRESET ?= debug
@@ -56,6 +57,18 @@ test-pprinter:
 		"cmake -B /build -S /src -G Ninja -DZLL_TESTS_ENABLED=ON -DCMAKE_BUILD_TYPE=Debug && \
 		 cmake --build /build && \
 		 ctest --test-dir /build -R 'gdb_test' --output-on-failure --verbose"
+
+# Code size probes under test/size (arm-none-eabi-g++, -Os, Cortex-M4)
+size-build:
+	cmake -S test/size -B build/size -G Ninja
+	cmake --build build/size
+
+size: size-build
+	python3 test/size/report.py build/size
+
+# Rewrites test/size/baseline.json with the current sizes
+size-baseline: size-build
+	python3 test/size/report.py build/size --update
 
 # Cleanup
 clean:

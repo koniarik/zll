@@ -38,6 +38,13 @@ struct hdr_access
         {
                 return item.hdr;
         }
+
+        // The header is the first member of a standard-layout node, so both share an address.
+        template < typename T, typename Compare >
+        static T& node( sh_header< T, hdr_access, Compare >& h ) noexcept
+        {
+                return *static_cast< T* >( static_cast< void* >( &h ) );
+        }
 };
 
 struct node_t
@@ -54,11 +61,13 @@ struct node_t
         }
 
         node_t( node_t&& o ) noexcept
+          : x( o.x )
         {
                 move_from_to< node_t, hdr_access >( o, *this );
         }
 
         node_t( node_t& o ) noexcept
+          : x( o.x )
         {
                 link_detached_to< node_t, hdr_access >( o, *this, std::less<>{} );
         }
@@ -66,6 +75,7 @@ struct node_t
         node_t& operator=( node_t&& o ) noexcept
         {
                 detach< node_t, hdr_access >( *this, std::less<>{} );
+                x = o.x;
                 move_from_to< node_t, hdr_access >( o, *this );
                 return *this;
         }
@@ -73,6 +83,7 @@ struct node_t
         node_t& operator=( node_t& o ) noexcept
         {
                 detach< node_t, hdr_access >( *this, std::less<>{} );
+                x = o.x;
                 link_detached_to< node_t, hdr_access >( o, *this, std::less<>{} );
                 return *this;
         }
@@ -87,6 +98,8 @@ struct node_t
                 detach< node_t, hdr_access >( *this, std::less<>{} );
         }
 };
+
+static_assert( std::is_standard_layout_v< node_t > );
 
 struct der : public sh_base< der >
 {
@@ -103,19 +116,109 @@ struct der : public sh_base< der >
         }
 };
 
+// The header sits behind other data, so mapping it back to its node has to undo an offset.
+struct off_access
+{
+        static auto& get( auto& item ) noexcept
+        {
+                return item.hdr;
+        }
+
+        template < typename T, typename Compare >
+        static T& node( sh_header< T, off_access, Compare >& h ) noexcept
+        {
+                void* p = reinterpret_cast< char* >( &h ) - offsetof( T, hdr );
+                return *static_cast< T* >( p );
+        }
+};
+
+struct off_node
+{
+        char                              pad[7] = {};
+        sh_header< off_node, off_access > hdr;
+        int                               x;
+
+        using access = off_access;
+
+        off_node( int v = 0 )
+          : x( v )
+        {
+        }
+
+        off_node( off_node&& o ) noexcept
+          : x( o.x )
+        {
+                move_from_to< off_node, off_access >( o, *this );
+        }
+
+        off_node( off_node& o ) noexcept
+          : x( o.x )
+        {
+                link_detached_to< off_node, off_access >( o, *this, std::less<>{} );
+        }
+
+        off_node& operator=( off_node&& o ) noexcept
+        {
+                detach< off_node, off_access >( *this, std::less<>{} );
+                x = o.x;
+                move_from_to< off_node, off_access >( o, *this );
+                return *this;
+        }
+
+        off_node& operator=( off_node& o ) noexcept
+        {
+                detach< off_node, off_access >( *this, std::less<>{} );
+                x = o.x;
+                link_detached_to< off_node, off_access >( o, *this, std::less<>{} );
+                return *this;
+        }
+
+        bool operator<( off_node const& other ) const noexcept
+        {
+                return x < other.x;
+        }
+
+        ~off_node()
+        {
+                detach< off_node, off_access >( *this, std::less<>{} );
+        }
+};
+
+// `sh_base` behind a polymorphic base, so its header is not at the start of the node either.
+struct poly_base
+{
+        virtual ~poly_base() = default;
+        char tag             = 0;
+};
+
+struct off_der : poly_base, sh_base< off_der >
+{
+        int x;
+
+        off_der( int v = 0 )
+          : x( v )
+        {
+        }
+
+        bool operator<( off_der const& other ) const noexcept
+        {
+                return x < other.x;
+        }
+};
+
 template < typename T, typename Acc = typename T::access >
 void check_links( T& node )
 {
 
         auto& h = Acc::get( node );
 
-        if ( h.left ) {
-                CHECK( Acc::get( *h.left ).parent == node );
-                check_links( *h.left );
+        if ( h._left ) {
+                CHECK( h._left->_parent == h );
+                check_links( _node< T, Acc >( *h._left ) );
         }
-        if ( h.right ) {
-                CHECK( Acc::get( *h.right ).parent == node );
-                check_links( *h.right );
+        if ( h._right ) {
+                CHECK( h._right->_parent == h );
+                check_links( _node< T, Acc >( *h._right ) );
         }
 }
 
@@ -124,8 +227,8 @@ std::ostream& operator<<( std::ostream& os, std::set< node_t const* > const& val
         os << "{ ";
         for ( auto* v : value ) {
                 auto& hdr = node_t::access::get( *v );
-                os << (void const*) v << "(" << (void const*) hdr.left << ", "
-                   << (void const*) hdr.right << ") ";
+                os << (void const*) v << "(" << (void const*) hdr._left << ", "
+                   << (void const*) hdr._right << ") ";
         }
         os << "}";
         return os;
@@ -135,8 +238,8 @@ std::ostream& operator<<( std::ostream& os, std::set< der const* > const& value 
 {
         os << "{ ";
         for ( auto* v : value )
-                os << (void const*) v << "(" << (void const*) der::access::get( *v ).left << ", "
-                   << (void const*) der::access::get( *v ).right << ") ";
+                os << (void const*) v << "(" << (void const*) der::access::get( *v )._left << ", "
+                   << (void const*) der::access::get( *v )._right << ") ";
         os << "}";
         return os;
 }
@@ -151,7 +254,7 @@ void check_for_each_node( T& node, std::set< T const* > expected )
         CHECK_EQ( s, expected );
 }
 
-TEST_CASE_TEMPLATE( "single", T, node_t, der )
+TEST_CASE_TEMPLATE( "single", T, node_t, der, off_node, off_der )
 {
         using access = typename T::access;
 
@@ -165,14 +268,14 @@ TEST_CASE_TEMPLATE( "single", T, node_t, der )
                 sh_heap< T, access > l;
                 l.link( d1 );
 
-                CHECK_EQ( l.top, &d1 );
+                CHECK_EQ( l.top(), &d1 );
         }
 
         check_links( d1 );
         check_for_each_node( d1, { &d1 } );
 }
 
-TEST_CASE_TEMPLATE( "dual", T, node_t, der )
+TEST_CASE_TEMPLATE( "dual", T, node_t, der, off_node, off_der )
 {
         using access = typename T::access;
 
@@ -189,13 +292,13 @@ TEST_CASE_TEMPLATE( "dual", T, node_t, der )
                 h.link( d1 );
                 h.link( d2 );
                 T d3{ std::move( d1 ) };
-                CHECK_EQ( h.top, &d3 );
+                CHECK_EQ( h.top(), &d3 );
                 check_for_each_node( d3, { &d2, &d3 } );
         }
         check_links( d1 );
 }
 
-TEST_CASE_TEMPLATE( "triple", T, node_t, der )
+TEST_CASE_TEMPLATE( "triple", T, node_t, der, off_node, off_der )
 {
         T d1{ 1 }, d2{ 2 }, d3{ 3 };
         link_detached< T, typename T::access >( d1, d2 );
@@ -208,7 +311,7 @@ TEST_CASE_TEMPLATE( "triple", T, node_t, der )
         check_for_each_node( d1, { &d1, &d3 } );
 }
 
-TEST_CASE_TEMPLATE( "cpy", T, node_t, der )
+TEST_CASE_TEMPLATE( "cpy", T, node_t, der, off_node, off_der )
 {
         T d1{ 1 };
         T d2{ d1 };
@@ -252,7 +355,7 @@ TEST_CASE_TEMPLATE( "cpy", T, node_t, der )
         }
 }
 
-TEST_CASE_TEMPLATE( "vector", T, node_t, der )
+TEST_CASE_TEMPLATE( "vector", T, node_t, der, off_node, off_der )
 {
         std::vector< T > d1;
         for ( int i = 0; i < 42; i++ ) {
@@ -290,10 +393,10 @@ void count_nodes( T& node, size_t& count )
 {
         count++;
         auto& h = Acc::get( node );
-        if ( h.left )
-                count_nodes( *h.left, count );
-        if ( h.right )
-                count_nodes( *h.right, count );
+        if ( h._left )
+                count_nodes( _node< T, Acc >( *h._left ), count );
+        if ( h._right )
+                count_nodes( _node< T, Acc >( *h._right ), count );
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
@@ -301,49 +404,49 @@ void check_heap_property( T& node, Compare comp = {} )
 {
         auto& h = Acc::get( node );
 
-        if ( h.left ) {
-                CHECK_FALSE( comp( *h.left, node ) );  // parent should be <= child
-                check_heap_property< T, Acc, Compare >( *h.left, comp );
+        if ( h._left ) {
+                T& l = _node< T, Acc >( *h._left );
+                CHECK_FALSE( comp( l, node ) );  // parent should be <= child
+                check_heap_property< T, Acc, Compare >( l, comp );
         }
-        if ( h.right ) {
-                CHECK_FALSE( comp( *h.right, node ) );  // parent should be <= child
-                check_heap_property< T, Acc, Compare >( *h.right, comp );
+        if ( h._right ) {
+                T& r = _node< T, Acc >( *h._right );
+                CHECK_FALSE( comp( r, node ) );  // parent should be <= child
+                check_heap_property< T, Acc, Compare >( r, comp );
         }
 }
 
 template < typename T, typename Acc = typename T::access, typename Compare = std::less<> >
 void check_heap_coherence( sh_heap< T, Acc, Compare > const& heap )
 {
-        if ( !heap.top )
+        if ( !heap.top() )
                 return;
 
-        // Check that top node's parent points back to the heap
-        auto& top_hdr = Acc::get( *heap.top );
-        auto* h       = _heap( top_hdr.parent );
-        CHECK_EQ( h, &heap );
+        // Check that top node's parent points back to the heap, whose untyped part is its first
+        // base
+        auto& top_hdr = Acc::get( *heap.top() );
+        CHECK_EQ(
+            static_cast< void const* >( top_hdr._parent.b() ),
+            static_cast< void const* >( &heap ) );
 
         // Recursively check all nodes in the tree
         std::function< void( T const& ) > check_node = [&]( T const& node ) {
                 auto& hdr = Acc::get( node );
 
-                if ( hdr.left ) {
+                if ( hdr._left ) {
                         // Check that left child's parent points back to this node
-                        auto& left_hdr = Acc::get( *hdr.left );
-                        auto* n        = _node( left_hdr.parent );
-                        CHECK_EQ( n, &node );
-                        check_node( *hdr.left );
+                        CHECK_EQ( hdr._left->_parent.a(), &hdr );
+                        check_node( _node< T, Acc >( *hdr._left ) );
                 }
 
-                if ( hdr.right ) {
+                if ( hdr._right ) {
                         // Check that right child's parent points back to this node
-                        auto& right_hdr = Acc::get( *hdr.right );
-                        auto* n         = _node( right_hdr.parent );
-                        CHECK_EQ( n, &node );
-                        check_node( *hdr.right );
+                        CHECK_EQ( hdr._right->_parent.a(), &hdr );
+                        check_node( _node< T, Acc >( *hdr._right ) );
                 }
         };
 
-        check_node( *heap.top );
+        check_node( *heap.top() );
 }
 
 TEST_CASE( "merge" )
@@ -378,7 +481,9 @@ TEST_CASE( "merge" )
 
                 h1.merge( std::move( h2 ) );
                 CHECK( h2.empty() );
-                CHECK( h1.empty() );
+                CHECK_FALSE( h1.empty() );
+                CHECK_EQ( h1.top()->value, 1 );
+                check_heap_property( *h1.top() );
         }
 
         SUBCASE( "merge non-empty into empty" )
@@ -389,8 +494,8 @@ TEST_CASE( "merge" )
                 h1.merge( std::move( h2 ) );
                 CHECK( h2.empty() );
                 CHECK_FALSE( h1.empty() );
-                CHECK_EQ( h1.top->value, 1 );
-                check_heap_property( *h1.top );
+                CHECK_EQ( h1.top()->value, 1 );
+                check_heap_property( *h1.top() );
         }
 
         SUBCASE( "merge self should be a no-op" )
@@ -400,8 +505,8 @@ TEST_CASE( "merge" )
 
                 h1.merge( std::move( h1 ) );
                 CHECK_FALSE( h1.empty() );
-                CHECK_EQ( h1.top->value, 1 );
-                check_heap_property( *h1.top );
+                CHECK_EQ( h1.top()->value, 1 );
+                check_heap_property( *h1.top() );
         }
 }
 
@@ -429,20 +534,20 @@ TEST_CASE( "heap_operations" )
         {
                 comparable_node n5( 5 ), n2( 2 ), n4( 4 ), n1( 1 ), n3( 3 );
                 h.link( n5 );
-                CHECK_EQ( h.top->value, 5 );
+                CHECK_EQ( h.top()->value, 5 );
                 h.link( n2 );
-                CHECK_EQ( h.top->value, 2 );
+                CHECK_EQ( h.top()->value, 2 );
                 h.link( n4 );
-                CHECK_EQ( h.top->value, 2 );
+                CHECK_EQ( h.top()->value, 2 );
                 h.link( n1 );
-                CHECK_EQ( h.top->value, 1 );
+                CHECK_EQ( h.top()->value, 1 );
                 h.link( n3 );
-                CHECK_EQ( h.top->value, 1 );
+                CHECK_EQ( h.top()->value, 1 );
 
                 size_t node_count = 0;
-                count_nodes( *h.top, node_count );
+                count_nodes( *h.top(), node_count );
                 CHECK_EQ( node_count, 5 );
-                check_heap_property( *h.top );
+                check_heap_property( *h.top() );
         }
 
         SUBCASE( "unlink (pop) extracts in sorted order" )
@@ -452,13 +557,13 @@ TEST_CASE( "heap_operations" )
                         h.link( n );
 
                 CHECK_EQ( h.take().value, 1 );
-                check_heap_property( *h.top );
+                check_heap_property( *h.top() );
                 CHECK_EQ( h.take().value, 2 );
-                check_heap_property( *h.top );
+                check_heap_property( *h.top() );
                 CHECK_EQ( h.take().value, 3 );
-                check_heap_property( *h.top );
+                check_heap_property( *h.top() );
                 CHECK_EQ( h.take().value, 4 );
-                check_heap_property( *h.top );
+                check_heap_property( *h.top() );
                 CHECK_EQ( h.take().value, 5 );
                 CHECK( h.empty() );
         }
@@ -468,20 +573,20 @@ TEST_CASE( "heap_operations" )
                 comparable_node n5( 5 ), n2( 2 ), n4( 4 ), n1( 1 ), n3( 3 );
                 h.link( n5 );
                 h.link( n2 );
-                CHECK_EQ( h.top->value, 2 );
+                CHECK_EQ( h.top()->value, 2 );
 
                 CHECK_EQ( h.take().value, 2 );
-                CHECK_EQ( h.top->value, 5 );
+                CHECK_EQ( h.top()->value, 5 );
 
                 h.link( n4 );
                 h.link( n1 );
-                CHECK_EQ( h.top->value, 1 );
+                CHECK_EQ( h.top()->value, 1 );
 
                 CHECK_EQ( h.take().value, 1 );
-                CHECK_EQ( h.top->value, 4 );
+                CHECK_EQ( h.top()->value, 4 );
 
                 h.link( n3 );
-                CHECK_EQ( h.top->value, 3 );
+                CHECK_EQ( h.top()->value, 3 );
 
                 CHECK_EQ( h.take().value, 3 );
                 CHECK_EQ( h.take().value, 4 );
@@ -515,18 +620,18 @@ TEST_CASE( "move_semantics" )
                 h1.link( n2 );
                 h1.link( n3 );
 
-                CHECK_EQ( h1.top->value, 5 );
+                CHECK_EQ( h1.top()->value, 5 );
 
                 sh_heap< comparable_node > h2( std::move( h1 ) );
 
                 CHECK( h1.empty() );
                 CHECK_FALSE( h2.empty() );
-                CHECK_EQ( h2.top->value, 5 );
+                CHECK_EQ( h2.top()->value, 5 );
 
                 size_t node_count = 0;
-                count_nodes( *h2.top, node_count );
+                count_nodes( *h2.top(), node_count );
                 CHECK_EQ( node_count, 3 );
-                check_heap_property( *h2.top );
+                check_heap_property( *h2.top() );
         }
 
         SUBCASE( "move assignment" )
@@ -536,35 +641,35 @@ TEST_CASE( "move_semantics" )
                 sh_heap< comparable_node > h1 = { &n1, &n2 };
                 sh_heap< comparable_node > h2 = { &n3, &n4 };
 
-                CHECK_EQ( h1.top->value, 10 );
-                CHECK_EQ( h2.top->value, 5 );
+                CHECK_EQ( h1.top()->value, 10 );
+                CHECK_EQ( h2.top()->value, 5 );
 
                 h1 = std::move( h2 );
 
                 CHECK( h2.empty() );
                 CHECK_FALSE( h1.empty() );
-                CHECK_EQ( h1.top->value, 5 );
+                CHECK_EQ( h1.top()->value, 5 );
 
                 size_t node_count = 0;
-                count_nodes( *h1.top, node_count );
+                count_nodes( *h1.top(), node_count );
                 CHECK_EQ( node_count, 2 );
-                check_heap_property( *h1.top );
+                check_heap_property( *h1.top() );
         }
 
         SUBCASE( "move assignment to self" )
         {
                 comparable_node            n1( 10 ), n2( 5 );
                 sh_heap< comparable_node > h1 = { &n1, &n2 };
-                CHECK_EQ( h1.top->value, 5 );
+                CHECK_EQ( h1.top()->value, 5 );
 #pragma GCC diagnostic ignored "-Wself-move"
                 h1 = std::move( h1 );  // This should be a no-op
 
                 CHECK_FALSE( h1.empty() );
-                CHECK_EQ( h1.top->value, 5 );
+                CHECK_EQ( h1.top()->value, 5 );
                 size_t node_count = 0;
-                count_nodes( *h1.top, node_count );
+                count_nodes( *h1.top(), node_count );
                 CHECK_EQ( node_count, 2 );
-                check_heap_property( *h1.top );
+                check_heap_property( *h1.top() );
         }
 }
 
@@ -600,7 +705,7 @@ TEST_CASE( "edge_cases_and_traversal" )
 
                 h.link( n1 );
                 CHECK_FALSE( h.empty() );
-                CHECK_EQ( h.top->value, 42 );
+                CHECK_EQ( h.top()->value, 42 );
 
                 CHECK_EQ( h.take().value, 42 );
                 CHECK( h.empty() );
@@ -608,7 +713,7 @@ TEST_CASE( "edge_cases_and_traversal" )
                 // Link again
                 h.link( n1 );
                 CHECK_FALSE( h.empty() );
-                CHECK_EQ( h.top->value, 42 );
+                CHECK_EQ( h.top()->value, 42 );
         }
 
         SUBCASE( "traversal" )
@@ -619,19 +724,19 @@ TEST_CASE( "edge_cases_and_traversal" )
                 // The exact traversal order depends on the heap's internal structure,
                 // but we can verify the set of visited nodes.
                 std::set< int > visited_values;
-                inorder_traverse( *h.top, [&]( comparable_node& n ) {
+                inorder_traverse( *h.top(), [&]( comparable_node& n ) {
                         visited_values.insert( n.value );
                 } );
                 CHECK_EQ( visited_values, std::set< int >{ 1, 2, 3, 4, 5, 6, 7 } );
 
                 visited_values.clear();
-                preorder_traverse( *h.top, [&]( comparable_node& n ) {
+                preorder_traverse( *h.top(), [&]( comparable_node& n ) {
                         visited_values.insert( n.value );
                 } );
                 CHECK_EQ( visited_values, std::set< int >{ 1, 2, 3, 4, 5, 6, 7 } );
 
                 visited_values.clear();
-                postorder_traverse( *h.top, [&]( comparable_node& n ) {
+                postorder_traverse( *h.top(), [&]( comparable_node& n ) {
                         visited_values.insert( n.value );
                 } );
                 CHECK_EQ( visited_values, std::set< int >{ 1, 2, 3, 4, 5, 6, 7 } );
@@ -655,6 +760,32 @@ TEST_CASE( "custom_comparator" )
                 }
         };
 
+        SUBCASE( "node functions with a custom comparator" )
+        {
+                comparable_node n1( 1 ), n2( 2 );
+                sh_heap< comparable_node, typename comparable_node::access, std::greater<> > h{
+                    &n1, &n2 };
+                CHECK_EQ( h.top(), &n2 );
+
+                comparable_node moved( std::move( n1 ) );
+                comparable_node copy( n2 );
+                CHECK_EQ( &top_node_of( moved ), h.top() );
+
+                std::size_t count = 0;
+                preorder_traverse( *h.top(), [&]( comparable_node& ) {
+                        ++count;
+                } );
+                inorder_traverse( *h.top(), [&]( comparable_node& ) {
+                        ++count;
+                } );
+                postorder_traverse( *h.top(), [&]( comparable_node& ) {
+                        ++count;
+                } );
+                CHECK_EQ( count, 9 );
+                check_heap_property( *h.top(), std::greater<>{} );
+                check_heap_coherence( h );
+        }
+
         SUBCASE( "max-heap link and take" )
         {
                 sh_heap< comparable_node, typename comparable_node::access, std::greater<> >
@@ -662,24 +793,24 @@ TEST_CASE( "custom_comparator" )
 
                 comparable_node n1( 1 ), n5( 5 ), n3( 3 ), n8( 8 ), n2( 2 );
                 max_heap.link( n1 );
-                CHECK_EQ( max_heap.top->value, 1 );
+                CHECK_EQ( max_heap.top()->value, 1 );
                 max_heap.link( n5 );
-                CHECK_EQ( max_heap.top->value, 5 );
+                CHECK_EQ( max_heap.top()->value, 5 );
                 max_heap.link( n3 );
-                CHECK_EQ( max_heap.top->value, 5 );
+                CHECK_EQ( max_heap.top()->value, 5 );
                 max_heap.link( n8 );
-                CHECK_EQ( max_heap.top->value, 8 );
+                CHECK_EQ( max_heap.top()->value, 8 );
                 max_heap.link( n2 );
-                CHECK_EQ( max_heap.top->value, 8 );
+                CHECK_EQ( max_heap.top()->value, 8 );
 
-                check_heap_property( *max_heap.top, std::greater<>{} );
+                check_heap_property( *max_heap.top(), std::greater<>{} );
 
                 CHECK_EQ( max_heap.take().value, 8 );
-                check_heap_property( *max_heap.top, std::greater<>{} );
+                check_heap_property( *max_heap.top(), std::greater<>{} );
                 CHECK_EQ( max_heap.take().value, 5 );
-                check_heap_property( *max_heap.top, std::greater<>{} );
+                check_heap_property( *max_heap.top(), std::greater<>{} );
                 CHECK_EQ( max_heap.take().value, 3 );
-                check_heap_property( *max_heap.top, std::greater<>{} );
+                check_heap_property( *max_heap.top(), std::greater<>{} );
                 CHECK_EQ( max_heap.take().value, 2 );
                 CHECK_EQ( max_heap.take().value, 1 );
                 CHECK( max_heap.empty() );
@@ -704,8 +835,8 @@ TEST_CASE( "custom_comparator" )
                 h2.link( n6 );
                 check_heap_coherence( h2 );
 
-                CHECK_EQ( h1.top->value, 5 );
-                CHECK_EQ( h2.top->value, 6 );
+                CHECK_EQ( h1.top()->value, 5 );
+                CHECK_EQ( h2.top()->value, 6 );
 
                 h1.merge( std::move( h2 ) );
                 check_heap_coherence( h1 );
@@ -713,14 +844,121 @@ TEST_CASE( "custom_comparator" )
 
                 CHECK( h2.empty() );
                 CHECK_FALSE( h1.empty() );
-                CHECK_EQ( h1.top->value, 6 );
+                CHECK_EQ( h1.top()->value, 6 );
 
                 size_t node_count = 0;
-                count_nodes( *h1.top, node_count );
+                count_nodes( *h1.top(), node_count );
                 CHECK_EQ( node_count, 6 );
-                check_heap_property( *h1.top, std::greater<>{} );
+                check_heap_property( *h1.top(), std::greater<>{} );
                 check_heap_coherence( h1 );
         }
 }
+
+struct may_throw_less
+{
+        bool operator()( auto const& a, auto const& b ) const
+        {
+                return a.x < b.x;
+        }
+};
+
+struct may_throw_node
+{
+        sh_header< may_throw_node, hdr_access, may_throw_less > hdr;
+        using access = hdr_access;
+        int x        = 0;
+};
+
+TEST_CASE( "noexcept follows the accessor and the comparator" )
+{
+        node_t            a;
+        sh_heap< node_t > h;
+        CHECK( noexcept( detach( a, std::less<>{} ) ) );
+        CHECK( noexcept( h.link( a ) ) );
+        CHECK( noexcept( h.take() ) );
+
+        may_throw_node                                        m;
+        sh_heap< may_throw_node, hdr_access, may_throw_less > mh;
+        CHECK_FALSE( noexcept( detach( m, may_throw_less{} ) ) );
+        CHECK_FALSE( noexcept( mh.link( m ) ) );
+        CHECK_FALSE( noexcept( mh.take() ) );
+}
+
+TEST_CASE( "copies keep the heap property" )
+{
+        der            a{ 1 }, b{ 2 }, c{ 3 };
+        sh_heap< der > h = { &a, &b, &c };
+
+        der d{ 9 };
+        d = a;
+        der e{ a };
+
+        check_heap_property( *h.top() );
+        check_heap_coherence( h );
+        std::size_t count = 0;
+        count_nodes( *h.top(), count );
+        CHECK_EQ( count, 5 );
+}
+
+struct flip_less
+{
+        bool greater = false;
+
+        bool operator()( auto const& a, auto const& b ) const noexcept
+        {
+                return greater ? b.x < a.x : a.x < b.x;
+        }
+};
+
+struct flip_node : sh_base< flip_node, flip_less >
+{
+        int x;
+
+        flip_node( int v = 0 )
+          : x( v )
+        {
+        }
+};
+
+TEST_CASE( "merging into an empty heap keeps its comparator" )
+{
+        flip_node                                          a{ 1 }, b{ 2 };
+        sh_heap< flip_node, flip_node::access, flip_less > max_heap( flip_less{ true } );
+        sh_heap< flip_node, flip_node::access, flip_less > min_heap( flip_less{ false } );
+        min_heap.link( a );
+        max_heap.merge( std::move( min_heap ) );
+        max_heap.link( b );
+        CHECK_EQ( max_heap.top(), &b );
+}
+
+struct dual_node : ll_base< dual_node >, sh_base< dual_node >
+{
+        using access = ll_base< dual_node >::access;
+
+        int x = 0;
+
+        bool operator<( dual_node const& other ) const noexcept
+        {
+                return x < other.x;
+        }
+};
+
+TEST_CASE( "node in both a list and a heap" )
+{
+        dual_node a, b;
+        a.x = 1;
+        b.x = 2;
+        ll_list< dual_node >                               l{ &a, &b };
+        sh_heap< dual_node, sh_base< dual_node >::access > h{ &a, &b };
+
+        dual_node c{ std::move( a ) };
+        CHECK_EQ( &l.front(), &c );
+        CHECK_EQ( h.top(), &c );
+
+        dual_node d{ b };
+        CHECK_EQ( &l.back(), &d );
+        CHECK_EQ( h.top(), &c );
+}
+
 }  // namespace
 }  // namespace zll

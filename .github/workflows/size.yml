@@ -1,0 +1,24 @@
+name: size
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: update apt
+        run: sudo apt update
+
+      - name: install deps
+        run: sudo apt install -y ninja-build python3 gcc-arm-none-eabi libstdc++-arm-none-eabi-newlib
+
+      - name: size
+        run: make size
