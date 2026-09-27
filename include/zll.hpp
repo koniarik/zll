@@ -386,10 +386,10 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
                                 lh = _node( Acc::get( *lh ).next );
                 }
                 detach( *tmp );
-                if ( !first )
-                        first = tmp;
                 if ( last )
                         link_detached_as_next( *last, *tmp );
+                else
+                        first = tmp;
                 last = tmp;
         }
         ZLL_ASSERT( first );
@@ -660,15 +660,13 @@ struct ll_list
                         return *this;
 
                 detach_nodes();
-                first = other.first;
+                first       = other.first;
+                last        = other.last;
+                other.first = nullptr;
+                other.last  = nullptr;
                 if ( first ) {
-                        other.first             = nullptr;
                         Acc::get( *first ).prev = *this;
-                }
-                last = other.last;
-                if ( last ) {
-                        other.last             = nullptr;
-                        Acc::get( *last ).next = *this;
+                        Acc::get( *last ).next  = *this;
                 }
 
                 return *this;
@@ -915,10 +913,10 @@ struct ll_list
 private:
         void detach_nodes() noexcept( noexcept_access )
         {
-                if ( first )
+                if ( first ) {
                         Acc::get( *first ).prev = nullptr;
-                if ( last )
-                        Acc::get( *last ).next = nullptr;
+                        Acc::get( *last ).next  = nullptr;
+                }
                 first = nullptr;
                 last  = nullptr;
         }
