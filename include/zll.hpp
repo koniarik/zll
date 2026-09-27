@@ -98,13 +98,13 @@ struct _vptr
         A* a() const noexcept
         {
                 static_assert( alignof( A ) > 2 );
-                return ptr && is_a() ? std::bit_cast< A* >( ptr ) : nullptr;
+                return is_a() ? std::bit_cast< A* >( ptr ) : nullptr;
         }
 
         B* b() const noexcept
         {
                 static_assert( alignof( B ) > 2 );
-                return ptr && !is_a() ? std::bit_cast< B* >( ptr & ~mask ) : nullptr;
+                return !is_a() ? std::bit_cast< B* >( ptr & ~mask ) : nullptr;
         }
 
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) noexcept = default;
@@ -134,8 +134,8 @@ void _prev_or_last_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
 {
         if ( T* x = _node( p ) )
                 Acc::get( *x ).prev = n;
-        else if ( auto* h = _list( p ) )
-                h->last = _node( n );
+        else if ( p )
+                _list( p )->last = _node( n );
 }
 
 template < typename T, typename Acc >
@@ -144,8 +144,8 @@ void _next_or_first_set( _ll_ptr< T, Acc > p, _ll_ptr< T, Acc > n ) noexcept(
 {
         if ( T* x = _node( p ) )
                 Acc::get( *x ).next = n;
-        else if ( auto* h = _list( p ) )
-                h->first = _node( n );
+        else if ( p )
+                _list( p )->first = _node( n );
 }
 
 /// Linked-list header containing pointers to the next and previous elements or the list itself.
