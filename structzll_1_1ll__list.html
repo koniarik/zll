@@ -93,17 +93,22 @@ $(document).ready(function(){initNavTree('structzll_1_1ll__list.html',''); initR
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structzll_1_1ll__list-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">zll::ll_list&lt; T, Acc &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Non-owning linked list container, expects nodes to contain <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a> as member.  
+<p>Non-owning linked list container, expects nodes to contain <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing links to the next and previous headers or the list itself.">ll_header</a> as member.  
  <a href="structzll_1_1ll__list.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="zll_8hpp_source.html">zll.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for zll::ll_list&lt; T, Acc &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="structzll_1_1ll__list.png" alt=""/>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -128,12 +133,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afc56f6dcd3b29275e4145b6affc80682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad194a7e2c1a2cb5cf166f6f270cf0a7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1ll__list.html#a47c59871f8a81c3207b5a7a1dfb9f87a">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ad194a7e2c1a2cb5cf166f6f270cf0a7f">cend</a> () const noexcept</td></tr>
 <tr class="separator:ad194a7e2c1a2cb5cf166f6f270cf0a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15757285ed6d05b0532ee33776cf2dc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">detach_back</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:a15757285ed6d05b0532ee33776cf2dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches the last element of the list.  <a href="structzll_1_1ll__list.html#a15757285ed6d05b0532ee33776cf2dc6">More...</a><br /></td></tr>
-<tr class="separator:a15757285ed6d05b0532ee33776cf2dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a044839e4fb589f4efe7f80559d0fb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">detach_front</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:a0a044839e4fb589f4efe7f80559d0fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches the first element of the list.  <a href="structzll_1_1ll__list.html#a0a044839e4fb589f4efe7f80559d0fb8">More...</a><br /></td></tr>
-<tr class="separator:a0a044839e4fb589f4efe7f80559d0fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3e773e814342692c9f9df3bc296acef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ac3e773e814342692c9f9df3bc296acef">detach_back</a> () noexcept</td></tr>
+<tr class="memdesc:ac3e773e814342692c9f9df3bc296acef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches the last element of the list.  <a href="structzll_1_1ll__list.html#ac3e773e814342692c9f9df3bc296acef">More...</a><br /></td></tr>
+<tr class="separator:ac3e773e814342692c9f9df3bc296acef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8433986238e09016c1ac84b776d1705"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ac8433986238e09016c1ac84b776d1705">detach_front</a> () noexcept</td></tr>
+<tr class="memdesc:ac8433986238e09016c1ac84b776d1705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches the first element of the list.  <a href="structzll_1_1ll__list.html#ac8433986238e09016c1ac84b776d1705">More...</a><br /></td></tr>
+<tr class="separator:ac8433986238e09016c1ac84b776d1705"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21dac906db82c68563d8d17e9790c9ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:a21dac906db82c68563d8d17e9790c9ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the list is empty, i.e. contains no elements.  <a href="structzll_1_1ll__list.html#a21dac906db82c68563d8d17e9790c9ca">More...</a><br /></td></tr>
 <tr class="separator:a21dac906db82c68563d8d17e9790c9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,9 +159,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6a916ca1505f421671a0ffb18dfb2089"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a6a916ca1505f421671a0ffb18dfb2089">ll_list</a> ()=default</td></tr>
 <tr class="memdesc:a6a916ca1505f421671a0ffb18dfb2089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor creates an empty list.  <a href="structzll_1_1ll__list.html#a6a916ca1505f421671a0ffb18dfb2089">More...</a><br /></td></tr>
 <tr class="separator:a6a916ca1505f421671a0ffb18dfb2089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac95a983fa5b5598201fd7fd72bf8c73c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ac95a983fa5b5598201fd7fd72bf8c73c">ll_list</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:ac95a983fa5b5598201fd7fd72bf8c73c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. Moved-from list is empty after move.  <a href="structzll_1_1ll__list.html#ac95a983fa5b5598201fd7fd72bf8c73c">More...</a><br /></td></tr>
-<tr class="separator:ac95a983fa5b5598201fd7fd72bf8c73c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dec0f5e4e3ca438fc01e446a2006454"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a5dec0f5e4e3ca438fc01e446a2006454">ll_list</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:a5dec0f5e4e3ca438fc01e446a2006454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. Moved-from list is empty after move.  <a href="structzll_1_1ll__list.html#a5dec0f5e4e3ca438fc01e446a2006454">More...</a><br /></td></tr>
+<tr class="separator:a5dec0f5e4e3ca438fc01e446a2006454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a797c87daaa74aeee4360c3109738038a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a797c87daaa74aeee4360c3109738038a">ll_list</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> const &amp;)=delete</td></tr>
 <tr class="memdesc:a797c87daaa74aeee4360c3109738038a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy is not allowed.  <a href="structzll_1_1ll__list.html#a797c87daaa74aeee4360c3109738038a">More...</a><br /></td></tr>
 <tr class="separator:a797c87daaa74aeee4360c3109738038a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,58 +171,51 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ef9849488ca8f4dc5e51332999edd0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">merge</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
 <tr class="memdesc:a6ef9849488ca8f4dc5e51332999edd0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge two lists together, seeh <code>merge_ranges</code> for details.  <a href="structzll_1_1ll__list.html#a6ef9849488ca8f4dc5e51332999edd0b">More...</a><br /></td></tr>
 <tr class="separator:a6ef9849488ca8f4dc5e51332999edd0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb5e08a4c41eb668029f8051d46303b4"><td class="memTemplParams" colspan="2">template&lt;typename Compare &gt; </td></tr>
-<tr class="memitem:abb5e08a4c41eb668029f8051d46303b4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#abb5e08a4c41eb668029f8051d46303b4">merge</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other, Compare comp) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(comp(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
-<tr class="memdesc:abb5e08a4c41eb668029f8051d46303b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge two lists together, see <code>merge_ranges</code> for details.  <a href="structzll_1_1ll__list.html#abb5e08a4c41eb668029f8051d46303b4">More...</a><br /></td></tr>
-<tr class="separator:abb5e08a4c41eb668029f8051d46303b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe6a7806993527b9b9622d37b63373e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#afe6a7806993527b9b9622d37b63373e0">operator=</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:afe6a7806993527b9b9622d37b63373e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator. Moved-from list is empty after move.  <a href="structzll_1_1ll__list.html#afe6a7806993527b9b9622d37b63373e0">More...</a><br /></td></tr>
-<tr class="separator:afe6a7806993527b9b9622d37b63373e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7855bb48316168663a4c2b5ea6dcce6f"><td class="memTemplParams" colspan="2">template&lt;typename Compare &gt; </td></tr>
+<tr class="memitem:a7855bb48316168663a4c2b5ea6dcce6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a7855bb48316168663a4c2b5ea6dcce6f">merge</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other, Compare comp) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(comp(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>(), <a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>())))</td></tr>
+<tr class="memdesc:a7855bb48316168663a4c2b5ea6dcce6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge two lists together, see <code>merge_ranges</code> for details.  <a href="structzll_1_1ll__list.html#a7855bb48316168663a4c2b5ea6dcce6f">More...</a><br /></td></tr>
+<tr class="separator:a7855bb48316168663a4c2b5ea6dcce6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5afa119dca54ff08c63979e4ff77fdb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a5afa119dca54ff08c63979e4ff77fdb2">operator=</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:a5afa119dca54ff08c63979e4ff77fdb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator. Moved-from list is empty after move.  <a href="structzll_1_1ll__list.html#a5afa119dca54ff08c63979e4ff77fdb2">More...</a><br /></td></tr>
+<tr class="separator:a5afa119dca54ff08c63979e4ff77fdb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1f443d853251d47e876273fdf7a1c38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ae1f443d853251d47e876273fdf7a1c38">operator=</a> (<a class="el" href="structzll_1_1ll__list.html">ll_list</a> const &amp;)=delete</td></tr>
 <tr class="separator:ae1f443d853251d47e876273fdf7a1c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa27815cb2485ef793996d215fb30b839"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#aa27815cb2485ef793996d215fb30b839">remove</a> (T const &amp;value) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>== *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>))</td></tr>
-<tr class="memdesc:aa27815cb2485ef793996d215fb30b839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all nodes compared equal to value <code>value</code> from the list.  <a href="structzll_1_1ll__list.html#aa27815cb2485ef793996d215fb30b839">More...</a><br /></td></tr>
-<tr class="separator:aa27815cb2485ef793996d215fb30b839"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3cad130a78a33b1fd08b9ea7fddec5"><td class="memTemplParams" colspan="2">template&lt;typename Pred &gt; </td></tr>
-<tr class="memitem:a5f3cad130a78a33b1fd08b9ea7fddec5"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a5f3cad130a78a33b1fd08b9ea7fddec5">remove_if</a> (Pred &amp;&amp;p) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(p(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>)))</td></tr>
-<tr class="memdesc:a5f3cad130a78a33b1fd08b9ea7fddec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all nodes for which <code>p</code> returns true from the list.  <a href="structzll_1_1ll__list.html#a5f3cad130a78a33b1fd08b9ea7fddec5">More...</a><br /></td></tr>
-<tr class="separator:a5f3cad130a78a33b1fd08b9ea7fddec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11e5aad2a9d916e1b820676747787fbd"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a11e5aad2a9d916e1b820676747787fbd">remove</a> (T const &amp;value) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>()==<a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>()))</td></tr>
+<tr class="memdesc:a11e5aad2a9d916e1b820676747787fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all nodes compared equal to value <code>value</code> from the list.  <a href="structzll_1_1ll__list.html#a11e5aad2a9d916e1b820676747787fbd">More...</a><br /></td></tr>
+<tr class="separator:a11e5aad2a9d916e1b820676747787fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1486f060ce38202fea25085068c7b79e"><td class="memTemplParams" colspan="2">template&lt;typename Pred &gt; </td></tr>
+<tr class="memitem:a1486f060ce38202fea25085068c7b79e"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a1486f060ce38202fea25085068c7b79e">remove_if</a> (Pred &amp;&amp;p) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(p(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>())))</td></tr>
+<tr class="memdesc:a1486f060ce38202fea25085068c7b79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all nodes for which <code>p</code> returns true from the list.  <a href="structzll_1_1ll__list.html#a1486f060ce38202fea25085068c7b79e">More...</a><br /></td></tr>
+<tr class="separator:a1486f060ce38202fea25085068c7b79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2de96f2d534a8b4524be7554ae75118a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">reverse</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
 <tr class="memdesc:a2de96f2d534a8b4524be7554ae75118a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the order of nodes in the list.  <a href="structzll_1_1ll__list.html#a2de96f2d534a8b4524be7554ae75118a">More...</a><br /></td></tr>
 <tr class="separator:a2de96f2d534a8b4524be7554ae75118a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b49b3c7d230c92b47d0d333c22cf9bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a4b49b3c7d230c92b47d0d333c22cf9bd">sort</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(std::less&lt;&gt;{}(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
-<tr class="memdesc:a4b49b3c7d230c92b47d0d333c22cf9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the nodes in the list. Uses <code>std::less&lt;&gt;</code> for comparison.  <a href="structzll_1_1ll__list.html#a4b49b3c7d230c92b47d0d333c22cf9bd">More...</a><br /></td></tr>
-<tr class="separator:a4b49b3c7d230c92b47d0d333c22cf9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2361dd25285cc5e663c90b974167d4a2"><td class="memTemplParams" colspan="2">template&lt;typename Compare &gt; </td></tr>
-<tr class="memitem:a2361dd25285cc5e663c90b974167d4a2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a2361dd25285cc5e663c90b974167d4a2">sort</a> (Compare &amp;&amp;cmp) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(cmp(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
-<tr class="memdesc:a2361dd25285cc5e663c90b974167d4a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the nodes in the list. The <code>cmp</code> is used to compare two nodes.  <a href="structzll_1_1ll__list.html#a2361dd25285cc5e663c90b974167d4a2">More...</a><br /></td></tr>
-<tr class="separator:a2361dd25285cc5e663c90b974167d4a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af728f25940bab15f11f0b71805d9a2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#af728f25940bab15f11f0b71805d9a2b6">sort</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(std::less&lt;&gt;{}(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>(), <a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>())))</td></tr>
+<tr class="memdesc:af728f25940bab15f11f0b71805d9a2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the nodes in the list. Uses <code>std::less&lt;&gt;</code> for comparison.  <a href="structzll_1_1ll__list.html#af728f25940bab15f11f0b71805d9a2b6">More...</a><br /></td></tr>
+<tr class="separator:af728f25940bab15f11f0b71805d9a2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09eb95a54372453944f887cd7ac656bc"><td class="memTemplParams" colspan="2">template&lt;typename Compare &gt; </td></tr>
+<tr class="memitem:a09eb95a54372453944f887cd7ac656bc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a09eb95a54372453944f887cd7ac656bc">sort</a> (Compare &amp;&amp;cmp) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(cmp(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>(), <a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>())))</td></tr>
+<tr class="memdesc:a09eb95a54372453944f887cd7ac656bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the nodes in the list. The <code>cmp</code> is used to compare two nodes.  <a href="structzll_1_1ll__list.html#a09eb95a54372453944f887cd7ac656bc">More...</a><br /></td></tr>
+<tr class="separator:a09eb95a54372453944f887cd7ac656bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f65edbf200d33be29439b31ee648f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">splice</a> (<a class="el" href="structzll_1_1ll__list.html#a67cee329308019f60f1006e7e7a3db32">iterator</a> pos, <a class="el" href="structzll_1_1ll__list.html">ll_list</a> &amp;&amp;other) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
 <tr class="memdesc:a0f65edbf200d33be29439b31ee648f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts the nodes from <code>other</code> into this list before position <code>pos</code>.  <a href="structzll_1_1ll__list.html#a0f65edbf200d33be29439b31ee648f1f">More...</a><br /></td></tr>
 <tr class="separator:a0f65edbf200d33be29439b31ee648f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a0b085be0b1e6066fde21c9e151fdf7fc">take_back</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the last element of the list.  <a href="structzll_1_1ll__list.html#a0b085be0b1e6066fde21c9e151fdf7fc">More...</a><br /></td></tr>
-<tr class="separator:a0b085be0b1e6066fde21c9e151fdf7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf286c5d86f76f747a472a5e119b1f6e"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#abf286c5d86f76f747a472a5e119b1f6e">take_front</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:abf286c5d86f76f747a472a5e119b1f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the first element of the list.  <a href="structzll_1_1ll__list.html#abf286c5d86f76f747a472a5e119b1f6e">More...</a><br /></td></tr>
-<tr class="separator:abf286c5d86f76f747a472a5e119b1f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1359bd94fbc097676904c240f76a063"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#af1359bd94fbc097676904c240f76a063">unique</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(std::equal_to&lt;&gt;{}(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
-<tr class="memdesc:af1359bd94fbc097676904c240f76a063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the list for which <code>std::equal_to&lt;&gt;</code> returns true.  <a href="structzll_1_1ll__list.html#af1359bd94fbc097676904c240f76a063">More...</a><br /></td></tr>
-<tr class="separator:af1359bd94fbc097676904c240f76a063"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d61b57194c6a5eb65ff9641af5d6895"><td class="memTemplParams" colspan="2">template&lt;typename BinPred &gt; </td></tr>
-<tr class="memitem:a5d61b57194c6a5eb65ff9641af5d6895"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a5d61b57194c6a5eb65ff9641af5d6895">unique</a> (BinPred p) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(p(*<a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a>, *<a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a>)))</td></tr>
-<tr class="memdesc:a5d61b57194c6a5eb65ff9641af5d6895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the list for which <code>p</code> returns true.  <a href="structzll_1_1ll__list.html#a5d61b57194c6a5eb65ff9641af5d6895">More...</a><br /></td></tr>
-<tr class="separator:a5d61b57194c6a5eb65ff9641af5d6895"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a496669464ff05be0d363d3e85a83448a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">~ll_list</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a>)</td></tr>
-<tr class="memdesc:a496669464ff05be0d363d3e85a83448a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches all nodes in the list.  <a href="structzll_1_1ll__list.html#a496669464ff05be0d363d3e85a83448a">More...</a><br /></td></tr>
-<tr class="separator:a496669464ff05be0d363d3e85a83448a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a4c74a537a39e56c335e0c40533a8a993"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a4c74a537a39e56c335e0c40533a8a993">first</a> = nullptr</td></tr>
-<tr class="separator:a4c74a537a39e56c335e0c40533a8a993"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6ad8989edf2e9cf1dbf65fb0852099b"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#aa6ad8989edf2e9cf1dbf65fb0852099b">last</a> = nullptr</td></tr>
-<tr class="separator:aa6ad8989edf2e9cf1dbf65fb0852099b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fee1b2fb0c9220f7d3dc1ea5f5585b"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a19fee1b2fb0c9220f7d3dc1ea5f5585b">take_back</a> () noexcept</td></tr>
+<tr class="memdesc:a19fee1b2fb0c9220f7d3dc1ea5f5585b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the last element of the list.  <a href="structzll_1_1ll__list.html#a19fee1b2fb0c9220f7d3dc1ea5f5585b">More...</a><br /></td></tr>
+<tr class="separator:a19fee1b2fb0c9220f7d3dc1ea5f5585b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e0db401c708bf1e4e77e942304edf1b"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a9e0db401c708bf1e4e77e942304edf1b">take_front</a> () noexcept</td></tr>
+<tr class="memdesc:a9e0db401c708bf1e4e77e942304edf1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches and returns the first element of the list.  <a href="structzll_1_1ll__list.html#a9e0db401c708bf1e4e77e942304edf1b">More...</a><br /></td></tr>
+<tr class="separator:a9e0db401c708bf1e4e77e942304edf1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6c261bb828aef152d965e3217380d3f"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ad6c261bb828aef152d965e3217380d3f">unique</a> () noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(std::equal_to&lt;&gt;{}(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>(), <a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>())))</td></tr>
+<tr class="memdesc:ad6c261bb828aef152d965e3217380d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the list for which <code>std::equal_to&lt;&gt;</code> returns true.  <a href="structzll_1_1ll__list.html#ad6c261bb828aef152d965e3217380d3f">More...</a><br /></td></tr>
+<tr class="separator:ad6c261bb828aef152d965e3217380d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83fa0e1716a5cf784b2b7255e3e71175"><td class="memTemplParams" colspan="2">template&lt;typename BinPred &gt; </td></tr>
+<tr class="memitem:a83fa0e1716a5cf784b2b7255e3e71175"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#a83fa0e1716a5cf784b2b7255e3e71175">unique</a> (BinPred p) noexcept(<a class="el" href="structzll_1_1ll__list.html#a923a34a6b4035f70077c790cb699ad97">noexcept_access</a> &amp;&amp;noexcept(p(<a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front</a>(), <a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back</a>())))</td></tr>
+<tr class="memdesc:a83fa0e1716a5cf784b2b7255e3e71175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all consecutive nodes in the list for which <code>p</code> returns true.  <a href="structzll_1_1ll__list.html#a83fa0e1716a5cf784b2b7255e3e71175">More...</a><br /></td></tr>
+<tr class="separator:a83fa0e1716a5cf784b2b7255e3e71175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4be34822e851337f1681facb878732d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__list.html#ac4be34822e851337f1681facb878732d">~ll_list</a> () noexcept</td></tr>
+<tr class="memdesc:ac4be34822e851337f1681facb878732d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches all nodes in the list.  <a href="structzll_1_1ll__list.html#ac4be34822e851337f1681facb878732d">More...</a><br /></td></tr>
+<tr class="separator:ac4be34822e851337f1681facb878732d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -226,7 +224,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Acc&gt;<br />
-struct zll::ll_list&lt; T, Acc &gt;</div><p >Non-owning linked list container, expects nodes to contain <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a> as member. </p>
+struct zll::ll_list&lt; T, Acc &gt;</div><p >Non-owning linked list container, expects nodes to contain <a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing links to the next and previous headers or the list itself.">ll_header</a> as member. </p>
 <p >The nodes are linked together in a doubly linked list, with the first and last nodes accessible through the <code><a class="el" href="structzll_1_1ll__list.html#a290b5a8b1feced8e0bb4f3ed08afeb46">front()</a></code> and <code><a class="el" href="structzll_1_1ll__list.html#a90749a5bb13d01cce3975d729a2dd89c">back()</a></code> methods.</p>
 <p >Type <code>T</code> is the type of the node that contains the header. Type <code>Acc</code> specifies how to access the node's header. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
@@ -369,8 +367,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="ac95a983fa5b5598201fd7fd72bf8c73c" name="ac95a983fa5b5598201fd7fd72bf8c73c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac95a983fa5b5598201fd7fd72bf8c73c">&#9670;&#160;</a></span>ll_list() <span class="overload">[4/4]</span></h2>
+<a id="a5dec0f5e4e3ca438fc01e446a2006454" name="a5dec0f5e4e3ca438fc01e446a2006454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dec0f5e4e3ca438fc01e446a2006454">&#9670;&#160;</a></span>ll_list() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,8 +397,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a496669464ff05be0d363d3e85a83448a" name="a496669464ff05be0d363d3e85a83448a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a496669464ff05be0d363d3e85a83448a">&#9670;&#160;</a></span>~ll_list()</h2>
+<a id="ac4be34822e851337f1681facb878732d" name="ac4be34822e851337f1681facb878732d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4be34822e851337f1681facb878732d">&#9670;&#160;</a></span>~ll_list()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -592,8 +590,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a15757285ed6d05b0532ee33776cf2dc6" name="a15757285ed6d05b0532ee33776cf2dc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15757285ed6d05b0532ee33776cf2dc6">&#9670;&#160;</a></span>detach_back()</h2>
+<a id="ac3e773e814342692c9f9df3bc296acef" name="ac3e773e814342692c9f9df3bc296acef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3e773e814342692c9f9df3bc296acef">&#9670;&#160;</a></span>detach_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,8 +620,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a0a044839e4fb589f4efe7f80559d0fb8" name="a0a044839e4fb589f4efe7f80559d0fb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a044839e4fb589f4efe7f80559d0fb8">&#9670;&#160;</a></span>detach_front()</h2>
+<a id="ac8433986238e09016c1ac84b776d1705" name="ac8433986238e09016c1ac84b776d1705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8433986238e09016c1ac84b776d1705">&#9670;&#160;</a></span>detach_front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -882,8 +880,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="abb5e08a4c41eb668029f8051d46303b4" name="abb5e08a4c41eb668029f8051d46303b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb5e08a4c41eb668029f8051d46303b4">&#9670;&#160;</a></span>merge() <span class="overload">[2/2]</span></h2>
+<a id="a7855bb48316168663a4c2b5ea6dcce6f" name="a7855bb48316168663a4c2b5ea6dcce6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7855bb48316168663a4c2b5ea6dcce6f">&#9670;&#160;</a></span>merge() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -924,8 +922,8 @@ template&lt;typename Compare &gt; </div>
 
 </div>
 </div>
-<a id="afe6a7806993527b9b9622d37b63373e0" name="afe6a7806993527b9b9622d37b63373e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe6a7806993527b9b9622d37b63373e0">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="a5afa119dca54ff08c63979e4ff77fdb2" name="a5afa119dca54ff08c63979e4ff77fdb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5afa119dca54ff08c63979e4ff77fdb2">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -982,8 +980,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="aa27815cb2485ef793996d215fb30b839" name="aa27815cb2485ef793996d215fb30b839"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa27815cb2485ef793996d215fb30b839">&#9670;&#160;</a></span>remove()</h2>
+<a id="a11e5aad2a9d916e1b820676747787fbd" name="a11e5aad2a9d916e1b820676747787fbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11e5aad2a9d916e1b820676747787fbd">&#9670;&#160;</a></span>remove()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1013,8 +1011,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a5f3cad130a78a33b1fd08b9ea7fddec5" name="a5f3cad130a78a33b1fd08b9ea7fddec5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f3cad130a78a33b1fd08b9ea7fddec5">&#9670;&#160;</a></span>remove_if()</h2>
+<a id="a1486f060ce38202fea25085068c7b79e" name="a1486f060ce38202fea25085068c7b79e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1486f060ce38202fea25085068c7b79e">&#9670;&#160;</a></span>remove_if()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1076,8 +1074,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a4b49b3c7d230c92b47d0d333c22cf9bd" name="a4b49b3c7d230c92b47d0d333c22cf9bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b49b3c7d230c92b47d0d333c22cf9bd">&#9670;&#160;</a></span>sort() <span class="overload">[1/2]</span></h2>
+<a id="af728f25940bab15f11f0b71805d9a2b6" name="af728f25940bab15f11f0b71805d9a2b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af728f25940bab15f11f0b71805d9a2b6">&#9670;&#160;</a></span>sort() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1105,8 +1103,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a2361dd25285cc5e663c90b974167d4a2" name="a2361dd25285cc5e663c90b974167d4a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2361dd25285cc5e663c90b974167d4a2">&#9670;&#160;</a></span>sort() <span class="overload">[2/2]</span></h2>
+<a id="a09eb95a54372453944f887cd7ac656bc" name="a09eb95a54372453944f887cd7ac656bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09eb95a54372453944f887cd7ac656bc">&#9670;&#160;</a></span>sort() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1178,8 +1176,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a0b085be0b1e6066fde21c9e151fdf7fc" name="a0b085be0b1e6066fde21c9e151fdf7fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b085be0b1e6066fde21c9e151fdf7fc">&#9670;&#160;</a></span>take_back()</h2>
+<a id="a19fee1b2fb0c9220f7d3dc1ea5f5585b" name="a19fee1b2fb0c9220f7d3dc1ea5f5585b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19fee1b2fb0c9220f7d3dc1ea5f5585b">&#9670;&#160;</a></span>take_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1208,8 +1206,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="abf286c5d86f76f747a472a5e119b1f6e" name="abf286c5d86f76f747a472a5e119b1f6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf286c5d86f76f747a472a5e119b1f6e">&#9670;&#160;</a></span>take_front()</h2>
+<a id="a9e0db401c708bf1e4e77e942304edf1b" name="a9e0db401c708bf1e4e77e942304edf1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e0db401c708bf1e4e77e942304edf1b">&#9670;&#160;</a></span>take_front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1238,8 +1236,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="af1359bd94fbc097676904c240f76a063" name="af1359bd94fbc097676904c240f76a063"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1359bd94fbc097676904c240f76a063">&#9670;&#160;</a></span>unique() <span class="overload">[1/2]</span></h2>
+<a id="ad6c261bb828aef152d965e3217380d3f" name="ad6c261bb828aef152d965e3217380d3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6c261bb828aef152d965e3217380d3f">&#9670;&#160;</a></span>unique() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1268,8 +1266,8 @@ template&lt;typename T , typename Acc &gt; </div>
 
 </div>
 </div>
-<a id="a5d61b57194c6a5eb65ff9641af5d6895" name="a5d61b57194c6a5eb65ff9641af5d6895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d61b57194c6a5eb65ff9641af5d6895">&#9670;&#160;</a></span>unique() <span class="overload">[2/2]</span></h2>
+<a id="a83fa0e1716a5cf784b2b7255e3e71175" name="a83fa0e1716a5cf784b2b7255e3e71175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83fa0e1716a5cf784b2b7255e3e71175">&#9670;&#160;</a></span>unique() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1302,38 +1300,6 @@ template&lt;typename BinPred &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a4c74a537a39e56c335e0c40533a8a993" name="a4c74a537a39e56c335e0c40533a8a993"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c74a537a39e56c335e0c40533a8a993">&#9670;&#160;</a></span>first</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* <a class="el" href="structzll_1_1ll__list.html">zll::ll_list</a>&lt; T, Acc &gt;::first = nullptr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa6ad8989edf2e9cf1dbf65fb0852099b" name="aa6ad8989edf2e9cf1dbf65fb0852099b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6ad8989edf2e9cf1dbf65fb0852099b">&#9670;&#160;</a></span>last</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename Acc &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* <a class="el" href="structzll_1_1ll__list.html">zll::ll_list</a>&lt; T, Acc &gt;::last = nullptr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a923a34a6b4035f70077c790cb699ad97" name="a923a34a6b4035f70077c790cb699ad97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a923a34a6b4035f70077c790cb699ad97">&#9670;&#160;</a></span>noexcept_access</h2>
 

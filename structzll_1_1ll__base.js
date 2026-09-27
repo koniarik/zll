@@ -1,6 +1,6 @@
 var structzll_1_1ll__base =
 [
-    [ "access", "structzll_1_1ll__base_1_1access.html", null ],
+    [ "access", "structzll_1_1ll__base.html#adbd5f4a6a42bf3e12997b0f48a0bb67f", null ],
     [ "ll_base", "structzll_1_1ll__base.html#a6d1c0948048a7f9b0f4c6afc4562c447", null ],
     [ "ll_base", "structzll_1_1ll__base.html#a5d0617c994a8c22248fd7eb0dc067215", null ],
     [ "ll_base", "structzll_1_1ll__base.html#a3ddcafc2edc7665684237be0d07d5a88", null ],

@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('structzll_1_1ll__base.html',''); initR
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="structzll_1_1ll__base-members.html">List of all members</a>  </div>
@@ -99,16 +99,25 @@ $(document).ready(function(){initNavTree('structzll_1_1ll__base.html',''); initR
 </div><!--header-->
 <div class="contents">
 
-<p>CRTP base class for linked list nodes containing <code><a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a></code>.  
+<p>CRTP base class for linked list nodes containing <code><a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing links to the next and previous headers or the list itself.">ll_header</a></code>.  
  <a href="structzll_1_1ll__base.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="zll_8hpp_source.html">zll.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for zll::ll_base&lt; Derived &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="structzll_1_1ll__base.png" usemap="#zll::ll_5Fbase_3C_20Derived_20_3E_map" alt=""/>
+  <map id="zll::ll_5Fbase_3C_20Derived_20_3E_map" name="zll::ll_5Fbase_3C_20Derived_20_3E_map">
+<area href="structzll_1_1ll__header.html" alt="zll::ll_header&lt; Derived, _ll_base_access&lt; Derived &gt; &gt;" shape="rect" coords="0,0,324,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__base_1_1access.html">access</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access type to the header of <a class="el" href="structzll_1_1ll__base.html" title="CRTP base class for linked list nodes containing ll_header.">ll_base</a>.  <a href="structzll_1_1ll__base_1_1access.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:adbd5f4a6a42bf3e12997b0f48a0bb67f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1ll__base.html#adbd5f4a6a42bf3e12997b0f48a0bb67f">access</a> = _ll_base_access&lt; Derived &gt;</td></tr>
+<tr class="memdesc:adbd5f4a6a42bf3e12997b0f48a0bb67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access type to the header of <a class="el" href="structzll_1_1ll__base.html" title="CRTP base class for linked list nodes containing ll_header.">ll_base</a>.  <a href="structzll_1_1ll__base.html#adbd5f4a6a42bf3e12997b0f48a0bb67f">More...</a><br /></td></tr>
+<tr class="separator:adbd5f4a6a42bf3e12997b0f48a0bb67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -151,10 +160,29 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Derived&gt;<br />
-struct zll::ll_base&lt; Derived &gt;</div><p >CRTP base class for linked list nodes containing <code><a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing pointers to the next and previous elements or the list itself.">ll_header</a></code>. </p>
+struct zll::ll_base&lt; Derived &gt;</div><p >CRTP base class for linked list nodes containing <code><a class="el" href="structzll_1_1ll__header.html" title="Linked-list header containing links to the next and previous headers or the list itself.">ll_header</a></code>. </p>
 <p >Provides access type to the header of the node and implements move and copy semantics for the node. Provides basic API for the node.</p>
 <p >Note that for copy construction to work it has to use non-const reference to the node. This is so we can re-link the copied node into the list. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="adbd5f4a6a42bf3e12997b0f48a0bb67f" name="adbd5f4a6a42bf3e12997b0f48a0bb67f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbd5f4a6a42bf3e12997b0f48a0bb67f">&#9670;&#160;</a></span>access</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structzll_1_1ll__base.html">zll::ll_base</a>&lt; Derived &gt;::access =  _ll_base_access&lt; Derived &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access type to the header of <a class="el" href="structzll_1_1ll__base.html" title="CRTP base class for linked list nodes containing ll_header.">ll_base</a>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6d1c0948048a7f9b0f4c6afc4562c447" name="a6d1c0948048a7f9b0f4c6afc4562c447"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6d1c0948048a7f9b0f4c6afc4562c447">&#9670;&#160;</a></span>ll_base() <span class="overload">[1/3]</span></h2>
 

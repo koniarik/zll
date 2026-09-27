@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('structzll_1_1sh__base.html',''); initR
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="structzll_1_1sh__base-members.html">List of all members</a>  </div>
@@ -99,27 +99,38 @@ $(document).ready(function(){initNavTree('structzll_1_1sh__base.html',''); initR
 </div><!--header-->
 <div class="contents">
 
-<p>CRTP base class for skew heap nodes containing <code><a class="el" href="structzll_1_1sh__header.html" title="Skew heap header containing pointers to left and right children and to the parent node or heap.">sh_header</a></code>.  
+<p>CRTP base class for skew heap nodes containing <code><a class="el" href="structzll_1_1sh__header.html" title="Skew heap header containing links to the headers of the left and right children and to the parent hea...">sh_header</a></code>.  
  <a href="structzll_1_1sh__base.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="zll_8hpp_source.html">zll.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for zll::sh_base&lt; Derived, Compare &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="structzll_1_1sh__base.png" usemap="#zll::sh_5Fbase_3C_20Derived_2C_20Compare_20_3E_map" alt=""/>
+  <map id="zll::sh_5Fbase_3C_20Derived_2C_20Compare_20_3E_map" name="zll::sh_5Fbase_3C_20Derived_2C_20Compare_20_3E_map">
+<area href="structzll_1_1sh__header.html" title="Skew heap header containing links to the headers of the left and right children and to the parent hea..." alt="zll::sh_header&lt; T, Acc, Compare &gt;" shape="rect" coords="0,0,472,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base_1_1access.html">access</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:af9ae56053ca8d9bd8f094913f7f525a7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#af9ae56053ca8d9bd8f094913f7f525a7">access</a> = _sh_base_access&lt; Derived, Compare &gt;</td></tr>
+<tr class="separator:af9ae56053ca8d9bd8f094913f7f525a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa5e8bb3a0d0f1d12b1deb1d92fa21a61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#aa5e8bb3a0d0f1d12b1deb1d92fa21a61">operator=</a> (<a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;&amp;o) noexcept</td></tr>
 <tr class="separator:aa5e8bb3a0d0f1d12b1deb1d92fa21a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a708f823b2e37a1cb3ea954cf7c539c3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#a708f823b2e37a1cb3ea954cf7c539c3f">operator=</a> (<a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;o) noexcept</td></tr>
+<tr class="memdesc:a708f823b2e37a1cb3ea954cf7c539c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment operator, the node is detached and linked right below the copied node.  <a href="structzll_1_1sh__base.html#a708f823b2e37a1cb3ea954cf7c539c3f">More...</a><br /></td></tr>
 <tr class="separator:a708f823b2e37a1cb3ea954cf7c539c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77a6479c3b32129a97fbd6572e736106"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#a77a6479c3b32129a97fbd6572e736106">sh_base</a> () noexcept=default</td></tr>
 <tr class="separator:a77a6479c3b32129a97fbd6572e736106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0adf8b17a324dec9a3db14d179d6316e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#a0adf8b17a324dec9a3db14d179d6316e">sh_base</a> (<a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;&amp;o) noexcept</td></tr>
 <tr class="separator:a0adf8b17a324dec9a3db14d179d6316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab65bc283b898691cd1251419d0465238"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#ab65bc283b898691cd1251419d0465238">sh_base</a> (<a class="el" href="structzll_1_1sh__base.html">sh_base</a> &amp;o) noexcept</td></tr>
+<tr class="memdesc:ab65bc283b898691cd1251419d0465238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor, the copy is linked right below the copied node.  <a href="structzll_1_1sh__base.html#ab65bc283b898691cd1251419d0465238">More...</a><br /></td></tr>
 <tr class="separator:ab65bc283b898691cd1251419d0465238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5902afe74981a30ccc8957f0dfdb921e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__base.html#a5902afe74981a30ccc8957f0dfdb921e">~sh_base</a> () noexcept</td></tr>
 <tr class="separator:a5902afe74981a30ccc8957f0dfdb921e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,9 +144,26 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Derived, typename Compare = std::less&lt;&gt;&gt;<br />
-struct zll::sh_base&lt; Derived, Compare &gt;</div><p >CRTP base class for skew heap nodes containing <code><a class="el" href="structzll_1_1sh__header.html" title="Skew heap header containing pointers to left and right children and to the parent node or heap.">sh_header</a></code>. </p>
+struct zll::sh_base&lt; Derived, Compare &gt;</div><p >CRTP base class for skew heap nodes containing <code><a class="el" href="structzll_1_1sh__header.html" title="Skew heap header containing links to the headers of the left and right children and to the parent hea...">sh_header</a></code>. </p>
 <p >Provides access type to the header of the node and implements move and copy semantics for the node. Provides basic API for the node </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="af9ae56053ca8d9bd8f094913f7f525a7" name="af9ae56053ca8d9bd8f094913f7f525a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ae56053ca8d9bd8f094913f7f525a7">&#9670;&#160;</a></span>access</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived , typename Compare  = std::less&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structzll_1_1sh__base.html">zll::sh_base</a>&lt; Derived, Compare &gt;::access =  _sh_base_access&lt; Derived, Compare &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a77a6479c3b32129a97fbd6572e736106" name="a77a6479c3b32129a97fbd6572e736106"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77a6479c3b32129a97fbd6572e736106">&#9670;&#160;</a></span>sh_base() <span class="overload">[1/3]</span></h2>
 
@@ -216,6 +244,8 @@ template&lt;typename Derived , typename Compare  = std::less&lt;&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Copy constructor, the copy is linked right below the copied node. </p>
 
 </div>
 </div>
@@ -354,6 +384,8 @@ template&lt;typename Derived , typename Compare  = std::less&lt;&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Copy assignment operator, the node is detached and linked right below the copied node. </p>
 
 </div>
 </div>
