@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     gcc \
     g++ \
     gdb \
+    git \
     python3 \
     musl-dev \
     linux-headers
