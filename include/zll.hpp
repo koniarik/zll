@@ -45,6 +45,13 @@
 
 #endif
 
+// The MSVC ABI ignores the standard spelling.
+#if defined( _MSC_VER )
+#define ZLL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+#else
+#define ZLL_NO_UNIQUE_ADDRESS [[no_unique_address]]
+#endif
+
 namespace zll
 {
 
@@ -1558,7 +1565,7 @@ protected:
         }
 
 private:
-        [[no_unique_address]] Compare _comp;
+        ZLL_NO_UNIQUE_ADDRESS Compare _comp;
 };
 
 /// Skew heap implementation. Provides API for linking and merging nodes, merging and popping the
@@ -1692,7 +1699,7 @@ struct sh_heap : private _raw_heap
         }
 
 private:
-        [[no_unique_address]] Compare _comp{};
+        ZLL_NO_UNIQUE_ADDRESS Compare _comp{};
 };
 
 }  // namespace zll
