@@ -37,6 +37,17 @@ jobs:
       - name: workflow
         run: cmake --workflow --preset ${{ matrix.preset }}
 
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: workflow
+        run: cmake --workflow --preset windows-debug
+
   install:
     runs-on: ubuntu-latest
     steps:
