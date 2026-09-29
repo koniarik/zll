@@ -55,6 +55,20 @@
             "cacheVariables": {
                 "ZLL_SIZE_ENABLED": "ON"
             }
+        },
+        {
+            "name": "windows-debug",
+            "displayName": "Windows debug build",
+            "description": "Debug build on Windows with clang++ and the MSVC libraries",
+            "inherits": "debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
         }
     ],
     "buildPresets": [
@@ -77,6 +91,10 @@
         {
             "name": "size",
             "configurePreset": "size"
+        },
+        {
+            "name": "windows-debug",
+            "configurePreset": "windows-debug"
         }
     ],
     "testPresets": [
@@ -98,6 +116,11 @@
         {
             "name": "release",
             "configurePreset": "release",
+            "output": { "outputOnFailure": true }
+        },
+        {
+            "name": "windows-debug",
+            "configurePreset": "windows-debug",
             "output": { "outputOnFailure": true }
         }
     ],
@@ -132,6 +155,14 @@
                 { "type": "configure", "name": "release" },
                 { "type": "build",     "name": "release" },
                 { "type": "test",      "name": "release" }
+            ]
+        },
+        {
+            "name": "windows-debug",
+            "steps": [
+                { "type": "configure", "name": "windows-debug" },
+                { "type": "build",     "name": "windows-debug" },
+                { "type": "test",      "name": "windows-debug" }
             ]
         }
     ]
