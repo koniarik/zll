@@ -37,28 +37,39 @@ enum class mode
         eval
 };
 
-void check_impl(
-    mode                              m,
-    std::string_view                  var,
-    [[maybe_unused]] std::string_view expected,
-    std::ostream&                     out,
-    std::source_location              sl = std::source_location::current() )
+// gdb stops here once per check and prints `v`. Each instantiation must stay a separate,
+// non-inlined function, so that `v` has its own type and is addressable at the breakpoint in
+// optimized builds too. GCC folds identical functions unless they are `noipa`.
+#if defined( __clang__ )
+#define ZLL_GDB_PROBE [[gnu::noinline]]
+#else
+#define ZLL_GDB_PROBE [[gnu::noipa]]
+#endif
+
+template < typename T >
+ZLL_GDB_PROBE void gdb_probe( T const& v )
 {
-        if ( m != mode::gen )
-                return;
-        out << "break " << sl.file_name() << ":" << sl.line() << "\n";
-        out << "commands\n";
-        out << "p " << var << "\n";
-        out << "c\n";
-        out << "end\n";
+        asm volatile( "" : : "r"( &v ) : "memory" );
 }
 
-void check_impl(
+template < typename T >
+void check(
     [[maybe_unused]] mode             m,
-    [[maybe_unused]] std::string_view var,
-    std::string_view                  expected,
-    std::istream&                     in,
-    std::source_location              sl = std::source_location::current() )
+    T const&                          var,
+    [[maybe_unused]] std::string_view expected,
+    [[maybe_unused]] std::ostream&    out )
+{
+        assert( m == mode::run );
+        gdb_probe( var );
+}
+
+template < typename T >
+void check(
+    [[maybe_unused]] mode     m,
+    [[maybe_unused]] T const& var,
+    std::string_view          expected,
+    std::istream&             in,
+    std::source_location      sl = std::source_location::current() )
 {
         assert( m == mode::eval );
         while ( in && in.get() != '$' ) {
@@ -81,8 +92,6 @@ void check_impl(
         std::cerr << "  Source: " << sl.file_name() << ":" << sl.line() << "\n";
         std::exit( 2 );
 }
-
-#define CHECK( m, var, expected, out ) check_impl( m, #var, expected, out )
 
 // ---------------------------------------------------------------------------
 // Node types
@@ -214,45 +223,45 @@ void run_tests( mode m, auto& st )
         // ll_list: empty
         {
                 zll::ll_list< ll_node, ll_access > l;
-                CHECK( m, l, "{}", st );
+                check( m, l, "{}", st );
         }
 
         // ll_header: detached
         {
                 ll_node n;
-                CHECK( m, n.hdr, "{prev = null, next = null}", st );
+                check( m, n.hdr, "{prev = null, next = null}", st );
         }
 
         // ll_header: only node in a 1-element list — both sides point to list
         {
                 ll_node                            n;
                 zll::ll_list< ll_node, ll_access > l{ &n };
-                CHECK( m, n.hdr, "{prev = {{...}}, next = {{...}}}", st );
+                check( m, n.hdr, "{prev = {{...}}, next = {{...}}}", st );
         }
 
         // ll_header: first in a 2-node list — prev = list, next = node
         {
                 ll_node                            n1, n2;
                 zll::ll_list< ll_node, ll_access > l{ &n1, &n2 };
-                CHECK( m, n1.hdr, "{prev = {{...}, {...}}, next = {hdr = {...}}}", st );
-                CHECK( m, n2.hdr, "{prev = {hdr = {...}}, next = {{...}, {...}}}", st );
+                check( m, n1.hdr, "{prev = {{...}, {...}}, next = {hdr = {...}}}", st );
+                check( m, n2.hdr, "{prev = {hdr = {...}}, next = {{...}, {...}}}", st );
         }
 
         // ll_header: first/middle/last in a 3-node list
         {
                 ll_node                            n1, n2, n3;
                 zll::ll_list< ll_node, ll_access > l{ &n1, &n2, &n3 };
-                CHECK( m, n1.hdr, "{prev = {{...}, {...}, {...}}, next = {hdr = {...}}}", st );
-                CHECK( m, n2.hdr, "{prev = {hdr = {...}}, next = {hdr = {...}}}", st );
-                CHECK( m, n3.hdr, "{prev = {hdr = {...}}, next = {{...}, {...}, {...}}}", st );
+                check( m, n1.hdr, "{prev = {{...}, {...}, {...}}, next = {hdr = {...}}}", st );
+                check( m, n2.hdr, "{prev = {hdr = {...}}, next = {hdr = {...}}}", st );
+                check( m, n3.hdr, "{prev = {hdr = {...}}, next = {{...}, {...}, {...}}}", st );
         }
 
         // ll_header: nodes connected without ll_list — prev/next = null on ends
         {
                 ll_node n1, n2;
                 zll::link_detached_as_next< ll_node, ll_access >( n1, n2 );
-                CHECK( m, n1.hdr, "{prev = null, next = {hdr = {...}}}", st );
-                CHECK( m, n2.hdr, "{prev = {hdr = {...}}, next = null}", st );
+                check( m, n1.hdr, "{prev = null, next = {hdr = {...}}}", st );
+                check( m, n2.hdr, "{prev = {hdr = {...}}, next = null}", st );
                 // detach manually so destructors don't assert
                 zll::detach< ll_node, ll_access >( n2 );
         }
@@ -264,13 +273,13 @@ void run_tests( mode m, auto& st )
         // sh_heap: empty
         {
                 zll::sh_heap< sh_node, sh_access > h;
-                CHECK( m, h, "{}", st );
+                check( m, h, "{}", st );
         }
 
         // sh_header: detached
         {
                 sh_node n;
-                CHECK( m, n.hdr, "{parent = null, left = null, right = null}", st );
+                check( m, n.hdr, "{parent = null, left = null, right = null}", st );
         }
 
         // sh_header: top of a 1-node heap — parent = heap, left/right = null
@@ -278,7 +287,7 @@ void run_tests( mode m, auto& st )
                 sh_node                            n( 1 );
                 zll::sh_heap< sh_node, sh_access > h;
                 h.link( n );
-                CHECK( m, n.hdr, "{parent = {{...}}, left = null, right = null}", st );
+                check( m, n.hdr, "{parent = {{...}}, left = null, right = null}", st );
         }
 
         // sh_header: top and child in a 2-node heap (n1=1 < n2=2)
@@ -287,12 +296,12 @@ void run_tests( mode m, auto& st )
                 zll::sh_heap< sh_node, sh_access > h;
                 h.link( n1 );
                 h.link( n2 );
-                CHECK(
+                check(
                     m,
                     n1.hdr,
                     "{parent = {{...}, {...}}, left = {hdr = {...}, x = 2}, right = null}",
                     st );
-                CHECK(
+                check(
                     m, n2.hdr, "{parent = {hdr = {...}, x = 1}, left = null, right = null}", st );
         }
 
@@ -301,7 +310,7 @@ void run_tests( mode m, auto& st )
                 sh_node                            n( 42 );
                 zll::sh_heap< sh_node, sh_access > h;
                 h.link( n );
-                CHECK( m, h, "{{hdr = {...}, x = 42}}", st );
+                check( m, h, "{{hdr = {...}, x = 42}}", st );
         }
 
         // sh_heap: 10 nodes — in-order DFS ends with x=6
@@ -310,7 +319,7 @@ void run_tests( mode m, auto& st )
                 zll::sh_heap< sh_node, sh_access > h;
                 for ( auto& n : nodes )
                         h.link( n );
-                CHECK( m, h, "{{hdr = {...}, x = 10}, {hdr = {...}, x = 6}}", st );
+                check( m, h, "{{hdr = {...}, x = 10}, {hdr = {...}, x = 6}}", st );
         }
 
         // dual: node simultaneously in ll_list and sh_heap
@@ -318,12 +327,12 @@ void run_tests( mode m, auto& st )
                 dual_node                                 n1( 1 ), n2( 2 ), n3( 3 );
                 zll::ll_list< dual_node, dual_ll_access > l{ &n1, &n2, &n3 };
                 zll::sh_heap< dual_node, dual_sh_access > h{ &n1, &n2, &n3 };
-                CHECK(
+                check(
                     m,
                     n1.ll_hdr,
                     "{prev = {{...}, {...}, {...}}, next = {ll_hdr = {...}, sh_hdr = {...}, x = 2}}",
                     st );
-                CHECK(
+                check(
                     m,
                     n1.sh_hdr,
                     "{parent = {{...}, {...}}, left = {ll_hdr = {...}, sh_hdr = {...}, x = 3}, right = {ll_hdr = {...}, sh_hdr = {...}, x = 2}}",
@@ -353,7 +362,11 @@ int main( [[maybe_unused]] int argc, char* argv[] )
                 out << "set logging enabled on\n";
                 out << "set width 0\n";
                 out << "set print max-depth 2\n";
-                run_tests( mode::gen, out );
+                out << "break gdb_probe\n";
+                out << "commands\n";
+                out << "p *&v\n";
+                out << "c\n";
+                out << "end\n";
                 out << "run run\n";
         } else if ( mode_str == "run" ) {
                 std::ostringstream ss;
