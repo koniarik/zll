@@ -60,8 +60,8 @@ test-pprinter:
 
 # Code size probes under test/size (arm-none-eabi-g++, -Os, Cortex-M4)
 size-build:
-	cmake -S test/size -B _build/size -G Ninja
-	cmake --build _build/size
+	cmake --preset size
+	cmake --build --preset size
 
 size: size-build
 	python3 test/size/report.py _build/size

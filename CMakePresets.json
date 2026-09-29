@@ -44,6 +44,17 @@
                 "CMAKE_CXX_FLAGS": "-Wall -Wextra -Werror -Wfatal-errors -Wno-comment -Wpedantic -Wcast-qual -Wshadow -Wnon-virtual-dtor -Wunused -Wcast-align -Wdouble-promotion -Wfloat-equal -Wsign-conversion -Wconversion -fvisibility=hidden",
                 "ZLL_TESTS_ENABLED": "ON"
             }
+        },
+        {
+            "name": "size",
+            "displayName": "Code size probes",
+            "description": "Cortex-M4 objects built with arm-none-eabi-g++ for test/size/report.py",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/_build/${presetName}",
+            "toolchainFile": "${sourceDir}/test/size/arm-none-eabi.cmake",
+            "cacheVariables": {
+                "ZLL_SIZE_ENABLED": "ON"
+            }
         }
     ],
     "buildPresets": [
@@ -62,6 +73,10 @@
         {
             "name": "release",
             "configurePreset": "release"
+        },
+        {
+            "name": "size",
+            "configurePreset": "size"
         }
     ],
     "testPresets": [

@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.19)
 
 option(ZLL_TESTS_ENABLED "Enable tests" OFF)
+option(ZLL_SIZE_ENABLED "Build the code size probes" OFF)
 
-project(zll)
+project(zll LANGUAGES CXX)
 
 add_library(zll INTERFACE include/zll.hpp)
 target_include_directories(
@@ -64,4 +65,8 @@ if(ZLL_TESTS_ENABLED)
       set_tests_properties(gdb_test_eval PROPERTIES FIXTURES_REQUIRED gdb_log)
     endif()
   endif()
+endif()
+
+if(ZLL_SIZE_ENABLED)
+  add_subdirectory(test/size)
 endif()

@@ -1,13 +1,6 @@
 # Code size probes: object files built with arm-none-eabi-g++ at -Os for
 # Cortex-M4 and measured by report.py, plus a warning check of every function.
 # `make size` at the repository root builds and reports them.
-cmake_minimum_required(VERSION 3.19)
-
-if(NOT CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/arm-none-eabi.cmake)
-endif()
-
-project(zll_size CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
