@@ -9,6 +9,7 @@ var zll_8hpp =
     [ "zll::sh_header< T, Acc, Compare >", "structzll_1_1sh__header.html", null ],
     [ "zll::sh_heap< T, Acc, Compare >", "structzll_1_1sh__heap.html", "structzll_1_1sh__heap" ],
     [ "ZLL_ASSERT", "zll_8hpp.html#ad557a40b4b74453a753885c38a99630e", null ],
+    [ "ZLL_NO_UNIQUE_ADDRESS", "zll_8hpp.html#a4590267a670c760f73011c0354822d3a", null ],
     [ "detach", "zll_8hpp.html#a6d418476eff4046b39fc5d0335ff6693", null ],
     [ "detach", "zll_8hpp.html#ab91f3700eb7d7dc3743db6471cf282ba", null ],
     [ "detach_range", "zll_8hpp.html#a5aee72801f82d0cebea0f695436f422f", null ],
