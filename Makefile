@@ -46,7 +46,7 @@ test-ubsan: build-ubsan
 
 # Static analysis
 clang-tidy:
-	find include/ \( -iname "*.h" -or -iname "*.hpp" -or -iname "*.cpp" \) -print0 | parallel -0 clang-tidy -p build/$(PRESET) {}
+	find include/ \( -iname "*.h" -or -iname "*.hpp" -or -iname "*.cpp" \) -print0 | parallel -0 clang-tidy -p _build/$(PRESET) {}
 
 # Pretty-printer tests (runs inside Alpine Docker with GDB)
 GDB_IMAGE ?= zll-gdb
@@ -60,16 +60,16 @@ test-pprinter:
 
 # Code size probes under test/size (arm-none-eabi-g++, -Os, Cortex-M4)
 size-build:
-	cmake -S test/size -B build/size -G Ninja
-	cmake --build build/size
+	cmake -S test/size -B _build/size -G Ninja
+	cmake --build _build/size
 
 size: size-build
-	python3 test/size/report.py build/size
+	python3 test/size/report.py _build/size
 
 # Rewrites test/size/baseline.json with the current sizes
 size-baseline: size-build
-	python3 test/size/report.py build/size --update
+	python3 test/size/report.py _build/size --update
 
 # Cleanup
 clean:
-	rm -rf build/
+	rm -rf _build/

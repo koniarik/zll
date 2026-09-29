@@ -1,4 +1,5 @@
-# Build directories
+# Local build trees, install prefixes and audit logs
+_*
 build/
 
 # IDE and editor files
