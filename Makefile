@@ -54,7 +54,7 @@ GDB_IMAGE ?= zll-gdb
 test-pprinter:
 	docker build -f docker/Dockerfile.gdb -t $(GDB_IMAGE) .
 	docker run --rm -v "$(CURDIR):/src" $(GDB_IMAGE) sh -c \
-		"cmake -B /build -S /src -G Ninja -DZLL_TESTS_ENABLED=ON -DCMAKE_BUILD_TYPE=Debug && \
+		"cmake -S /src --preset debug -B /build && \
 		 cmake --build /build && \
 		 ctest --test-dir /build -R 'gdb_test' --output-on-failure --verbose"
 
