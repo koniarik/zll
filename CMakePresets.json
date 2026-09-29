@@ -68,34 +68,22 @@
         {
             "name": "debug",
             "configurePreset": "debug",
-            "output": { "outputOnFailure": true },
-            "filter": {
-                "exclude": { "name": "^gdb_test" }
-            }
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "asan",
             "configurePreset": "asan",
-            "output": { "outputOnFailure": true },
-            "filter": {
-                "exclude": { "name": "^gdb_test" }
-            }
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "ubsan",
             "configurePreset": "ubsan",
-            "output": { "outputOnFailure": true },
-            "filter": {
-                "exclude": { "name": "^gdb_test" }
-            }
+            "output": { "outputOnFailure": true }
         },
         {
             "name": "release",
             "configurePreset": "release",
-            "output": { "outputOnFailure": true },
-            "filter": {
-                "exclude": { "name": "^gdb_test" }
-            }
+            "output": { "outputOnFailure": true }
         }
     ],
     "workflowPresets": [
