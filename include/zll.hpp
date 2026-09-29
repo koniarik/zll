@@ -24,8 +24,12 @@
 
 #include <bit>
 #include <concepts>
+#include <cstddef>
 #include <cstdint>
+#include <functional>
+#include <initializer_list>
 #include <iterator>
+#include <type_traits>
 #include <utility>
 
 #ifdef ZLL_DEFAULT_ASSERT
@@ -420,12 +424,12 @@ merge_ranges( T& lhf, T& lhl, T& rhf, T& rhl, Compare&& comp = std::less<>{} ) n
         _ll_hdr& rf = Acc::get( rhf );
         _ll_hdr& rl = Acc::get( rhl );
         _unlink( rf, rl );
-        _ll_hdr* lh    = &Acc::get( lhf );
-        _ll_hdr* rh    = &rf;
-        _ll_hdr* first = nullptr;
-        _ll_hdr* last  = nullptr;
-        _ll_word pred  = lh->_prev;
-        _ll_word succ  = ll._next;
+        _ll_hdr*       lh    = &Acc::get( lhf );
+        _ll_hdr*       rh    = &rf;
+        _ll_hdr*       first = nullptr;
+        _ll_hdr*       last  = nullptr;
+        _ll_word const pred  = lh->_prev;
+        _ll_word       succ  = ll._next;
         while ( lh && rh ) {
                 _ll_hdr* tmp = nullptr;
                 if ( comp( _node< T, Acc >( *rh ), _node< T, Acc >( *lh ) ) ) {
@@ -1017,6 +1021,7 @@ struct ll_base : private ll_header< Derived, _ll_base_access< Derived > >
 
         /// Copy assignment operator, copied node is linked to the list of the copied node after
         /// it. If the copied node is the same as the current node, nothing happens.
+        // NOLINTNEXTLINE(misc-unconventional-assign-operator)
         ll_base& operator=( ll_base& o ) noexcept
         {
                 if ( this == &o )
@@ -1518,6 +1523,7 @@ struct sh_base : private sh_header< Derived, _sh_base_access< Derived, Compare >
         }
 
         /// Copy assignment operator, the node is detached and linked right below the copied node.
+        // NOLINTNEXTLINE(misc-unconventional-assign-operator)
         sh_base& operator=( sh_base& o ) noexcept
         {
                 if ( this == &o )

@@ -7,7 +7,7 @@ Checks: >
   misc*,
   performance*,
   portability*,
-WarningsAsErrors: true
+WarningsAsErrors: "*"
 HeaderFilterRegex: include/
 FormatStyle: file
 CheckOptions:
