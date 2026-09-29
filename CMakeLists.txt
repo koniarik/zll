@@ -33,11 +33,19 @@ if(ZLL_TESTS_ENABLED)
 
     file(GLOB TESTS test/*_test.cpp)
 
-    add_library(doctest INTERFACE)
-    target_include_directories(doctest INTERFACE deps/)
+    include(FetchContent)
+    FetchContent_Declare(
+      doctest
+      GIT_REPOSITORY https://github.com/doctest/doctest.git
+      GIT_TAG v2.4.12
+      FIND_PACKAGE_ARGS 2.4.12)
+    set(DOCTEST_NO_INSTALL
+        ON
+        CACHE BOOL "")
+    FetchContent_MakeAvailable(doctest)
 
     add_executable(zll_utest ${TESTS})
-    target_link_libraries(zll_utest PUBLIC zll doctest)
+    target_link_libraries(zll_utest PUBLIC zll doctest::doctest)
     target_compile_features(zll_utest INTERFACE cxx_std_20)
     add_test(NAME zll_utest COMMAND zll_utest)
 
