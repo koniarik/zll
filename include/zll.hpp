@@ -204,6 +204,14 @@ inline void _link( _ll_hdr& first, _ll_hdr& last, _ll_word prev, _ll_word next )
         _next_or_first_set( prev, first );
 }
 
+/// Moves the links of `from` to the detached `to`; `from` ends up detached.
+inline void _ll_move( _ll_hdr& from, _ll_hdr& to ) noexcept
+{
+        _link( to, to, from._prev, from._next );
+        from._next = nullptr;
+        from._prev = nullptr;
+}
+
 inline _ll_hdr::~_ll_hdr() noexcept
 {
         _unlink( *this, *this );
@@ -289,13 +297,7 @@ requires( _provides_ll_header< T, Acc > )
 void move_from_to( T& from, T& to ) noexcept( _nothrow_access< Acc, T > )
 {
         ZLL_ASSERT( ( detached< T, Acc >( to ) ) );
-        _ll_hdr& from_hdr = Acc::get( from );
-        _ll_hdr& to_hdr   = Acc::get( to );
-
-        _link( to_hdr, to_hdr, from_hdr._prev, from_hdr._next );
-
-        from_hdr._next = nullptr;
-        from_hdr._prev = nullptr;
+        _ll_move( Acc::get( from ), Acc::get( to ) );
 }
 
 /// Link detached node `d` after node `n`, any successor of `n` will be successor of `d`.
@@ -998,13 +1000,14 @@ struct ll_base : private ll_header< Derived, _ll_base_access< Derived > >
         /// list of the moved-from node instead of it.
         ll_base( ll_base&& o ) noexcept
         {
-                move_from_to< Derived, access >( o.derived(), derived() );
+                _ll_move( o, *this );
         }
 
         /// Copy constructor, copied node is linked to the list of the copied node after it.
         ll_base( ll_base& o ) noexcept
         {
-                link_detached_as_next< Derived, access >( o.derived(), derived() );
+                _ll_hdr& n = o;
+                _link( *this, *this, n, n._next );
         }
 
         /// Move assignment operator, moved-from node is detached. The new node is linked to the
@@ -1310,6 +1313,15 @@ _sh_pop( _sh_hdr& h, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T,
         return nullptr;
 }
 
+template < typename T, typename Acc, typename Compare >
+void _sh_detach( _sh_hdr& h, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T, Compare > )
+{
+        if ( _sh_hdr* n = _sh_pop< T, Acc >( h, comp ) )
+                _sh_replace_in_parent( h, *n );
+        else
+                _sh_detach_parent( h );
+}
+
 /// Returns true if the node is detached from heap.
 template < typename T, typename Acc = typename T::access >
 requires( _provides_sh_header< T, Acc > )
@@ -1352,11 +1364,7 @@ template < typename T, typename Acc = typename T::access, typename Compare >
 requires( _provides_sh_header< T, Acc > )
 void detach( T& node, Compare&& comp ) noexcept( _nothrow_access_compare< Acc, T, Compare > )
 {
-        _sh_hdr& h = Acc::get( node );
-        if ( _sh_hdr* n = _sh_pop< T, Acc >( h, comp ) )
-                _sh_replace_in_parent( h, *n );
-        else
-                _sh_detach_parent( h );
+        _sh_detach< T, Acc >( Acc::get( node ), comp );
 }
 
 template < typename T, typename Acc >
@@ -1504,7 +1512,7 @@ struct sh_base : private sh_header< Derived, _sh_base_access< Derived, Compare >
 
         sh_base( sh_base&& o ) noexcept
         {
-                move_from_to< Derived, access >( o.derived(), derived() );
+                _sh_move( o, *this );
         }
 
         sh_base& operator=( sh_base&& o ) noexcept
@@ -1535,7 +1543,7 @@ struct sh_base : private sh_header< Derived, _sh_base_access< Derived, Compare >
 
         ~sh_base() noexcept
         {
-                detach< Derived, access >( derived(), _comp );
+                _sh_detach< Derived, access >( *this, _comp );
         }
 
 protected:
