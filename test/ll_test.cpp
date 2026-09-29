@@ -818,9 +818,9 @@ TEST_CASE( "merge matches std::merge on every small input" )
                 auto greater = []( vnode const& x, vnode const& y ) {
                         return x.value > y.value;
                 };
-                for ( auto a : seqs )
+                for ( auto a : seqs ) {
+                        std::reverse( a.begin(), a.end() );
                         for ( auto b : seqs ) {
-                                std::reverse( a.begin(), a.end() );
                                 std::reverse( b.begin(), b.end() );
                                 check_merge(
                                     a, b, [&]( auto& la, auto& lb, auto& pa, auto& pb, auto& out ) {
@@ -836,6 +836,7 @@ TEST_CASE( "merge matches std::merge on every small input" )
                                             la.merge( std::move( lb ), greater );
                                     } );
                         }
+                }
         }
 }
 
