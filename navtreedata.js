@@ -30,10 +30,11 @@ var NAVTREE =
       [ "Usage", "index.html#autotoc_md2", null ],
       [ "How it works", "index.html#autotoc_md3", null ],
       [ "Skew heap", "index.html#autotoc_md4", [
-        [ "Timer Example", "index.html#autotoc_md5", null ]
+        [ "Timer Example", "index.html#autotoc_md5", null ],
+        [ "Removing nodes by predicate", "index.html#autotoc_md6", null ]
       ] ],
-      [ "Assert", "index.html#autotoc_md6", null ],
-      [ "GDB pretty printer", "index.html#autotoc_md7", null ],
+      [ "Assert", "index.html#autotoc_md7", null ],
+      [ "GDB pretty printer", "index.html#autotoc_md8", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
@@ -64,7 +65,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structzll_1_1sh__heap.html#a292d867096c21cb8d655178887e87dd0"
+"structzll_1_1sh__base.html#a0adf8b17a324dec9a3db14d179d6316e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -114,6 +114,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the heap is empty, i.e. contains no nodes.  <a href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">More...</a><br /></td></tr>
 <tr class="separator:adfcc52f4d05a15e7c95870cf28da6ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11cbf1eb939b5632451f33c30ece4eb6"><td class="memTemplParams" colspan="2">template&lt;typename Pred &gt; </td></tr>
+<tr class="memitem:a11cbf1eb939b5632451f33c30ece4eb6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a11cbf1eb939b5632451f33c30ece4eb6">extract_if</a> (Pred &amp;&amp;p) noexcept(<a class="el" href="structzll_1_1sh__heap.html#ab6c8fb71cf64507c1aac0d6fc638e873">noexcept_compare</a> &amp;&amp;noexcept(p(std::declval&lt; T &amp; &gt;())))</td></tr>
+<tr class="memdesc:a11cbf1eb939b5632451f33c30ece4eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlinks every node for which <code>p</code> returns true and returns them in a bag, in no heap order; the nodes left keep the heap property.  <a href="structzll_1_1sh__heap.html#a11cbf1eb939b5632451f33c30ece4eb6">More...</a><br /></td></tr>
+<tr class="separator:a11cbf1eb939b5632451f33c30ece4eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade88ffb26b6fa855f89d210d0cfff1aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#ade88ffb26b6fa855f89d210d0cfff1aa">link</a> (<a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;bag) noexcept(<a class="el" href="structzll_1_1sh__heap.html#ab6c8fb71cf64507c1aac0d6fc638e873">noexcept_compare</a>)</td></tr>
+<tr class="memdesc:ade88ffb26b6fa855f89d210d0cfff1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links every node of <code>bag</code> into the heap, leaving the bag empty.  <a href="structzll_1_1sh__heap.html#ade88ffb26b6fa855f89d210d0cfff1aa">More...</a><br /></td></tr>
+<tr class="separator:ade88ffb26b6fa855f89d210d0cfff1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac11e866afefbcb708df5dbcc97e568b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9">link</a> (T &amp;node) noexcept(<a class="el" href="structzll_1_1sh__heap.html#ab6c8fb71cf64507c1aac0d6fc638e873">noexcept_compare</a>)</td></tr>
 <tr class="memdesc:ac11e866afefbcb708df5dbcc97e568b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links the node <code>node</code> into the heap.  <a href="structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9">More...</a><br /></td></tr>
 <tr class="separator:ac11e866afefbcb708df5dbcc97e568b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +140,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8">sh_heap</a> (Compare comp)</td></tr>
 <tr class="memdesc:a80f50ef05b133d1c4c97ae270e165cd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a heap with the given comparison function.  <a href="structzll_1_1sh__heap.html#a80f50ef05b133d1c4c97ae270e165cd8">More...</a><br /></td></tr>
 <tr class="separator:a80f50ef05b133d1c4c97ae270e165cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88786ce43a25a9196b9d0717d60a8107"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a88786ce43a25a9196b9d0717d60a8107">sh_heap</a> (<a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;bag) noexcept(<a class="el" href="structzll_1_1sh__heap.html#ab6c8fb71cf64507c1aac0d6fc638e873">noexcept_compare</a>)</td></tr>
+<tr class="memdesc:a88786ce43a25a9196b9d0717d60a8107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a heap of the nodes of <code>bag</code>, leaving the bag empty.  <a href="structzll_1_1sh__heap.html#a88786ce43a25a9196b9d0717d60a8107">More...</a><br /></td></tr>
+<tr class="separator:a88786ce43a25a9196b9d0717d60a8107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4a527ad2a712697a74105a303af568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a9e4a527ad2a712697a74105a303af568">sh_heap</a> (<a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;bag, Compare comp)</td></tr>
+<tr class="memdesc:a9e4a527ad2a712697a74105a303af568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a heap ordered by <code>comp</code> of the nodes of <code>bag</code>, leaving the bag empty.  <a href="structzll_1_1sh__heap.html#a9e4a527ad2a712697a74105a303af568">More...</a><br /></td></tr>
+<tr class="separator:a9e4a527ad2a712697a74105a303af568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5">sh_heap</a> (<a class="el" href="structzll_1_1sh__heap.html">sh_heap</a> &amp;&amp;other) noexcept</td></tr>
 <tr class="memdesc:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor, moved-from heap becomes empty.  <a href="structzll_1_1sh__heap.html#a53ec2c6a9bbd14d86725820f7dd890a5">More...</a><br /></td></tr>
 <tr class="separator:a53ec2c6a9bbd14d86725820f7dd890a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,7 +180,7 @@ struct zll::sh_heap&lt; T, Acc, Compare &gt;</div><p >Skew heap implementation. 
 <p >Provides API for linking and merging nodes, merging and popping the heap, checking if the heap is empty and accessing the top node of the heap. The top node is the node with the smallest value in the heap according to the comparison function <code>Compare</code>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a480877817290a799c27f8bd7bd34f824" name="a480877817290a799c27f8bd7bd34f824"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a480877817290a799c27f8bd7bd34f824">&#9670;&#160;</a></span>sh_heap() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a480877817290a799c27f8bd7bd34f824">&#9670;&#160;</a></span>sh_heap() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,7 +207,7 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </div>
 </div>
 <a id="a63e7ad9869aaff7f5a1c025c29dbf81f" name="a63e7ad9869aaff7f5a1c025c29dbf81f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63e7ad9869aaff7f5a1c025c29dbf81f">&#9670;&#160;</a></span>sh_heap() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a63e7ad9869aaff7f5a1c025c29dbf81f">&#9670;&#160;</a></span>sh_heap() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +235,7 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </div>
 </div>
 <a id="a80f50ef05b133d1c4c97ae270e165cd8" name="a80f50ef05b133d1c4c97ae270e165cd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80f50ef05b133d1c4c97ae270e165cd8">&#9670;&#160;</a></span>sh_heap() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a80f50ef05b133d1c4c97ae270e165cd8">&#9670;&#160;</a></span>sh_heap() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +266,7 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </div>
 </div>
 <a id="a53ec2c6a9bbd14d86725820f7dd890a5" name="a53ec2c6a9bbd14d86725820f7dd890a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53ec2c6a9bbd14d86725820f7dd890a5">&#9670;&#160;</a></span>sh_heap() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ec2c6a9bbd14d86725820f7dd890a5">&#9670;&#160;</a></span>sh_heap() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +297,7 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 </div>
 </div>
 <a id="ac22e1faf47d2d8b64047706d81ab04c8" name="ac22e1faf47d2d8b64047706d81ab04c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac22e1faf47d2d8b64047706d81ab04c8">&#9670;&#160;</a></span>sh_heap() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac22e1faf47d2d8b64047706d81ab04c8">&#9670;&#160;</a></span>sh_heap() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,6 +324,76 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 
 <p>Constructs a heap from an initializer list of nodes. </p>
 <p >All nodes in the initializer list must be detached. The nodes are linked together to form the heap using the comparison function <code>Compare</code>. </p>
+
+</div>
+</div>
+<a id="a88786ce43a25a9196b9d0717d60a8107" name="a88786ce43a25a9196b9d0717d60a8107"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88786ce43a25a9196b9d0717d60a8107">&#9670;&#160;</a></span>sh_heap() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>bag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a heap of the nodes of <code>bag</code>, leaving the bag empty. </p>
+
+</div>
+</div>
+<a id="a9e4a527ad2a712697a74105a303af568" name="a9e4a527ad2a712697a74105a303af568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e4a527ad2a712697a74105a303af568">&#9670;&#160;</a></span>sh_heap() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::sh_heap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>bag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Compare&#160;</td>
+          <td class="paramname"><em>comp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a heap ordered by <code>comp</code> of the nodes of <code>bag</code>, leaving the bag empty. </p>
 
 </div>
 </div>
@@ -373,8 +456,71 @@ template&lt;typename T , typename Acc , typename Compare &gt; </div>
 
 </div>
 </div>
+<a id="a11cbf1eb939b5632451f33c30ece4eb6" name="a11cbf1eb939b5632451f33c30ece4eb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11cbf1eb939b5632451f33c30ece4eb6">&#9670;&#160;</a></span>extract_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<div class="memtemplate">
+template&lt;typename Pred &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::extract_if </td>
+          <td>(</td>
+          <td class="paramtype">Pred &amp;&amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unlinks every node for which <code>p</code> returns true and returns them in a bag, in no heap order; the nodes left keep the heap property. </p>
+<p ><code>p</code> is called once per node, on a node's children before the node, and must not change the heap. Linear in the size of the heap plus a merge per node unlinked, in constant stack. </p>
+
+</div>
+</div>
+<a id="ade88ffb26b6fa855f89d210d0cfff1aa" name="ade88ffb26b6fa855f89d210d0cfff1aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade88ffb26b6fa855f89d210d0cfff1aa">&#9670;&#160;</a></span>link() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Acc , typename Compare &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structzll_1_1sh__heap.html">zll::sh_heap</a>&lt; T, Acc, Compare &gt;::link </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structzll_1_1sh__bag.html">sh_bag</a>&lt; T, Acc &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>bag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Links every node of <code>bag</code> into the heap, leaving the bag empty. </p>
+
+</div>
+</div>
 <a id="ac11e866afefbcb708df5dbcc97e568b9" name="ac11e866afefbcb708df5dbcc97e568b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac11e866afefbcb708df5dbcc97e568b9">&#9670;&#160;</a></span>link()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac11e866afefbcb708df5dbcc97e568b9">&#9670;&#160;</a></span>link() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

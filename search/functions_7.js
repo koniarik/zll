@@ -1,7 +1,7 @@
 var searchData=
 [
   ['last_5fnode_5fof_0',['last_node_of',['../namespacezll.html#a71541bac40e1e9feef56f551b0bbe9ce',1,'zll']]],
-  ['link_1',['link',['../structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9',1,'zll::sh_heap']]],
+  ['link_1',['link',['../structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9',1,'zll::sh_heap::link()'],['../structzll_1_1sh__bag.html#adecd8d460053181b019901dc57a93444',1,'zll::sh_bag::link()'],['../structzll_1_1sh__heap.html#ade88ffb26b6fa855f89d210d0cfff1aa',1,'zll::sh_heap::link()']]],
   ['link_5fback_2',['link_back',['../structzll_1_1ll__list.html#a0f5fbc8c0b897d6c0a31e7006203fcd9',1,'zll::ll_list']]],
   ['link_5fdetached_3',['link_detached',['../namespacezll.html#a1d8e37f363fceef88778368b5d5dc860',1,'zll']]],
   ['link_5fdetached_5fas_5ffirst_4',['link_detached_as_first',['../namespacezll.html#ad06c452ca25356a01e4ac1a88d341add',1,'zll']]],

@@ -7,6 +7,7 @@ var hierarchy =
       [ "zll::ll_header< T, Acc >", "structzll_1_1ll__header.html", null ]
     ] ],
     [ "zll::_raw_heap", null, [
+      [ "zll::sh_bag< T, Acc >", "structzll_1_1sh__bag.html", null ],
       [ "zll::sh_heap< T, Acc, Compare >", "structzll_1_1sh__heap.html", null ]
     ] ],
     [ "zll::_raw_list", null, [

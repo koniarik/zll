@@ -5,6 +5,7 @@ var zll_8hpp =
     [ "zll::ll_header< T, Acc >", "structzll_1_1ll__header.html", null ],
     [ "zll::ll_iterator< T, Acc >", "structzll_1_1ll__iterator.html", "structzll_1_1ll__iterator" ],
     [ "zll::ll_list< T, Acc >", "structzll_1_1ll__list.html", "structzll_1_1ll__list" ],
+    [ "zll::sh_bag< T, Acc >", "structzll_1_1sh__bag.html", "structzll_1_1sh__bag" ],
     [ "zll::sh_base< Derived, Compare >", "structzll_1_1sh__base.html", "structzll_1_1sh__base" ],
     [ "zll::sh_header< T, Acc, Compare >", "structzll_1_1sh__header.html", null ],
     [ "zll::sh_heap< T, Acc, Compare >", "structzll_1_1sh__heap.html", "structzll_1_1sh__heap" ],

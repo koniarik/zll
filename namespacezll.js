@@ -5,6 +5,7 @@ var namespacezll =
     [ "ll_header", "structzll_1_1ll__header.html", null ],
     [ "ll_iterator", "structzll_1_1ll__iterator.html", "structzll_1_1ll__iterator" ],
     [ "ll_list", "structzll_1_1ll__list.html", "structzll_1_1ll__list" ],
+    [ "sh_bag", "structzll_1_1sh__bag.html", "structzll_1_1sh__bag" ],
     [ "sh_base", "structzll_1_1sh__base.html", "structzll_1_1sh__base" ],
     [ "sh_header", "structzll_1_1sh__header.html", null ],
     [ "sh_heap", "structzll_1_1sh__heap.html", "structzll_1_1sh__heap" ],

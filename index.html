@@ -272,12 +272,12 @@ Timer Example</h3>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Heap empty: &quot;</span> &lt;&lt; timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">empty</a>() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;  <span class="comment">// true</span></div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructzll_1_1sh__base_html"><div class="ttname"><a href="structzll_1_1sh__base.html">zll::sh_base</a></div><div class="ttdoc">CRTP base class for skew heap nodes containing sh_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1514</div></div>
-<div class="ttc" id="astructzll_1_1sh__heap_html"><div class="ttname"><a href="structzll_1_1sh__heap.html">zll::sh_heap</a></div><div class="ttdoc">Skew heap implementation.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1576</div></div>
-<div class="ttc" id="astructzll_1_1sh__heap_html_a513374a1c8781803f1e4e77e600bee33"><div class="ttname"><a href="structzll_1_1sh__heap.html#a513374a1c8781803f1e4e77e600bee33">zll::sh_heap::top</a></div><div class="ttdeci">T * top() noexcept</div><div class="ttdoc">Returns the top node of the heap, or null if the heap is empty.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1670</div></div>
-<div class="ttc" id="astructzll_1_1sh__heap_html_a896559b5bfadff607ee5b0551b3228c2"><div class="ttname"><a href="structzll_1_1sh__heap.html#a896559b5bfadff607ee5b0551b3228c2">zll::sh_heap::take</a></div><div class="ttdeci">T &amp; take() noexcept(noexcept_compare)</div><div class="ttdoc">Unlinks and returns the top node from the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1693</div></div>
-<div class="ttc" id="astructzll_1_1sh__heap_html_ac11e866afefbcb708df5dbcc97e568b9"><div class="ttname"><a href="structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9">zll::sh_heap::link</a></div><div class="ttdeci">void link(T &amp;node) noexcept(noexcept_compare)</div><div class="ttdoc">Links the node node into the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1638</div></div>
-<div class="ttc" id="astructzll_1_1sh__heap_html_adfcc52f4d05a15e7c95870cf28da6ecb"><div class="ttname"><a href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">zll::sh_heap::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Returns true if the heap is empty, i.e. contains no nodes.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1664</div></div>
+<div class="ttc" id="astructzll_1_1sh__base_html"><div class="ttname"><a href="structzll_1_1sh__base.html">zll::sh_base</a></div><div class="ttdoc">CRTP base class for skew heap nodes containing sh_header.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1530</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html"><div class="ttname"><a href="structzll_1_1sh__heap.html">zll::sh_heap</a></div><div class="ttdoc">Skew heap implementation.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1680</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_a513374a1c8781803f1e4e77e600bee33"><div class="ttname"><a href="structzll_1_1sh__heap.html#a513374a1c8781803f1e4e77e600bee33">zll::sh_heap::top</a></div><div class="ttdeci">T * top() noexcept</div><div class="ttdoc">Returns the top node of the heap, or null if the heap is empty.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1794</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_a896559b5bfadff607ee5b0551b3228c2"><div class="ttname"><a href="structzll_1_1sh__heap.html#a896559b5bfadff607ee5b0551b3228c2">zll::sh_heap::take</a></div><div class="ttdeci">T &amp; take() noexcept(noexcept_compare)</div><div class="ttdoc">Unlinks and returns the top node from the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1817</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_ac11e866afefbcb708df5dbcc97e568b9"><div class="ttname"><a href="structzll_1_1sh__heap.html#ac11e866afefbcb708df5dbcc97e568b9">zll::sh_heap::link</a></div><div class="ttdeci">void link(T &amp;node) noexcept(noexcept_compare)</div><div class="ttdoc">Links the node node into the heap.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1754</div></div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_adfcc52f4d05a15e7c95870cf28da6ecb"><div class="ttname"><a href="structzll_1_1sh__heap.html#adfcc52f4d05a15e7c95870cf28da6ecb">zll::sh_heap::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Returns true if the heap is empty, i.e. contains no nodes.</div><div class="ttdef"><b>Definition:</b> zll.hpp:1788</div></div>
 <div class="ttc" id="azll_8hpp_html"><div class="ttname"><a href="zll_8hpp.html">zll.hpp</a></div></div>
 </div><!-- fragment --><p >Key benefits:</p><ul>
 <li>Timer objects can live anywhere (stack, member variable, container)</li>
@@ -285,10 +285,20 @@ Timer Example</h3>
 <li>Move timer object freely - it stays registered in heap</li>
 <li>No dynamic allocation required for heap structure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
+Removing nodes by predicate</h3>
+<p ><code>extract_if(pred)</code> unlinks every node for which <code>pred</code> returns true, wherever it sits, and returns them in an <code>sh_bag</code>, in no particular order; the nodes left keep the heap property. It takes time linear in the heap's size plus one merge per node removed, and constant stack, as every heap operation that links or unlinks nodes does; only the <code>*order_traverse</code> functions recurse, as deep as the heap is tall. <code>pred</code> must not change the heap. Acting on the removed nodes afterwards, rather than inside <code>pred</code>, leaves that code free to link new nodes into the heap. With a <code>bool canceled</code> member added to <code>timer_event</code>:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> canceled = timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a11cbf1eb939b5632451f33c30ece4eb6">extract_if</a>([](timer_event&amp; t) { <span class="keywordflow">return</span> t.canceled; });</div>
+<div class="line"><span class="keywordflow">while</span> (!canceled.empty())</div>
+<div class="line">    notify(canceled.take());   <span class="comment">// in no particular order</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// or in deadline order, at the cost of building a heap of them:</span></div>
+<div class="line"><a class="code hl_struct" href="structzll_1_1sh__heap.html">zll::sh_heap&lt;timer_event&gt;</a> by_deadline(timers.<a class="code hl_function" href="structzll_1_1sh__heap.html#a11cbf1eb939b5632451f33c30ece4eb6">extract_if</a>([](timer_event&amp; t) { return t.canceled; }));</div>
+<div class="ttc" id="astructzll_1_1sh__heap_html_a11cbf1eb939b5632451f33c30ece4eb6"><div class="ttname"><a href="structzll_1_1sh__heap.html#a11cbf1eb939b5632451f33c30ece4eb6">zll::sh_heap::extract_if</a></div><div class="ttdeci">sh_bag&lt; T, Acc &gt; extract_if(Pred &amp;&amp;p) noexcept(noexcept_compare &amp;&amp;noexcept(p(std::declval&lt; T &amp; &gt;())))</div><div class="ttdoc">Unlinks every node for which p returns true and returns them in a bag, in no heap order; the nodes le...</div><div class="ttdef"><b>Definition:</b> zll.hpp:1831</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Assert</h2>
 <p >Library asserts by using custom <code>ZLL_ASSERT</code> macro, by default it maps to standard <code>assert</code>, but user can override it before including the header to use custom assert mechanism.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 GDB pretty printer</h2>
 <p ><code>pprinter.py</code> provides GDB pretty printers for all <code>zll</code> types. Load it in your GDB session:</p>
 <div class="fragment"><div class="line">(gdb) source /path/to/zll/pprinter.py</div>
