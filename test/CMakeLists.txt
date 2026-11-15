@@ -4,8 +4,8 @@ include(FetchContent)
 FetchContent_Declare(
   doctest
   GIT_REPOSITORY https://github.com/doctest/doctest.git
-  GIT_TAG v2.4.12
-  FIND_PACKAGE_ARGS 2.4.12)
+  GIT_TAG v2.5.3
+  FIND_PACKAGE_ARGS 2.5.3)
 set(DOCTEST_NO_INSTALL
     ON
     CACHE BOOL "")

@@ -1337,12 +1337,10 @@ inline _sh_hdr& _sh_first_postorder( _sh_hdr& h ) noexcept
 /// nothing below `n`, so `n` may be detached once the next node is known.
 inline _sh_hdr* _sh_next_postorder( _sh_hdr& n ) noexcept
 {
-        _sh_hdr* p = n._parent.a();
-        if ( !p )
-                return nullptr;
-        if ( p->_left == &n && p->_right )
+        _sh_hdr const* p = n._parent.a();
+        if ( p && p->_left == &n && p->_right )
                 return &_sh_first_postorder( *p->_right );
-        return p;
+        return n._parent.a();
 }
 
 /// Returns true if the node is detached from heap.

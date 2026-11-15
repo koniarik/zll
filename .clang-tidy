@@ -6,7 +6,7 @@ Checks: >
   modernize*,-modernize-use-trailing-return-type,-modernize-avoid-c-arrays,-modernize-use-nullptr,-modernize-use-nodiscard,
   misc*,
   performance*,
-  portability*,
+  portability*,-portability-avoid-pragma-once,
 WarningsAsErrors: "*"
 HeaderFilterRegex: include/
 FormatStyle: file
