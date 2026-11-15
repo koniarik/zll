@@ -322,6 +322,21 @@ void run_tests( mode m, auto& st )
                 check( m, h, "{{hdr = {...}, x = 10}, {hdr = {...}, x = 6}}", st );
         }
 
+        // sh_bag: empty
+        {
+                zll::sh_bag< sh_node, sh_access > c;
+                check( m, c, "{}", st );
+        }
+
+        // sh_bag: front first, cut at print max-depth
+        {
+                sh_node                           nodes[] = { 1, 2, 3 };
+                zll::sh_bag< sh_node, sh_access > c;
+                for ( auto& n : nodes )
+                        c.link( n );
+                check( m, c, "{{hdr = {...}, x = 3}, {hdr = {...}, x = 2}}", st );
+        }
+
         // dual: node simultaneously in ll_list and sh_heap
         {
                 dual_node                                 n1( 1 ), n2( 2 ), n3( 3 );

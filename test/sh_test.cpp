@@ -21,11 +21,16 @@
 /// SOFTWARE.
 #include "zll.hpp"
 
+#include <algorithm>
+#include <cstdint>
 #include <doctest/doctest.h>
 #include <functional>
 #include <iostream>
 #include <list>
+#include <optional>
+#include <random>
 #include <set>
+#include <stdexcept>
 #include <vector>
 
 namespace zll
@@ -882,6 +887,25 @@ TEST_CASE( "noexcept follows the accessor and the comparator" )
         CHECK_FALSE( noexcept( detach( m, may_throw_less{} ) ) );
         CHECK_FALSE( noexcept( mh.link( m ) ) );
         CHECK_FALSE( noexcept( mh.take() ) );
+
+        auto const quiet = []( auto& ) noexcept {
+                return true;
+        };
+        auto const loud = []( auto& ) {
+                return true;
+        };
+        sh_bag< node_t > bag;
+        CHECK( noexcept( h.extract_if( quiet ) ) );
+        CHECK_FALSE( noexcept( h.extract_if( loud ) ) );
+        CHECK( noexcept( h.link( std::move( bag ) ) ) );
+        CHECK( (std::is_nothrow_constructible_v< sh_heap< node_t >, sh_bag< node_t >&& >) );
+
+        sh_bag< may_throw_node, hdr_access > mbag;
+        CHECK_FALSE( noexcept( mh.extract_if( quiet ) ) );
+        CHECK_FALSE( noexcept( mh.link( std::move( mbag ) ) ) );
+        CHECK_FALSE( (std::is_nothrow_constructible_v<
+                      sh_heap< may_throw_node, hdr_access, may_throw_less >,
+                      sh_bag< may_throw_node, hdr_access >&& >) );
 }
 
 TEST_CASE( "copies keep the heap property" )
@@ -942,6 +966,637 @@ struct dual_node : ll_base< dual_node >, sh_base< dual_node >
                 return x < other.x;
         }
 };
+
+template < typename T, typename Acc, typename Compare >
+std::vector< int > drain_values( sh_heap< T, Acc, Compare >& h )
+{
+        std::vector< int > out;
+        while ( !h.empty() )
+                out.push_back( h.take().x );
+        return out;
+}
+
+// The keys of every node in `bag`, sorted.
+std::vector< int > bag_values( sh_bag< der > const& bag )
+{
+        std::vector< int > out;
+        der const*         f = bag.front();
+        if ( !f )
+                return out;
+        out.push_back( f->x );
+        auto const&             fh = der::access::get( *f );
+        std::vector< _sh_hdr* > todo{ fh._left, fh._right };
+        while ( !todo.empty() ) {
+                _sh_hdr* h = todo.back();
+                todo.pop_back();
+                if ( !h )
+                        continue;
+                out.push_back( _node< der, der::access >( *h ).x );
+                todo.push_back( h->_left );
+                todo.push_back( h->_right );
+        }
+        std::sort( out.begin(), out.end() );
+        return out;
+}
+
+// ASan may give each call a frame of its own on a fake stack, where the address of a local says
+// nothing about how deep the call is.
+#if defined( __SANITIZE_ADDRESS__ )
+constexpr bool fake_stack = true;
+#elif defined( __has_feature )
+#if __has_feature( address_sanitizer )
+constexpr bool fake_stack = true;
+#else
+constexpr bool fake_stack = false;
+#endif
+#else
+constexpr bool fake_stack = false;
+#endif
+
+// The range of stack addresses `note` was called at: a loop calls it at one depth, a recursion at
+// a deeper one on each level.
+struct stack_span
+{
+        std::uintptr_t lo = UINTPTR_MAX;
+        std::uintptr_t hi = 0;
+
+        void note()
+        {
+                int const            local = 0;
+                std::uintptr_t const at    = reinterpret_cast< std::uintptr_t >( &local );
+                lo                         = std::min( lo, at );
+                hi                         = std::max( hi, at );
+        }
+};
+
+TEST_CASE( "merging two long right spines runs in constant stack" )
+{
+        // Each spine is a valid heap: every node's only child is its right child, with a larger
+        // key. The recursive form of the merge would descend once per node of both spines.
+        std::size_t const  per = 50000;
+        std::vector< der > a( per ), b( per );
+        for ( std::size_t i = 0; i < per; ++i ) {
+                a[i].x = static_cast< int >( 2 * i );
+                b[i].x = static_cast< int >( 2 * i + 1 );
+                if ( i ) {
+                        _sh_attach_right( der::access::get( a[i - 1] ), der::access::get( a[i] ) );
+                        _sh_attach_right( der::access::get( b[i - 1] ), der::access::get( b[i] ) );
+                }
+        }
+        stack_span span;
+        auto       cmp = [&]( der const& l, der const& r ) {
+                span.note();
+                return l.x < r.x;
+        };
+        _sh_hdr& root = _sh_merge< der, der::access >(
+            der::access::get( a[0] ), der::access::get( b[0] ), cmp );
+        if ( !fake_stack )
+                CHECK_LT( span.hi - span.lo, 1024u );
+
+        // The merged tree holds every node once, each no smaller than its parent.
+        std::size_t             count = 0;
+        std::vector< _sh_hdr* > todo{ &root };
+        while ( !todo.empty() ) {
+                _sh_hdr* h = todo.back();
+                todo.pop_back();
+                ++count;
+                for ( _sh_hdr* c : { h->_left, h->_right } ) {
+                        if ( !c )
+                                continue;
+                        CHECK_EQ( c->_parent.a(), h );
+                        CHECK_FALSE(
+                            _node< der, der::access >( *c ) < _node< der, der::access >( *h ) );
+                        todo.push_back( c );
+                }
+        }
+        CHECK_EQ( count, 2 * per );
+        CHECK_EQ( _node< der, der::access >( root ).x, 0 );
+}
+
+struct counting_less
+{
+        static inline std::size_t calls = 0;
+
+        bool operator()( auto const& a, auto const& b ) const noexcept
+        {
+                ++calls;
+                return a.x < b.x;
+        }
+};
+
+struct counted_node : sh_base< counted_node, counting_less >
+{
+        int x = 0;
+};
+
+using counted_heap = sh_heap< counted_node, counted_node::access, counting_less >;
+
+TEST_CASE( "a skew heap makes O(log n) amortized comparisons per operation" )
+{
+        // A merge without the skew swap of children still builds a valid heap, but makes n / 2
+        // comparisons per link of ascending keys.
+        std::size_t const log2_n = 14;
+        std::size_t const n      = std::size_t{ 1 } << log2_n;
+        std::mt19937      rng( 3 );
+        for ( int order : { 0, 1, 2 } ) {
+                CAPTURE( order );
+                std::vector< counted_node > nodes( n );
+                for ( std::size_t i = 0; i < n; ++i )
+                        nodes[i].x = static_cast< int >(
+                            order == 0 ? i :
+                            order == 1 ? n - i :
+                                         rng() % n );
+                counted_heap h;
+                counting_less::calls = 0;
+                for ( auto& c : nodes )
+                        h.link( c );
+                while ( !h.empty() )
+                        h.take();
+                CHECK_LT( counting_less::calls, 3 * n * log2_n );
+        }
+}
+
+TEST_CASE( "extract_if makes O(log n) amortized comparisons per node it unlinks" )
+{
+        std::size_t const           log2_n = 14;
+        std::size_t const           n      = std::size_t{ 1 } << log2_n;
+        std::mt19937                rng( 5 );
+        std::vector< counted_node > nodes( n );
+        for ( auto& c : nodes )
+                c.x = static_cast< int >( rng() % n );
+        counted_heap h;
+        for ( auto& c : nodes )
+                h.link( c );
+        std::size_t calls = 0, taken = 0;
+        counting_less::calls = 0;
+        auto out             = h.extract_if( [&]( counted_node& c ) {
+                ++calls;
+                if ( c.x % 2 )
+                        return false;
+                ++taken;
+                return true;
+        } );
+        CHECK_EQ( calls, n );
+        CHECK_GT( taken, n / 4 );
+        CHECK_LT( counting_less::calls, 3 * taken * log2_n );
+}
+
+struct throwing_less
+{
+        static inline int calls    = 0;
+        static inline int throw_at = 0;
+
+        bool operator()( auto const& a, auto const& b ) const
+        {
+                if ( ++calls == throw_at )
+                        throw std::runtime_error( "compare" );
+                return a.x < b.x;
+        }
+};
+
+struct throwing_node : sh_base< throwing_node, throwing_less >
+{
+        int x;
+
+        throwing_node( int v = 0 )
+          : x( v )
+        {
+        }
+};
+
+TEST_CASE( "a comparator that throws in a merge leaves two heaps with consistent links" )
+{
+        // Interleaved keys make the merge switch spines, so a throw can follow a swap.
+        int throws = 0;
+        for ( int at = 1;; ++at ) {
+                CAPTURE( at );
+                std::vector< throwing_node > nodes;
+                nodes.reserve( 16 );
+                for ( int i = 0; i < 16; ++i )
+                        nodes.emplace_back( i );
+                sh_heap< throwing_node, throwing_node::access, throwing_less > h, g;
+                throwing_less::throw_at = 0;
+                for ( auto& n : nodes )
+                        ( n.x % 2 ? g : h ).link( n );
+
+                throwing_less::calls    = 0;
+                throwing_less::throw_at = at;
+                bool threw              = false;
+                try {
+                        h.merge( std::move( g ) );
+                }
+                catch ( std::runtime_error const& ) {
+                        threw = true;
+                }
+                throwing_less::throw_at = 0;
+
+                std::size_t roots = 0;
+                for ( auto& n : nodes ) {
+                        _sh_hdr& hdr = throwing_node::access::get( n );
+                        if ( hdr._left ) {
+                                CHECK_EQ( hdr._left->_parent.a(), &hdr );
+                                CHECK_NE( hdr._left, hdr._right );
+                        }
+                        if ( hdr._right )
+                                CHECK_EQ( hdr._right->_parent.a(), &hdr );
+                        if ( _sh_hdr* p = hdr._parent.a() )
+                                CHECK( ( p->_left == &hdr || p->_right == &hdr ) );
+                        if ( !hdr._parent ) {
+                                ++roots;
+                                check_heap_property<
+                                    throwing_node,
+                                    throwing_node::access,
+                                    throwing_less >( n );
+                        }
+                }
+                if ( !threw )
+                        break;
+                ++throws;
+                CHECK( h.empty() );
+                CHECK( g.empty() );
+                CHECK_EQ( roots, 2u );
+        }
+        CHECK_GT( throws, 4 );
+}
+
+TEST_CASE( "extract_if" )
+{
+        SUBCASE( "an empty heap gives an empty heap" )
+        {
+                sh_heap< der > h;
+                int            calls = 0;
+                auto           out   = h.extract_if( [&]( der& ) {
+                        ++calls;
+                        return true;
+                } );
+                CHECK( out.empty() );
+                CHECK( h.empty() );
+                CHECK_EQ( calls, 0 );
+        }
+
+        SUBCASE( "no match leaves the heap whole" )
+        {
+                std::vector< der > nodes;
+                for ( int i : { 5, 3, 8, 1, 9, 2 } )
+                        nodes.emplace_back( i );
+                sh_heap< der > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                auto out = h.extract_if( []( der& ) {
+                        return false;
+                } );
+                CHECK( out.empty() );
+                check_heap_coherence( h );
+                CHECK_EQ( drain_values( h ), std::vector< int >{ 1, 2, 3, 5, 8, 9 } );
+        }
+
+        SUBCASE( "everything matching moves every node" )
+        {
+                std::vector< der > nodes;
+                for ( int i : { 5, 3, 8, 1, 9, 2 } )
+                        nodes.emplace_back( i );
+                sh_heap< der > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                sh_heap< der > out( h.extract_if( []( der& ) {
+                        return true;
+                } ) );
+                CHECK( h.empty() );
+                check_heap_coherence( out );
+                CHECK_EQ( drain_values( out ), std::vector< int >{ 1, 2, 3, 5, 8, 9 } );
+        }
+
+        SUBCASE( "a node's children are seen before the node" )
+        {
+                std::vector< der > nodes;
+                for ( int i = 0; i < 32; ++i )
+                        nodes.emplace_back( ( i * 7 ) % 32 );
+                sh_heap< der > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                std::vector< std::pair< _sh_hdr const*, _sh_hdr const* > > children;
+                for ( auto& n : nodes ) {
+                        auto& hdr = der::access::get( n );
+                        children.emplace_back( hdr._left, hdr._right );
+                }
+                std::vector< _sh_hdr const* > order;
+                auto                          out = h.extract_if( [&]( der& n ) {
+                        order.push_back( &der::access::get( n ) );
+                        return n.x % 2 == 0;
+                } );
+                auto                          pos = [&]( _sh_hdr const* x ) {
+                        return std::find( order.begin(), order.end(), x ) - order.begin();
+                };
+                CHECK_EQ( order.size(), nodes.size() );
+                for ( std::size_t i = 0; i < nodes.size(); ++i ) {
+                        auto const self = pos( &der::access::get( nodes[i] ) );
+                        if ( children[i].first )
+                                CHECK_LT( pos( children[i].first ), self );
+                        if ( children[i].second )
+                                CHECK_LT( pos( children[i].second ), self );
+                }
+        }
+
+        SUBCASE( "what is left stays ordered by the heap's comparator" )
+        {
+                // The nodes' own comparator orders the other way, so detaching with it would
+                // break this heap.
+                std::vector< flip_node > nodes;
+                nodes.reserve( 40 );
+                for ( int i = 0; i < 40; ++i )
+                        nodes.emplace_back( ( i * 17 ) % 40 );
+                sh_heap< flip_node, flip_node::access, flip_less > h( flip_less{ true } );
+                for ( auto& n : nodes )
+                        h.link( n );
+                auto out = h.extract_if( []( flip_node& n ) {
+                        return n.x % 3 == 0;
+                } );
+                check_heap_coherence( h );
+                check_heap_property( *h.top(), flip_less{ true } );
+                std::vector< int > left = drain_values( h );
+                CHECK_EQ( left.size(), 26u );
+                CHECK( std::is_sorted( left.rbegin(), left.rend() ) );
+        }
+
+        SUBCASE( "a predicate that throws leaves the nodes it did not unlink in a valid heap" )
+        {
+                std::vector< der > nodes;
+                nodes.reserve( 20 );
+                for ( int i = 0; i < 20; ++i )
+                        nodes.emplace_back( ( i * 7 ) % 20 );
+                sh_heap< der > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                int         calls = 0;
+                std::size_t taken = 0;
+                auto        pred  = [&]( der& n ) {
+                        if ( ++calls == 12 )
+                                throw std::runtime_error( "predicate" );
+                        if ( n.x % 2 )
+                                return false;
+                        ++taken;
+                        return true;
+                };
+                CHECK_THROWS_AS( (void) h.extract_if( pred ), std::runtime_error );
+                CHECK_GT( taken, 0u );
+                check_heap_coherence( h );
+                check_heap_property( *h.top() );
+                CHECK_EQ( drain_values( h ).size(), nodes.size() - taken );
+        }
+
+        SUBCASE( "a heap one node wide is walked without recursion" )
+        {
+                // Linking ever smaller keys makes each new node the root above the previous one.
+                std::vector< der > nodes( 100000 );
+                for ( std::size_t i = 0; i < nodes.size(); ++i )
+                        nodes[i].x = static_cast< int >( nodes.size() - i );
+                sh_heap< der > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                std::size_t calls = 0;
+                stack_span  span;
+                auto        out = h.extract_if( [&]( der& n ) {
+                        span.note();
+                        ++calls;
+                        return n.x % 1000 == 0;
+                } );
+                CHECK_EQ( calls, nodes.size() );
+                // Every call runs at one stack depth, which a recursive walk would not.
+                if ( !fake_stack )
+                        CHECK_LT( span.hi - span.lo, 1024u );
+                std::size_t taken = 0;
+                while ( !out.empty() ) {
+                        CHECK_EQ( out.take().x % 1000, 0 );
+                        ++taken;
+                }
+                CHECK_EQ( taken, nodes.size() / 1000 );
+        }
+}
+
+TEST_CASE_TEMPLATE(
+    "extract_if splits random heaps, each node seen once",
+    T,
+    node_t,
+    der,
+    off_node,
+    off_der )
+{
+        std::mt19937 rng( 7 );
+        for ( int round = 0; round < 200; ++round ) {
+                std::size_t const   count = 1 + rng() % 64;
+                std::vector< T >    nodes;
+                std::vector< int >  kept, taken;
+                std::multiset< T* > seen;
+                nodes.reserve( count );
+                for ( std::size_t i = 0; i < count; ++i )
+                        nodes.emplace_back( static_cast< int >( rng() % 50 ) );
+                sh_heap< T > h;
+                for ( auto& n : nodes )
+                        h.link( n );
+                for ( auto& n : nodes )
+                        ( n.x % 3 == 0 ? taken : kept ).push_back( n.x );
+                sh_heap< T > out( h.extract_if( [&]( T& n ) {
+                        seen.insert( &n );
+                        return n.x % 3 == 0;
+                } ) );
+                CHECK_EQ( seen.size(), count );
+                CHECK_EQ( std::set< T* >( seen.begin(), seen.end() ).size(), count );
+                check_heap_coherence( h );
+                check_heap_coherence( out );
+                if ( h.top() )
+                        check_heap_property( *h.top() );
+                if ( out.top() )
+                        check_heap_property( *out.top() );
+                std::sort( kept.begin(), kept.end() );
+                std::sort( taken.begin(), taken.end() );
+                CHECK_EQ( drain_values( h ), kept );
+                CHECK_EQ( drain_values( out ), taken );
+        }
+}
+
+TEST_CASE_TEMPLATE(
+    "a bag keeps every node through copies and destructions",
+    T,
+    node_t,
+    der,
+    off_node,
+    off_der )
+{
+        // Copies and destructions relink nodes as in a heap: they give nodes left children and
+        // merge subtrees.
+        std::vector< std::optional< T > > nodes( 12 );
+        sh_bag< T >                       bag;
+        for ( int i = 0; i < 8; ++i ) {
+                nodes[std::size_t( i )].emplace( i );
+                bag.link( *nodes[std::size_t( i )] );
+        }
+        nodes[8].emplace( *nodes[7] );
+        nodes[9].emplace( *nodes[3] );
+        nodes[10].emplace( *nodes[0] );
+        nodes[11].emplace( *nodes[9] );
+        nodes[3].reset();
+        nodes[7].reset();
+        nodes[9].reset();
+
+        std::set< T* > live, taken;
+        for ( auto& n : nodes )
+                if ( n )
+                        live.insert( &*n );
+        while ( !bag.empty() ) {
+                T& t = bag.take();
+                CHECK( detached( t ) );
+                taken.insert( &t );
+        }
+        CHECK_EQ( taken, live );
+}
+
+TEST_CASE( "sh_bag" )
+{
+        SUBCASE( "takes its nodes in the reverse of the order they were linked" )
+        {
+                der                  a( 1 ), b( 2 ), c( 3 );
+                sh_bag< der >        bag;
+                sh_bag< der > const& view = bag;
+                CHECK( bag.empty() );
+                CHECK_EQ( bag.front(), nullptr );
+                bag.link( a );
+                bag.link( b );
+                bag.link( c );
+                CHECK_EQ( bag.front(), &c );
+                CHECK_EQ( view.front(), &c );
+                for ( der* n : { &c, &b, &a } ) {
+                        der& t = bag.take();
+                        CHECK_EQ( &t, n );
+                        CHECK( detached( t ) );
+                }
+                CHECK( bag.empty() );
+        }
+
+        SUBCASE( "a node destroyed in the bag unlinks itself, at the front, inside or at the end" )
+        {
+                der                  c( 3 );
+                std::optional< der > a( std::in_place, 1 );
+                std::optional< der > b( std::in_place, 2 );
+                std::optional< der > d( std::in_place, 4 );
+                sh_bag< der >        bag;
+                bag.link( *a );
+                bag.link( *b );
+                bag.link( c );
+                bag.link( *d );
+                d.reset();
+                CHECK_EQ( bag_values( bag ), std::vector< int >{ 1, 2, 3 } );
+                b.reset();
+                CHECK_EQ( bag_values( bag ), std::vector< int >{ 1, 3 } );
+                a.reset();
+                CHECK_EQ( bag_values( bag ), std::vector< int >{ 3 } );
+                CHECK_EQ( &bag.take(), &c );
+                CHECK( bag.empty() );
+        }
+
+        SUBCASE( "a copy of a node in the bag is in the bag too" )
+        {
+                der           a( 1 ), b( 2 ), c( 3 );
+                sh_bag< der > bag;
+                bag.link( a );
+                bag.link( b );
+                der copy( b );
+                c = a;
+                CHECK_EQ( bag_values( bag ), std::vector< int >{ 1, 1, 2, 2 } );
+                std::set< der* > taken;
+                while ( !bag.empty() ) {
+                        der& t = bag.take();
+                        CHECK( detached( t ) );
+                        taken.insert( &t );
+                }
+                CHECK_EQ( taken, std::set< der* >{ &a, &b, &c, &copy } );
+        }
+
+        SUBCASE( "a node moved while in the bag hands its place over" )
+        {
+                der           a( 1 ), b( 2 ), c( 3 );
+                sh_bag< der > bag;
+                bag.link( a );
+                bag.link( b );
+                bag.link( c );
+                der moved( std::move( b ) );
+                der assigned( 9 );
+                assigned = std::move( c );
+                CHECK( detached( b ) );
+                CHECK( detached( c ) );
+                for ( der* n : { &assigned, &moved, &a } )
+                        CHECK_EQ( &bag.take(), n );
+                CHECK( bag.empty() );
+        }
+
+        SUBCASE( "a destroyed bag leaves its nodes linked to each other" )
+        {
+                der a( 1 ), b( 2 );
+                {
+                        sh_bag< der > bag;
+                        bag.link( a );
+                        bag.link( b );
+                }
+                auto& hb = der::access::get( b );
+                CHECK( !hb._parent );
+                CHECK_EQ( hb._right, &der::access::get( a ) );
+                CHECK_EQ( der::access::get( a )._parent.a(), &hb );
+        }
+
+        SUBCASE( "moving a bag moves its nodes" )
+        {
+                der           a( 1 ), b( 2 ), c( 3 ), d( 4 );
+                sh_bag< der > bag;
+                bag.link( a );
+                bag.link( b );
+                sh_bag< der > moved( std::move( bag ) );
+                CHECK( bag.empty() );
+                CHECK_EQ( bag_values( moved ), std::vector< int >{ 1, 2 } );
+
+                // The nodes the assigned-to bag held stay linked to each other.
+                sh_bag< der > assigned;
+                assigned.link( c );
+                assigned.link( d );
+                assigned = std::move( moved );
+                CHECK( moved.empty() );
+                CHECK( !der::access::get( d )._parent );
+                CHECK_EQ( der::access::get( d )._right, &der::access::get( c ) );
+
+#pragma GCC diagnostic ignored "-Wself-move"
+                assigned = std::move( assigned );
+                CHECK_EQ( bag_values( assigned ), std::vector< int >{ 1, 2 } );
+                CHECK_EQ( &assigned.take(), &b );
+                CHECK_EQ( &assigned.take(), &a );
+        }
+
+        SUBCASE( "a heap built from a bag, or linking one, orders its nodes" )
+        {
+                der           n[6] = { 5, 3, 8, 1, 9, 2 };
+                sh_bag< der > bag;
+                for ( auto& x : n )
+                        bag.link( x );
+                sh_heap< der > h( std::move( bag ) );
+                CHECK( bag.empty() );
+                check_heap_coherence( h );
+                CHECK_EQ( drain_values( h ), std::vector< int >{ 1, 2, 3, 5, 8, 9 } );
+
+                for ( auto& x : n )
+                        bag.link( x );
+                sh_heap< der > h2;
+                der            zero( 0 );
+                h2.link( zero );
+                h2.link( std::move( bag ) );
+                CHECK_EQ( drain_values( h2 ), std::vector< int >{ 0, 1, 2, 3, 5, 8, 9 } );
+
+                flip_node           f[3] = { 1, 3, 2 };
+                sh_bag< flip_node > fbag;
+                for ( auto& x : f )
+                        fbag.link( x );
+                sh_heap< flip_node, flip_node::access, flip_less > max_heap(
+                    std::move( fbag ), flip_less{ true } );
+                CHECK( fbag.empty() );
+                CHECK_EQ( drain_values( max_heap ), std::vector< int >{ 3, 2, 1 } );
+        }
+}
 
 TEST_CASE( "node in both a list and a heap" )
 {

@@ -266,6 +266,25 @@ Key benefits:
 - Move timer object freely - it stays registered in heap
 - No dynamic allocation required for heap structure
 
+### Removing nodes by predicate
+
+`extract_if(pred)` unlinks every node for which `pred` returns true, wherever it sits, and
+returns them in an `sh_bag`, in no particular order; the nodes left keep the heap property. It
+takes time linear in the heap's size plus one merge per node removed, and constant stack, as
+every heap operation that links or unlinks nodes does; only the `*order_traverse` functions
+recurse, as deep as the heap is tall. `pred` must not change the heap. Acting on the removed nodes
+afterwards, rather than inside `pred`, leaves that code free to link new nodes into the heap.
+With a `bool canceled` member added to `timer_event`:
+
+```cpp
+auto canceled = timers.extract_if([](timer_event& t) { return t.canceled; });
+while (!canceled.empty())
+    notify(canceled.take());   // in no particular order
+
+// or in deadline order, at the cost of building a heap of them:
+zll::sh_heap<timer_event> by_deadline(timers.extract_if([](timer_event& t) { return t.canceled; }));
+```
+
 ## Assert
 
 Library asserts by using custom `ZLL_ASSERT` macro, by default it maps to standard `assert`,

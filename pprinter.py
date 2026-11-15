@@ -188,7 +188,7 @@ class ShHeaderPrinter(gdb.ValuePrinter):
 
 
 # ---------------------------------------------------------------------------
-# sh_heap<T,Acc,Compare>  — in-order DFS, depth limited by print max-depth
+# sh_heap<T,Acc,Compare>, sh_bag<T,Acc>  — in-order DFS, depth limited by print max-depth
 # ---------------------------------------------------------------------------
 
 
@@ -237,7 +237,7 @@ class _ShHeapIterator:
 
 
 class ShHeapPrinter(gdb.ValuePrinter):
-    """Print a zll::sh_heap."""
+    """Print a zll::sh_heap or a zll::sh_bag, both trees of nodes under `root`."""
 
     def __init__(self, val):
         self.__val = val
@@ -270,6 +270,7 @@ def build_pretty_printer():
     pp.add_printer("ll_list",   r"^zll::ll_list<",   LlListPrinter)
     pp.add_printer("ll_header", r"^zll::ll_header<",  LlHeaderPrinter)
     pp.add_printer("sh_heap",   r"^zll::sh_heap<",    ShHeapPrinter)
+    pp.add_printer("sh_bag",    r"^zll::sh_bag<",     ShHeapPrinter)
     pp.add_printer("sh_header", r"^zll::sh_header<",  ShHeaderPrinter)
     pp.add_printer("_vptr",     r"^zll::_vptr<",      VptrPrinter)
     return pp

@@ -1266,31 +1266,8 @@ T& _node( _sh_hdr& h ) noexcept
         return Acc::node( static_cast< _hdr_of< T, Acc >& >( h ) );
 }
 
-template < typename T, typename Acc, typename Compare >
-_sh_hdr& _sh_merge( _sh_hdr& left, _sh_hdr& right, Compare&& comp ) noexcept(
-    _nothrow_access_compare< Acc, T, Compare > );
-
-template < typename T, typename Acc, typename Compare >
-_sh_hdr& _sh_merge_impl( _sh_hdr& left, _sh_hdr& right, Compare&& comp ) noexcept(
-    _nothrow_access_compare< Acc, T, Compare > )
-{
-        _sh_hdr* left_left = nullptr;
-        if ( left._left )
-                left_left = &_sh_detach_left( left );
-
-        if ( left._right ) {
-                auto& left_right = _sh_detach_right( left );
-                auto& new_left   = _sh_merge< T, Acc >( left_right, right, comp );
-                _sh_attach_left( left, new_left );
-        } else {
-                _sh_attach_left( left, right );
-        }
-        if ( left_left )
-                _sh_attach_right( left, *left_left );
-
-        return left;
-}
-
+/// Merges the detached heaps rooted at `left` and `right` and returns the new root, in constant
+/// stack. If `comp` throws, every node is left in one of two detached heaps.
 template < typename T, typename Acc, typename Compare >
 _sh_hdr& _sh_merge( _sh_hdr& left, _sh_hdr& right, Compare&& comp ) noexcept(
     _nothrow_access_compare< Acc, T, Compare > )
@@ -1298,10 +1275,24 @@ _sh_hdr& _sh_merge( _sh_hdr& left, _sh_hdr& right, Compare&& comp ) noexcept(
         ZLL_ASSERT( !left._parent );
         ZLL_ASSERT( !right._parent );
 
-        if ( comp( _node< T, Acc >( right ), _node< T, Acc >( left ) ) )
-                return _sh_merge_impl< T, Acc >( right, left, comp );
-        else
-                return _sh_merge_impl< T, Acc >( left, right, comp );
+        bool const right_first = comp( _node< T, Acc >( right ), _node< T, Acc >( left ) );
+        _sh_hdr&   top         = right_first ? right : left;
+        _sh_hdr*   cur         = &top;
+        _sh_hdr*   other       = right_first ? &left : &right;
+        while ( _sh_hdr* r = cur->_right ) {
+                if ( comp( _node< T, Acc >( *other ), _node< T, Acc >( *r ) ) )
+                        std::swap( r, other );
+                cur->_right = cur->_left;
+                cur->_left  = r;
+                r->_parent  = *cur;
+                if constexpr ( !_nothrow_access_compare< Acc, T, Compare > )
+                        other->_parent = nullptr;
+                cur = r;
+        }
+        cur->_right    = cur->_left;
+        cur->_left     = other;
+        other->_parent = *cur;
+        return top;
 }
 
 template < typename T, typename Acc, typename Compare >
@@ -1327,6 +1318,31 @@ void _sh_detach( _sh_hdr& h, Compare&& comp ) noexcept( _nothrow_access_compare<
                 _sh_replace_in_parent( h, *n );
         else
                 _sh_detach_parent( h );
+}
+
+/// The first node of a post-order walk of the subtree rooted at `h`.
+inline _sh_hdr& _sh_first_postorder( _sh_hdr& h ) noexcept
+{
+        _sh_hdr* n = &h;
+        for ( ;; )
+                if ( n->_left )
+                        n = n->_left;
+                else if ( n->_right )
+                        n = n->_right;
+                else
+                        return *n;
+}
+
+/// The node after `n` in a post-order walk of the heap `n` is in; null after the last. Reads
+/// nothing below `n`, so `n` may be detached once the next node is known.
+inline _sh_hdr* _sh_next_postorder( _sh_hdr& n ) noexcept
+{
+        _sh_hdr* p = n._parent.a();
+        if ( !p )
+                return nullptr;
+        if ( p->_left == &n && p->_right )
+                return &_sh_first_postorder( *p->_right );
+        return p;
 }
 
 /// Returns true if the node is detached from heap.
@@ -1568,6 +1584,94 @@ private:
         ZLL_NO_UNIQUE_ADDRESS Compare _comp;
 };
 
+/// Nodes of a skew heap held in no heap order, linked as a binary tree. `link` and `take` cost
+/// O(1) amortized. Copying, moving or destroying a node in the bag changes its links as it would in
+/// a heap, and every other node stays in the bag. `sh_heap::link( sh_bag&& )` puts the nodes in
+/// heap order.
+template < typename T, typename Acc = typename T::access >
+struct sh_bag : private _raw_heap
+{
+        sh_bag() noexcept                  = default;
+        sh_bag( sh_bag const& )            = delete;
+        sh_bag& operator=( sh_bag const& ) = delete;
+
+        /// The moved-from bag becomes empty.
+        sh_bag( sh_bag&& other ) noexcept
+        {
+                if ( other.root )
+                        _sh_attach_top( *this, _sh_detach_top( other ) );
+        }
+
+        /// The moved-from bag becomes empty; the nodes this bag held are left linked to each
+        /// other, as a destroyed bag leaves them.
+        sh_bag& operator=( sh_bag&& other ) noexcept
+        {
+                if ( this == &other )
+                        return *this;
+                if ( root )
+                        _sh_detach_top( *this );
+                if ( other.root )
+                        _sh_attach_top( *this, _sh_detach_top( other ) );
+                return *this;
+        }
+
+        ~sh_bag() noexcept
+        {
+                if ( root )
+                        _sh_detach_top( *this );
+        }
+
+        bool empty() const noexcept
+        {
+                return !root;
+        }
+
+        /// Returns the node `take` returns next, or null if the bag is empty.
+        T* front() noexcept
+        {
+                return root ? &_node< T, Acc >( *root ) : nullptr;
+        }
+
+        /// Returns the node `take` returns next, or null if the bag is empty.
+        T const* front() const noexcept
+        {
+                return root ? &_node< T, Acc >( *root ) : nullptr;
+        }
+
+        /// Links the detached node `node` into the bag, as the node `take` returns next.
+        void link( T& node ) noexcept( _nothrow_access< Acc, T > )
+        {
+                ZLL_ASSERT( ( detached< T, Acc >( node ) ) );
+                _sh_hdr& n = Acc::get( node );
+                if ( root )
+                        _sh_attach_right( n, _sh_detach_top( *this ) );
+                _sh_attach_top( *this, n );
+        }
+
+        /// Unlinks and returns the node `front` returns. Undefined behavior if the bag is empty.
+        T& take() noexcept
+        {
+                ZLL_ASSERT( root );
+                _sh_hdr& t = _sh_detach_top( *this );
+                _sh_hdr* r = t._right ? &_sh_detach_right( t ) : nullptr;
+                _sh_hdr* n = r;
+                if ( t._left ) {
+                        n = &_sh_detach_left( t );
+                        if ( r ) {
+                                // The walked nodes join the root's right spine and stay on it
+                                // until taken, so each node is walked at most once.
+                                _sh_hdr* end = n;
+                                while ( end->_right )
+                                        end = end->_right;
+                                _sh_attach_right( *end, *r );
+                        }
+                }
+                if ( n )
+                        _sh_attach_top( *this, *n );
+                return _node< T, Acc >( t );
+        }
+};
+
 /// Skew heap implementation. Provides API for linking and merging nodes, merging and popping the
 /// heap, checking if the heap is empty and accessing the top node of the heap. The top node is the
 /// node with the smallest value in the heap according to the comparison function `Compare`.
@@ -1621,9 +1725,21 @@ struct sh_heap : private _raw_heap
                 // XXX: well, this could be more optimal
                 for ( auto* n : il ) {
                         ZLL_ASSERT( n );
-                        ZLL_ASSERT( ( detached< T, Acc >( *n ) ) );
                         link( *n );
                 }
+        }
+
+        /// Constructs a heap of the nodes of `bag`, leaving the bag empty.
+        explicit sh_heap( sh_bag< T, Acc >&& bag ) noexcept( noexcept_compare )
+        {
+                link( std::move( bag ) );
+        }
+
+        /// Constructs a heap ordered by `comp` of the nodes of `bag`, leaving the bag empty.
+        sh_heap( sh_bag< T, Acc >&& bag, Compare comp )
+          : _comp( std::move( comp ) )
+        {
+                link( std::move( bag ) );
         }
 
         /// Destructor, detaches the top node if present.
@@ -1642,10 +1758,18 @@ struct sh_heap : private _raw_heap
                         decltype( Acc::get( node ) ),
                         sh_header< T, Acc, Compare >& >,
                     "the node's sh_header has to use the heap's Compare" );
+                ZLL_ASSERT( ( detached< T, Acc >( node ) ) );
                 _sh_hdr* n = &Acc::get( node );
                 if ( root )
                         n = &_sh_merge< T, Acc >( _sh_detach_top( *this ), *n, _comp );
                 _sh_attach_top( *this, *n );
+        }
+
+        /// Links every node of `bag` into the heap, leaving the bag empty.
+        void link( sh_bag< T, Acc >&& bag ) noexcept( noexcept_compare )
+        {
+                while ( !bag.empty() )
+                        link( bag.take() );
         }
 
         /// Merges the `other` heap into this heap. The `other` heap becomes empty after this
@@ -1696,6 +1820,27 @@ struct sh_heap : private _raw_heap
                 T& n = _node< T, Acc >( *root );
                 pop();
                 return n;
+        }
+
+        /// Unlinks every node for which `p` returns true and returns them in a bag, in no heap
+        /// order; the nodes left keep the heap property. `p` is called once per node, on a node's
+        /// children before the node, and must not change the heap. Linear in the size of the heap
+        /// plus a merge per node unlinked, in constant stack.
+        template < typename Pred >
+        sh_bag< T, Acc >
+        extract_if( Pred&& p ) noexcept( noexcept_compare && noexcept( p( std::declval< T& >() ) ) )
+        {
+                sh_bag< T, Acc > out;
+                _sh_hdr*         n = root ? &_sh_first_postorder( *root ) : nullptr;
+                while ( n ) {
+                        _sh_hdr* next = _sh_next_postorder( *n );
+                        if ( p( _node< T, Acc >( *n ) ) ) {
+                                _sh_detach< T, Acc >( *n, _comp );
+                                out.link( _node< T, Acc >( *n ) );
+                        }
+                        n = next;
+                }
+                return out;
         }
 
 private:
